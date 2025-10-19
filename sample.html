@@ -12,11 +12,9 @@ html, body {
   background: linear-gradient(to bottom, #aee6ff, #0056b3);
   font-family: 'Helvetica Neue', sans-serif;
   overflow: hidden; /* スクロール禁止 */
-  touch-action: manipulation; /* ダブルタップ拡大防止 */
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -ms-touch-action: manipulation;
-  -ms-content-zooming: none;
   overscroll-behavior: none;
 }
 
@@ -94,13 +92,16 @@ button {
   font-size: 1.4rem;
   font-weight: bold;
   padding: 8vh 0;
-  transition: all 0.15s ease;
   box-shadow: 0 8px #004a99;
   color: #004a99;
+  user-select: none;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.15s ease;
 }
 
-button:active {
+/* JSで pressedクラスを制御 */
+button.pressed {
   background: #004a99;
   color: white;
   transform: translateY(6px);
@@ -125,5 +126,17 @@ button:active {
       <button>イルカ</button>
     </div>
   </div>
+
+<script>
+// ボタン押下の色反転＆凹みをJSで制御
+const buttons = document.querySelectorAll('button');
+buttons.forEach(btn => {
+  btn.addEventListener('touchstart', e => { e.preventDefault(); btn.classList.add('pressed'); }, {passive: false});
+  btn.addEventListener('touchend', e => { e.preventDefault(); btn.classList.remove('pressed'); }, {passive: false});
+  btn.addEventListener('mousedown', () => btn.classList.add('pressed'));
+  btn.addEventListener('mouseup', () => btn.classList.remove('pressed'));
+  btn.addEventListener('mouseleave', () => btn.classList.remove('pressed'));
+});
+</script>
 </body>
 </html>
