@@ -15,25 +15,29 @@ html, body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  overscroll-behavior: none;
 }
 
 button {
   background: white;
-  border: 4px solid #004a99;
-  outline: 2px solid white;
+  border: 4px solid #004a99;          /* 濃い青の外枠 */
   border-radius: 12px;
   font-size: 1.6rem;
   font-weight: bold;
   padding: 8vh 5vw;
   color: #004a99;
-  box-shadow: 0 8px #004a99;
+  box-shadow: 0 8px #004a99;          /* 押し込み感の影 */
   transition: all 0.15s ease;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  position: relative;
 }
 
-/* JSで押下時に付与するクラス */
+/* 押下時の色反転＋凹み */
 button.pressed {
   background: #004a99;
   color: white;
@@ -47,7 +51,7 @@ button.pressed {
   <button id="startBtn">スタート</button>
 
 <script>
-// 押下アニメをクイズページと同じに統一
+// クイズページと同じ押下アニメに統一
 const startBtn = document.getElementById('startBtn');
 
 startBtn.addEventListener('touchstart', e => { 
