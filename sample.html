@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>クイズ</title>
 <style>
 html, body {
@@ -11,7 +11,13 @@ html, body {
   height: 100%;
   background: linear-gradient(to bottom, #aee6ff, #0056b3);
   font-family: 'Helvetica Neue', sans-serif;
-  overflow: hidden;
+  overflow: hidden; /* スクロール禁止 */
+  touch-action: manipulation; /* ダブルタップ拡大防止 */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -ms-touch-action: manipulation;
+  -ms-content-zooming: none;
+  overscroll-behavior: none;
 }
 
 .container {
@@ -76,7 +82,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
   gap: 5vw;
-  margin-bottom: 12vh; /* ボタンを上に */
+  margin-bottom: 12vh;
 }
 
 button {
@@ -87,10 +93,11 @@ button {
   border-radius: 12px;
   font-size: 1.4rem;
   font-weight: bold;
-  padding: 8vh 0; /* 高さ2倍 */
+  padding: 8vh 0;
   transition: all 0.15s ease;
   box-shadow: 0 8px #004a99;
   color: #004a99;
+  touch-action: manipulation;
 }
 
 button:active {
@@ -98,6 +105,7 @@ button:active {
   color: white;
   transform: translateY(6px);
   box-shadow: 0 2px #002f66;
+  transition: all 0.1s ease;
 }
 </style>
 </head>
