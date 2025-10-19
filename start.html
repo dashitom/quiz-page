@@ -30,18 +30,41 @@ button {
   transition: all 0.15s ease;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-button:active {
+/* JSで押下時に付与するクラス */
+button.pressed {
   background: #004a99;
   color: white;
   transform: translateY(6px);
   box-shadow: 0 2px #002f66;
+  transition: all 0.1s ease;
 }
-
 </style>
 </head>
 <body>
-  <button onclick="location.href='sample.html'">スタート</button>
+  <button id="startBtn">スタート</button>
+
+<script>
+// 押下アニメをクイズページと同じに統一
+const startBtn = document.getElementById('startBtn');
+
+startBtn.addEventListener('touchstart', e => { 
+  e.preventDefault(); 
+  startBtn.classList.add('pressed'); 
+}, {passive: false});
+
+startBtn.addEventListener('touchend', e => { 
+  e.preventDefault(); 
+  startBtn.classList.remove('pressed'); 
+  // クイズページへ遷移
+  location.href = 'sample.html';
+}, {passive: false});
+
+startBtn.addEventListener('mousedown', () => startBtn.classList.add('pressed'));
+startBtn.addEventListener('mouseup', () => startBtn.classList.remove('pressed'));
+startBtn.addEventListener('mouseleave', () => startBtn.classList.remove('pressed'));
+</script>
 </body>
 </html>
