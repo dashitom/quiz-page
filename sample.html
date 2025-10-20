@@ -21,7 +21,7 @@ html,body{
 }
 
 .question-box{
-  flex:2;
+  flex:3;
   background:white;
   border-radius:10px;
   padding:1vh 2vw;
@@ -56,7 +56,7 @@ button{
   border:4px solid #004a99;
   outline:2px solid white;
   border-radius:12px;
-  font-size:1rem;
+  font-size:3rem;
   font-weight:bold;
   padding:3vh 0;
   box-shadow:0 6px #004a99;
@@ -68,7 +68,7 @@ button{
 }
 
 .question-box img{
-  max-width:80%; margin-top:1vh; border-radius:8px;
+  max-height:30vh; margin-top:1vh; border-radius:8px;
 }
 .timer-label{color:white;font-weight:bold;font-size:1rem;}
 .timer-bar{position:relative;width:70%;height:8px;background:rgba(255,255,255,0.3);
@@ -123,96 +123,16 @@ button img{
 <script>
 // --- 問題データ（画像も管理） ---
 const quizData=[
-  {
-    "question": "次のポケモンはどれがイルカに似てる？",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png",
-    "options": [
-      {
-        "text": "ペンギン",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/17.png"
-      },
-      {
-        "text": "イルカ",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/87.png"
-      }
-    ],
-    "correct": "イルカ"
-  },
-  {
-    "question": "次のポケモンはどれが果物？",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    "options": [
-      {
-        "text": "トマト",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png"
-      },
-      {
-        "text": "ニンジン",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
-      }
-    ],
-    "correct": "トマト"
-  },
-  {
-    "question": "日本の首都は？",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    "options": [
-      {
-        "text": "大阪",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png"
-      },
-      {
-        "text": "東京",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
-      }
-    ],
-    "correct": "東京"
-  },
-  {
-    "question": "次のポケモンはどれがイルカに似てる？",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png",
-    "options": [
-      {
-        "text": "ペンギン",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/17.png"
-      },
-      {
-        "text": "イルカ",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/87.png"
-      }
-    ],
-    "correct": "イルカ"
-  },
-  {
-    "question": "次のポケモンはどれが果物？",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    "options": [
-      {
-        "text": "トマト",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png"
-      },
-      {
-        "text": "ニンジン",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
-      }
-    ],
-    "correct": "トマト"
-  },
-  {
-    "question": "日本の首都は？",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    "options": [
-      {
-        "text": "大阪",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png"
-      },
-      {
-        "text": "東京",
-        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
-      }
-    ],
-    "correct": "東京"
-  }
+  {"question": "ピクセル数が多いのは？","image": "images/slime2.png",
+   "options": [{"text": "黒","image": ""},{"text": "青","image": ""}],"correct": "青"},
+  {"question": "A「Bは身長180cm以上あるのか。<br>10代の頃までは俺のほうが高かったのに」長男は？","image": "images/brothers.png",
+   "options": [{"text": "A","image": ""},{"text": "B","image": ""}],"correct": "A"},
+  {"question": "ピクセル数が多いのは？","image": "images/slime3.png",
+   "options": [{"text": "黒","image": ""},{"text": "青","image": ""}],"correct": "青"},
+  {"question": "長男は？<br>A　　　　B","image": "images/mario.png",
+   "options": [{"text": "A","image": ""},{"text": "B","image": ""}],"correct": "A"},
+  {"question": "ピクセル数が多いのは？","image": "images/slime.png",
+   "options": [{"text": "黒","image": ""},{"text": "青","image": ""}],"correct": "青"},
 ]
 
 
