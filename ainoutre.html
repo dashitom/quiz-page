@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>脳トレWeb TOP</title>
+<title>AI脳トレ</title>
 <style>
 :root {
   --color-dark: #002060;
@@ -20,6 +20,10 @@ html,body{
   color:var(--color-text);
   text-align:center;
   overflow:hidden;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none; /* ← 選択禁止 */
 }
 .container{
   display:flex;
@@ -33,9 +37,10 @@ html,body{
 .logo{
   height:40vh;
   margin-top:2vh;
+  display:block;
 }
 .version{
-  margin-top: -4vh;
+  margin-top:0;
   height:3vh;line-height:3vh;
   background:white;color:var(--color-light);
   border-radius:20px;width:35%;
@@ -101,8 +106,8 @@ html,body{
 <body>
 <div class="container">
   <img src="logo.png" alt="ロゴ" class="logo">
-  <div class="version">ver1.0.0.1</div>
-  <button class="start-btn" onclick="location.href='quiz.html'">START</button>
+  <div class="version">ver.1.0.0.1</div>
+  <button class="start-btn" onclick="delayedStart()">START</button>
   <div class="line"></div>
   <div class="notice">
     <label class="notice-header">お知らせ</label>
@@ -111,5 +116,15 @@ html,body{
   </div>
   <div class="footer">©TEAM STAND WITH FREAND</div>
 </div>
+
+<script>
+function delayedStart() {
+  const btn = document.querySelector('.start-btn');
+  btn.classList.add('active');
+  setTimeout(() => {
+    location.href = 'quiz.html';
+  }, 500);
+}
+</script>
 </body>
 </html>
