@@ -26,6 +26,7 @@ html,body{
   flex-direction:column;
   justify-content:space-between;
   height:80vh;
+  max-width:60vh;
   margin:5vh 5vw;
   box-sizing:border-box;
 }
@@ -36,7 +37,7 @@ html,body{
   background:var(--color-dark);
   color:var(--color-text);
   font-weight:bold;
-  font-size:1rem;
+  font-size:1.2rem;
   border-radius:0 20px 20px 0;
   padding:0.3rem 1.5rem;
   width:max-content;
@@ -50,7 +51,7 @@ html,body{
   border-radius:10px;
   padding:1vh 2vw;
   text-align:center;
-  font-size:1.1rem;
+  font-size:1.3rem;
   font-weight:bold;
   box-shadow:0 3px 10px rgba(0,0,0,0.1);
   margin-top:1vh;
@@ -229,14 +230,14 @@ button img{
 </head>
 <body>
 <div id="loading-overlay">
-  <div>リソース読み込み中...</div>
+  <div>問題を作成しています...</div>
   <div class="loading-bar"><div class="loading-progress" id="loadingProgress"></div></div>
 </div>
 <div id="countdown-overlay"><div class="count-number" id="countNum"></div></div>
 
 <div class="container" style="display:none;">
   <div class="quiz-header">
-    <span id="quiz-no">Q3　ドキドキ☆2択クイズ</span>
+    <span id="quiz-no"></span>
   </div>
   <div class="question-box" id="question"></div>
   <div class="timer-container">
@@ -295,19 +296,22 @@ function showCountdown(){
 
 // --- 問題データ ---
 const quizData=[
-  {"question":"ピクセル数が多いのは？","image":"images/slime2.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
-  {"question":"A「10代までは、<br>Bより背が高かったよ」<br>長男は？","image":"","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
-  {"question":"？にあてはまるのは","image":"images/num1.png","options":[{"text":"2"},{"text":"3"}],"correct":"2"},
-  {"question":"文字数が多いのは？","image":"images/ty.png","options":[{"text":"T"},{"text":"Y"}],"correct":"Y"},
-  {"question":"進行方向は？","image":"images/bus_left.png","options":[{"text":"左"},{"text":"右"}],"correct":"左"},
-  {"question":"ピクセル数が多いのは？","image":"images/slime3.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
-  {"question":"長男は？<br>A　　　　B","image":"images/mario.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
-  {"question":"？にあてはまるのは","image":"images/num2.png","options":[{"text":"1"},{"text":"2"}],"correct":"1"},
-  {"question":"文字数が多いのは？","image":"images/moji2.png","options":[{"text":"S"},{"text":"A"}],"correct":"S"},
-  {"question":"進行方向は？","image":"images/bus_right.png","options":[{"text":"左"},{"text":"右"}],"correct":"右"},
-  {"question":"ピクセル数が多いのは？","image":"images/slime.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
-  {"question":"進行方向は？","image":"images/ookubo.png","options":[{"text":"手前"},{"text":"奥"}],"correct":"手前"},
-  {"question":"片方しか助けられない。<br>どっちを助ける？","image":"","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
+  {"quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime2.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"quiztype":"判断力","question":"A「10代までは、<br>Bより背が高かったよ」<br>長男は？","image":"","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
+  {"quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","options":[{"text":"2"},{"text":"3"}],"correct":"2"},
+  {"quiztype":"注意力","question":"文字数が多いのは？","image":"images/ty.png","options":[{"text":"T"},{"text":"Y"}],"correct":"Y"},
+  {"quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_left.png","options":[{"text":"左"},{"text":"右"}],"correct":"左"},
+  {"quiztype":"形状判断力","question":"若いのは？","image":"images/otama.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
+  {"quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime3.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"quiztype":"判断力","question":"長男は？<br>A　　　　B","image":"images/mario.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
+  {"quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num2.png","options":[{"text":"1"},{"text":"2"}],"correct":"1"},
+  {"quiztype":"判断力","question":"片方しか助けられない。<br>どっちを助ける？","image":"","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
+  {"quiztype":"注意力","question":"文字数が多いのは？","image":"images/moji2.png","options":[{"text":"S"},{"text":"A"}],"correct":"S"},
+  {"quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_right.png","options":[{"text":"左"},{"text":"右"}],"correct":"右"},
+  {"quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"quiztype":"空間認識力","question":"進行方向は？","image":"images/ookubo.png","options":[{"text":"手前"},{"text":"奥"}],"correct":"手前"},
+  {"quiztype":"形状判断力","question":"若いのは？","image":"images/keropen.png","options":[{"text":"A"},{"text":"B"}],"correct":"B"},
+  {"quiztype":"ドキドキ☆2択クイズ","question":"片方しか助けられない。<br>どっちを助ける？","image":"images/tinmoku.png","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
 ];
 
 let currentIndex=0;
@@ -342,7 +346,7 @@ function stopTimer(){
 function showQuestion(){
   answered=false;
   const q=quizData[currentIndex];
-  quizNo.innerHTML="Q" + (currentIndex + 1);
+  quizNo.innerHTML="Q" + (currentIndex + 1) + "　" + q.quiztype;
   questionBox.innerHTML=q.question + (q.image?`<br><img src="${q.image}">`:"");
   buttonsDiv.innerHTML="";
   q.options.forEach(opt=>{
