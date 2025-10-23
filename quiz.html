@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>クイズ</title>
+<style>
+:root {
+  --color-dark: #002060;     /* 濃い青 */
+  --color-light: #3399FF;    /* 明るい青 */
+  --color-bg-top: #3399FF;   /* 背景グラデ上部 */
+  --color-bg-bottom: #0056b3;/* 背景グラデ下部 */
+  --color-shadow: #555555;   /* ボタン影 */
+  --color-text: white;
+}
+
+/* === 共通設定 === */
+html,body{
+  margin:0;padding:0;height:100%;
+  background:linear-gradient(to bottom,var(--color-bg-top),var(--color-bg-bottom));
+  font-family:'Helvetica Neue',sans-serif;overflow:hidden;
+}
+
+.container{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  height:80vh;
+  margin:5vh 5vw;
+  box-sizing:border-box;
+}
+
+/* === ヘッダー === */
+.quiz-header{
+  margin-left:-5vw;
+  background:var(--color-dark);
+  color:var(--color-text);
+  font-weight:bold;
+  font-size:1rem;
+  border-radius:0 20px 20px 0;
+  padding:0.3rem 1.5rem;
+  width:max-content;
+  margin-bottom:0.5rem;
+}
+
+/* === 問題エリア === */
+.question-box{
+  flex:3;
+  background:white;
+  border-radius:10px;
+  padding:1vh 2vw;
+  text-align:center;
+  font-size:1.1rem;
+  font-weight:bold;
+  box-shadow:0 3px 10px rgba(0,0,0,0.1);
+  margin-top:1vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.question-box img{
+  max-width:25vh; max-height:25vh; margin-top:1vh; border-radius:8px;
+}
+
+/* === タイマー === */
+.timer-container{
+  flex:0.8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0;
+  gap:2vw;
+}
+
+.timer-label{
+  color:var(--color-text);
+  font-weight:bold;
+  font-size:1rem;
+  text-shadow:
+    -2px 0   0 var(--color-dark),
+     2px 0   0 var(--color-dark),
+     0   -2px 0 var(--color-dark),
+     0    2px 0 var(--color-dark),
+    -2px -2px 0 var(--color-dark),
+     2px -2px 0 var(--color-dark),
+    -2px  2px 0 var(--color-dark),
+     2px  2px 0 var(--color-dark),
+     0    0   2px var(--color-dark);
+}
+
+.timer-bar {
+  position: relative;
+  width: 90%;
+  height: 12px;
+  background: var(--color-dark);
+  border: 3px solid var(--color-dark);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.timer-progress {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: var(--color-light);
+  border-radius: 10px;
+  transition: width 10s linear;
+}
+
+/* === ボタン === */
+.buttons{
+  flex:2;
+  display:flex;
+  justify-content:space-between;
+  align-items:stretch;
+  gap:4vw;
+  margin-bottom:1vh;
+}
+
+button{
+  flex:1;
+  background:white;
+  border:7px solid var(--color-dark);
+  outline:3px solid white;
+  border-radius:12px;
+  font-size:3rem;
+  font-weight:bold;
+  padding:3vh 0;
+  box-shadow:0 12px var(--color-shadow);
+  color:var(--color-dark);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+button.pressed{
+  background:var(--color-dark);
+  color:var(--color-text);
+  transform:translateY(6px);
+  box-shadow:0 2px #002f66;
+  transition:all .1s ease;
+}
+
+button img{
+  max-width:60%; margin-top:0.5vh; border-radius:6px;
+}
+
+/* === カットイン === */
+.cutin{
+  position:fixed;
+  top:50%;left:0;
+  width:100%;
+  height:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:2.5rem;
+  font-weight:bold;
+  text-shadow:0 0 12px rgba(255,255,255,0.8);
+  overflow:hidden;
+  transform:translateY(-50%);
+  z-index:1000;
+  animation:beamExpand 1s linear forwards;
+}
+
+.cutin.correct {
+  background: linear-gradient(180deg, #ff0033 0%, #ff0033 50%, #ff0033 100%);
+  color: #ff0033;
+  text-shadow:
+    -2px 0 0 white,
+     2px 0 0 white,
+     0 -2px 0 white,
+     0  2px 0 white;
+}
+.cutin.wrong {
+  background: linear-gradient(180deg, #0044ff 0%, #0044ff 50%, #0044ff 100%);
+  color: #0044ff;
+  text-shadow:
+    -2px 0   0 white,
+     2px 0   0 white,
+     0   -2px 0 white,
+     0    2px 0 white,
+    -2px -2px 0 white,
+     2px -2px 0 white,
+    -2px  2px 0 white,
+     2px  2px 0 white,
+     0    0   2px white;
+}
+
+@keyframes beamExpand{
+  0%{height:0;opacity:0;}
+  25%{height:13vh;opacity:1;}
+  75%{height:13vh;opacity:1;}
+  100%{height:0;opacity:0;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="quiz-header">
+    <span id="quiz-no">Q3　ドキドキ☆2択クイズ</span>
+  </div>
+  <div class="question-box" id="question"></div>
+  <div class="timer-container">
+    <div class="timer-label">TIME</div>
+    <div class="timer-bar"><div class="timer-progress" id="timerProgress"></div></div>
+  </div>
+  <div class="buttons" id="buttons"></div>
+</div>
+
+<script>
+// --- 問題データ ---
+const quizData=[
+  {"question":"ピクセル数が多いのは？","image":"images/slime2.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"question":"A「10代までは、<br>Bより背が高かったよ」<br>長男は？","image":"","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
+  {"question":"？にあてはまるのは","image":"images/num1.png","options":[{"text":"2"},{"text":"3"}],"correct":"2"},
+  {"question":"文字数が多いのは？","image":"images/ty.png","options":[{"text":"T"},{"text":"Y"}],"correct":"Y"},
+  {"question":"進行方向は？","image":"images/bus_left.png","options":[{"text":"左"},{"text":"右"}],"correct":"左"},
+  {"question":"ピクセル数が多いのは？","image":"images/slime3.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"question":"長男は？<br>A　　　　B","image":"images/mario.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
+  {"question":"？にあてはまるのは","image":"images/num2.png","options":[{"text":"1"},{"text":"2"}],"correct":"1"},
+  {"question":"文字数が多いのは？","image":"images/moji2.png","options":[{"text":"S"},{"text":"A"}],"correct":"S"},
+  {"question":"進行方向は？","image":"images/bus_right.png","options":[{"text":"左"},{"text":"右"}],"correct":"右"},
+  {"question":"ピクセル数が多いのは？","image":"images/slime.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"question":"進行方向は？","image":"images/ookubo.png","options":[{"text":"手前"},{"text":"奥"}],"correct":"手前"},
+  {"question":"片方しか助けられない。<br>どっちを助ける？","image":"","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
+];
+
+let currentIndex=0;
+let answered=false;
+let timerTimeout;
+
+const quizNo=document.getElementById('quiz-no');
+const questionBox=document.getElementById('question');
+const buttonsDiv=document.getElementById('buttons');
+const timerProgress=document.getElementById('timerProgress');
+
+function startTimer(){
+  timerProgress.style.transition="none";
+  timerProgress.style.width="100%";
+  setTimeout(()=>{
+    timerProgress.style.transition="width 10s linear";
+    timerProgress.style.width="0%";
+  },50);
+  timerTimeout=setTimeout(()=>{
+    if(!answered) handleAnswer(null);
+  },10000);
+}
+
+function stopTimer(){
+  clearTimeout(timerTimeout);
+  const computedStyle=window.getComputedStyle(timerProgress);
+  const width=computedStyle.width;
+  timerProgress.style.transition="none";
+  timerProgress.style.width=width;
+}
+
+function showQuestion(){
+  answered=false;
+  const q=quizData[currentIndex];
+  quizNo.innerHTML="Q" + (currentIndex + 1);
+  questionBox.innerHTML=q.question + (q.image?`<br><img src="${q.image}">`:"");
+  buttonsDiv.innerHTML="";
+  q.options.forEach(opt=>{
+    const btn=document.createElement('button');
+    btn.innerHTML=opt.text;
+    btn.onclick=()=>handleAnswer(opt.text);
+    buttonsDiv.appendChild(btn);
+  });
+  startTimer();
+}
+
+function handleAnswer(selected){
+  if(answered) return;
+  answered=true;
+  stopTimer();
+  const q=quizData[currentIndex];
+  const isCorrect=(selected===q.correct);
+  Array.from(buttonsDiv.children).forEach(btn=>{
+    if(btn.textContent.includes(selected)) btn.classList.add('pressed');
+  });
+  showCutIn(isCorrect?"正解！":"不正解！",isCorrect);
+}
+
+function showCutIn(text,isCorrect){
+  const cut=document.createElement('div');
+  cut.className='cutin '+(isCorrect?'correct':'wrong');
+  cut.textContent=text;
+  document.body.appendChild(cut);
+  cut.addEventListener('animationend',()=>{
+    cut.remove();
+    currentIndex++;
+    if(currentIndex<quizData.length) showQuestion();
+    else endQuiz();
+  });
+}
+
+function endQuiz(){
+  questionBox.textContent="クイズ終了！お疲れさまでした。";
+  buttonsDiv.innerHTML="";
+  stopTimer();
+}
+
+showQuestion();
+</script>
+</body>
+</html>

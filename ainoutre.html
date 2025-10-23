@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>脳トレWeb TOP</title>
+<style>
+:root {
+  --color-dark: #002060;
+  --color-light: #3399FF;
+  --color-bg-top: #3399FF;
+  --color-bg-bottom: #0056b3;
+  --color-shadow: #555555;
+  --color-text: white;
+}
+html,body{
+  margin:0;padding:0;height:100%;
+  background:linear-gradient(to bottom,var(--color-bg-top),var(--color-bg-bottom));
+  font-family:'Helvetica Neue',sans-serif;
+  color:var(--color-text);
+  text-align:center;
+  overflow:hidden;
+}
+.container{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  height:100%;
+  padding:1vh 5vw;
+  box-sizing:border-box;
+}
+.logo{
+  height:40vh;
+  margin-top:2vh;
+}
+.version{
+  margin-top: -4vh;
+  height:3vh;line-height:3vh;
+  background:white;color:var(--color-light);
+  border-radius:20px;width:35%;
+  font-weight:bold;
+}
+.start-btn{
+  background:white;
+  border:7px solid var(--color-dark);
+  outline:3px solid white;
+  border-radius:12px;
+  font-size:1.5rem;
+  font-weight:bold;
+  padding:3vh 0;
+  box-shadow:0 12px var(--color-shadow);
+  color:var(--color-dark);
+  width:60%;
+  margin-top:3vh;
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.start-btn:active{
+  background:var(--color-dark);
+  color:var(--color-text);
+  transform:translateY(6px);
+  box-shadow:0 2px #002f66;
+}
+.line{
+  width:80%;height:1px;
+  background:white;margin:3vh 0;
+}
+.notice{
+  width:85%;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.6);
+  border-radius:8px;
+  padding:1.2em;
+  font-size:0.7rem;
+  text-align:left;
+  line-height:1.6;
+  box-shadow:0 3px 6px rgba(0,0,0,0.15);
+}
+.notice-header{
+  display:inline-block;
+  border:1.5px solid #fff;
+  padding:1px 12px;
+  border-radius:20px;
+  font-weight:bold;
+  margin-bottom:0.6em;
+}
+.notice b{
+  color:#fff;
+  display:block;
+  font-size:0.8rem;
+  margin-bottom:0.3em;
+}
+.footer{
+  font-size:0.8rem;
+  opacity:0.7;
+  margin-bottom:1vh;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <img src="logo.png" alt="ロゴ" class="logo">
+  <div class="version">ver1.0.0.1</div>
+  <button class="start-btn" onclick="location.href='quiz.html'">START</button>
+  <div class="line"></div>
+  <div class="notice">
+    <label class="notice-header">お知らせ</label>
+    <b>2025年12月31日まで無料公開中！</b>
+    リリースを記念して、2025年12月31日23:59まで、会員登録不要でどなたでも無料で楽しむことができます！
+  </div>
+  <div class="footer">©TEAM STAND WITH FREAND</div>
+</div>
+</body>
+</html>
