@@ -21,6 +21,20 @@ html,body{
   font-family:'Helvetica Neue',sans-serif;overflow:hidden;
 }
 
+/* 文字選択・画像保存などを禁止 */
+body {
+  -webkit-user-select: none; /* 文字選択禁止 */
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none; /* 画像長押しメニュー無効 */
+}
+
+/* 画像にも適用 */
+img {
+  pointer-events: none; /* ドラッグや右クリック防止 */
+}
+
 .container{
   display:flex;
   flex-direction:column;
@@ -355,7 +369,48 @@ function showQuestion(){
     btn.onclick=()=>handleAnswer(opt.text);
     buttonsDiv.appendChild(btn);
   });
+  initButtonTouchEvents();
   startTimer();
+}
+
+// ==== スマホ向けボタン押下制御 ====
+function initButtonTouchEvents() {
+  const buttons = document.querySelectorAll('.buttons button');
+  buttons.forEach(btn => {
+    let isInside = false;
+
+    btn.addEventListener('touchstart', () => {
+      isInside = true;
+      btn.classList.add('pressed');
+    });
+
+    btn.addEventListener('touchmove', e => {
+      const touch = e.touches[0];
+      const rect = btn.getBoundingClientRect();
+      const inside =
+        touch.clientX >= rect.left &&
+        touch.clientX <= rect.right &&
+        touch.clientY >= rect.top &&
+        touch.clientY <= rect.bottom;
+      if (inside && !isInside) {
+        btn.classList.add('pressed');
+        isInside = true;
+      } else if (!inside && isInside) {
+        btn.classList.remove('pressed');
+        isInside = false;
+      }
+    });
+
+    btn.addEventListener('touchend', () => {
+      if (isInside) {
+        btn.classList.remove('pressed');
+        btn.click();
+      } else {
+        btn.classList.remove('pressed');
+      }
+      isInside = false;
+    });
+  });
 }
 
 function handleAnswer(selected){
