@@ -328,6 +328,23 @@ const quizData=[
   {"quiztype":"ドキドキ☆2択クイズ","question":"片方しか助けられない。<br>どっちを助ける？","image":"images/tinmoku.png","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
 ];
 
+// JSON内のすべての画像URLを抽出してプリロード
+window.addEventListener("load", () => {
+  const imageUrls = new Set();
+
+  quizData.forEach(q => {
+    if (q.image) imageUrls.add(q.image);
+    q.options?.forEach(opt => {
+      if (opt.image) imageUrls.add(opt.image);
+    });
+  });
+
+  imageUrls.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+});
+
 let currentIndex=0;
 let answered=false;
 let timerTimeout;
@@ -403,7 +420,7 @@ function initButtonTouchEvents() {
 
     btn.addEventListener('touchend', () => {
       if (isInside) {
-        btn.classList.remove('pressed');
+        //btn.classList.remove('pressed');
         btn.click();
       } else {
         btn.classList.remove('pressed');
