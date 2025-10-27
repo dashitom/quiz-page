@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Safariステータスバー（背景色を青に） -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>クイズ</title>
 <style>
 :root {
@@ -52,6 +55,8 @@ body {
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: contain;
+  min-height: 100vh;
+  padding-top: env(safe-area-inset-top);
 }
 
 /* 背景を右下→右上へ */
