@@ -76,23 +76,35 @@ body {
   margin: 0 auto 2vh; 
   display: flex;
   align-items: center;
+  line-height: 1;
   justify-content: space-between;
   width: calc(100% - 4vh);
   max-width: 500px;
   background: rgba(0, 0, 0, 0.2);
   color: white;
   border-radius: 28px;
-  padding: 0.3rem 0.8rem;
+  padding: 0.5rem 1rem;
   font-weight: bold;
   font-size: 1rem;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   z-index: 1500;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(3px);
 }
 
 .stage-right {
   flex: 1;
   text-align: center;
+  text-shadow:
+    0 0 4px rgba(100,180,255,0.7),
+    0 0 8px rgba(100,180,255,0.4),
+    0 0 12px rgba(100,180,255,0.2);
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-weight: 600;
+  justify-content: center; /* ← 中央寄せで一体感を出す */
+  gap: 0.4rem;              /* ← 適度な間隔 */
+  min-width: 6.5em;         /* ← 幅を固定（4桁＋余白分） */
 }
 
 .stage-left {
@@ -100,27 +112,70 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-shadow:
+    -2px 0   0 var(--color-dark),
+     2px 0   0 var(--color-dark),
+     0   -2px 0 var(--color-dark),
+     0    2px 0 var(--color-dark);
+}
+
+.stage-left, .stage-right {
+  flex: 0 0 auto;
+  margin: 0 0.3rem;
+  align-items: center;
+  height: 100%;
 }
 
 .stage-center {
   flex: 1; display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 0.2rem;
+  transform: translateY(1px);
 }
 
 .stage-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  height: 15px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-  overflow: hidden;
+  height: 12px;
+  background: var(--color-dark);
+  border-radius: 0px;
+  padding: 2px;
+  gap: 2px;
 }
 
-.stage-progress-bar {
+.stage-progress-segment {
+  flex: 1;
   height: 100%;
-  background: linear-gradient(90deg, #00ccff, #00ff99);
-  border-radius: 6px;
-  transition: width 0.5s ease;
+  background: rgba(255,255,255,0.2);
+  border-radius: 0px;
+  transition: background 0.3s;
+}
+
+.stage-progress-segment.filled {
+  background: var(--color-light);
+}
+
+.score-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.score-value {
+  transform: translateY(-1px);
+  font-size: 1.1rem;
+  text-align: right;
+  transition: transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+.score-value.bump {
+  transform: scale(1.2);
+  text-shadow:
+    0 0 8px rgba(180,220,255,1),
+    0 0 16px rgba(120,200,255,0.9),
+    0 0 28px rgba(100,180,255,0.7);
 }
 
 /* === クイズジャンルヘッダー === */
@@ -133,7 +188,6 @@ body {
   border-radius:0 20px 20px 0;
   padding:0.3rem 1.5rem;
   width:max-content;
-  margin-bottom:0.5rem;
 }
 
 /* === 問題エリア === */
@@ -333,13 +387,13 @@ button img{
   <!-- === ステージ情報バー === -->
   <div class="stage-info">
     <div class="stage-left">STAGE 1</div>
-    <div class="stage-center">
-      <div class="stage-progress">
-        <div class="stage-progress-bar" style="width:40%;">
-        </div>
-      </div>
+<div class="stage-center">
+  <div class="stage-progress"></div>
+</div>
+    <div class="stage-right">
+  <span class="score-label">SCORE</span>
+  <span class="score-value">0000</span>
     </div>
-    <div class="stage-right">SCORE 999</div>
   </div>
   <div class="quiz-header">
     <span id="quiz-no"></span>
@@ -393,10 +447,22 @@ function showCountdown(){
       setTimeout(()=>{
         overlay.style.display='none';
         container.style.display='flex';
+        createProgressSegments();
         showQuestion();
       },500);
     }
   },{once:true});
+}
+
+function createProgressSegments() {
+  const stageProgress = document.querySelector('.stage-progress');
+  stageProgress.innerHTML = ''; // 既存をクリア
+
+  quizData.forEach(() => {
+    const seg = document.createElement('div');
+    seg.className = 'stage-progress-segment';
+    stageProgress.appendChild(seg);
+  });
 }
 
 // --- 問題データ ---
@@ -439,6 +505,8 @@ window.addEventListener("load", () => {
 let currentIndex=0;
 let answered=false;
 let timerTimeout;
+let startTime, endTime;
+let timeLeftMs = 0;
 
 const quizNo=document.getElementById('quiz-no');
 const questionBox=document.getElementById('question');
@@ -446,12 +514,15 @@ const buttonsDiv=document.getElementById('buttons');
 const timerProgress=document.getElementById('timerProgress');
 
 function startTimer(){
+  startTime = Date.now();
+  endTime = startTime + 10000; // 10秒
   timerProgress.style.transition="none";
   timerProgress.style.width="100%";
   setTimeout(()=>{
     timerProgress.style.transition="width 10s linear";
     timerProgress.style.width="0%";
   },50);
+
   timerTimeout=setTimeout(()=>{
     if(!answered) handleAnswer(null);
   },10000);
@@ -459,11 +530,14 @@ function startTimer(){
 
 function stopTimer(){
   clearTimeout(timerTimeout);
+  const now = Date.now();
+  timeLeftMs = Math.max(endTime - now, 0); // 残りミリ秒
   const computedStyle=window.getComputedStyle(timerProgress);
   const width=computedStyle.width;
   timerProgress.style.transition="none";
   timerProgress.style.width=width;
 }
+
 
 function showQuestion(){
   answered=false;
@@ -531,20 +605,53 @@ function handleAnswer(selected){
     if(btn.textContent.includes(selected)) btn.classList.add('pressed');
   });
   showCutIn(isCorrect?"正解！":"不正解！",isCorrect);
+  if(isCorrect){
+    const gained = Math.floor(timeLeftMs / 100);
+    addScore(gained);
+  }
 }
 
-function showCutIn(text,isCorrect){
-  const cut=document.createElement('div');
-  cut.className='cutin '+(isCorrect?'correct':'wrong');
-  cut.textContent=text;
+
+let score = 0;
+let displayScore = 0;
+const scoreEl = document.querySelector('.score-value');
+
+function addScore(amount) {
+  const start = score;
+  const end = score + amount;
+  score = end;
+  
+  const step = () => {
+    if (displayScore < score) {
+      displayScore += Math.ceil((score - displayScore) / 10); // 徐々に追いつく
+      scoreEl.textContent = displayScore.toString().padStart(4, '0');
+      requestAnimationFrame(step);
+    } else {
+      scoreEl.textContent = score.toString().padStart(4, '0');
+    }
+  };
+  requestAnimationFrame(step);
+}
+
+
+function showCutIn(text, isCorrect) {
+  const cut = document.createElement('div');
+  cut.className = 'cutin ' + (isCorrect ? 'correct' : 'wrong');
+  cut.textContent = text;
   document.body.appendChild(cut);
-  cut.addEventListener('animationend',()=>{
+
+  // 進捗を更新
+  const segments = document.querySelectorAll('.stage-progress-segment');
+  if (segments[currentIndex]) segments[currentIndex].classList.add('filled');
+
+  cut.addEventListener('animationend', () => {
     cut.remove();
     currentIndex++;
-    if(currentIndex<quizData.length) showQuestion();
+    if (currentIndex < quizData.length) showQuestion();
     else endQuiz();
   });
 }
+
 
 function endQuiz(){
   questionBox.textContent="クイズ終了！お疲れさまでした。";
