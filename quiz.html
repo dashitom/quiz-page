@@ -181,7 +181,7 @@ body::before {
 }
 
 .score-value {
-  transform: translateY(0px);
+  transform: translateY(1px);
   font-size: 1.2rem;
   text-align: right;
   transition: transform 0.2s ease, text-shadow 0.2s ease;
@@ -423,7 +423,7 @@ button img{
 <div id="stage-overlay" >
   <div id="stage-title" >STAGE 1</div>
   <div id="stage-msg" ></div>
-  <div class="count-number" id="countNum" style="display:none;">　</div>
+  <div class="count-number" id="countNum" style="display:none;">3</div>
   <div class="loading-bar" id="loadingBar" ><div class="loading-progress" id="stageProgress"></div></div>
 </div>
 
@@ -721,10 +721,9 @@ function showNextStage(){
     document.getElementById('stage-msg').textContent = nowStage.startMsg;
     stageProgress.style.transition = "none";
     stageProgress.style.width = "0%";
-    countNum.style.display = "";
       
     setTimeout(()=>{
-      
+      countNum.style.display = "";
       count=3
       showCountdown();
     },2000);
@@ -741,17 +740,22 @@ let count=3;
 
 function showCountdown(){
   countNum.textContent=count;
+  countNum.style.opacity='1';
   countNum.style.animation='moveUp 1s ease';
+  
   countNum.addEventListener('animationend',()=>{
     countNum.style.animation='none';
     countNum.style.opacity='0';
     count--;
+  
     if(count>0){
       setTimeout(showCountdown,150);
     }else{
     
       stageOverlay.style.transition='opacity .5s';
       stageOverlay.style.opacity='0';
+      countNum.style.opacity='0';
+      
       setTimeout(()=>{
         stageOverlay.style.display='none';
   
