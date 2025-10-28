@@ -181,7 +181,7 @@ body::before {
 }
 
 .score-value {
-  transform: translateY(-1px);
+  transform: translateY(0px);
   font-size: 1.2rem;
   text-align: right;
   transition: transform 0.2s ease, text-shadow 0.2s ease;
@@ -391,116 +391,94 @@ button img{
   transition:width 3s linear;
 }
 
+/* === ステージ移行画面 === */
+#stage-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:3000;
+  color:white;
+}
+
+#stage-title{
+  font-size:2rem;
+  font-weight:bold;
+  margin-bottom:2vh;
+  color:white;
+  text-align:center;
+  text-shadow:
+    -3px 0   0 var(--color-dark),
+     3px 0   0 var(--color-dark),
+     0   -3px 0 var(--color-dark),
+     0    3px 0 var(--color-dark);
+}
+
+#stage-msg{
+  font-weight:bold;
+}
+
 </style>
 </head>
 <body>
-<div id="loading-overlay">
-  <div>問題を作成しています...</div>
-  <div class="loading-bar"><div class="loading-progress" id="loadingProgress"></div></div>
-</div>
-<div id="countdown-overlay"><div class="count-number" id="countNum"></div></div>
 
-<div class="container" style="display:none;">
+<div id="stage-overlay" >
+  <div id="stage-title" >STAGE 1</div>
+  <div id="stage-msg" ></div>
+  <div class="count-number" id="countNum" style="display:none;">　</div>
+  <div class="loading-bar" id="loadingBar" ><div class="loading-progress" id="stageProgress"></div></div>
+</div>
+
+
+<div class="container" >
   <!-- === ステージ情報バー === -->
   <div class="stage-info">
-    <div class="stage-left">STAGE 1</div>
-<div class="stage-center">
-  <div class="stage-progress"></div>
-</div>
+    <div class="stage-left" id="stage-info-title">STAGE 1</div>
+    <div class="stage-center">
+      <div class="stage-progress"></div>
+    </div>
     <div class="stage-right">
-  <span class="score-label">SCORE</span>
-  <span class="score-value">0000</span>
+      <span class="score-label">SCORE</span>
+      <span class="score-value">0000</span>
     </div>
   </div>
-  <div class="quiz-header">
+  <div class="quiz-header" id="quiz-header" style="display:none;">
     <span id="quiz-no"></span>
   </div>
-  <div class="question-box" id="question"></div>
-  <div class="timer-container">
+  <div class="question-box" id="question" style="display:none;"></div>
+  <div class="timer-container" id="timer-container" style="display:none;">
     <div class="timer-label">TIME</div>
     <div class="timer-bar"><div class="timer-progress" id="timerProgress"></div></div>
   </div>
-  <div class="buttons" id="buttons"></div>
+  <div class="buttons" id="buttons" style="display:none;"></div>
 </div>
 
 <script>
 const loading=document.getElementById('loading-overlay');
 const loadingProgress=document.getElementById('loadingProgress');
 
-window.addEventListener('load',()=>{
-  // 疑似的に3秒かけて進捗バーを進める
-  setTimeout(()=>{
-    loadingProgress.style.width="100%";
-    setTimeout(()=>{
-      // ローディング終了 → カウントダウン開始
-      loading.style.transition="opacity 0.5s ease";
-      loading.style.opacity="0";
-      setTimeout(()=>{
-        loading.style.display="none";
-        showCountdown();
-      },500);
-    },3000);
-  },100);
-});
 
-// --- カウントダウン処理 ---
-const overlay=document.getElementById('countdown-overlay');
-const countNum=document.getElementById('countNum');
-const container=document.querySelector('.container');
-let count=3;
 
-function showCountdown(){
-  countNum.textContent=count;
-  countNum.style.animation='moveUp 1s ease';
-  countNum.addEventListener('animationend',()=>{
-    countNum.style.animation='none';
-    countNum.style.opacity='0';
-    count--;
-    if(count>0){
-      setTimeout(showCountdown,150);
-    }else{
-      overlay.style.transition='opacity .5s';
-      overlay.style.opacity='0';
-      setTimeout(()=>{
-        overlay.style.display='none';
-        container.style.display='flex';
-        createProgressSegments();
-        showQuestion();
-      },500);
-    }
-  },{once:true});
-}
-
-function createProgressSegments() {
-  const stageProgress = document.querySelector('.stage-progress');
-  stageProgress.innerHTML = ''; // 既存をクリア
-
-  quizData.forEach(() => {
-    const seg = document.createElement('div');
-    seg.className = 'stage-progress-segment';
-    stageProgress.appendChild(seg);
-  });
-}
 
 // --- 問題データ ---
 const quizData=[
-  {"quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime2.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
-  {"quiztype":"判断力","question":"A「10代までは、<br>Bより背が高かったよ」<br>長男は？","image":"","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
-  {"quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","options":[{"text":"2"},{"text":"3"}],"correct":"2"},
-  {"quiztype":"注意力","question":"文字数が多いのは？","image":"images/ty.png","options":[{"text":"T"},{"text":"Y"}],"correct":"Y"},
-  {"quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_left.png","options":[{"text":"左"},{"text":"右"}],"correct":"左"},
-  {"quiztype":"形状判断力","question":"若いのは？","image":"images/otama.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
-  {"quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime3.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
-  {"quiztype":"判断力","question":"長男は？<br>A　　　　B","image":"images/mario.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
-  {"quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num2.png","options":[{"text":"1"},{"text":"2"}],"correct":"1"},
-  {"quiztype":"判断力","question":"片方しか助けられない。<br>どっちを助ける？","image":"","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
-  {"quiztype":"注意力","question":"文字数が多いのは？","image":"images/moji2.png","options":[{"text":"S"},{"text":"A"}],"correct":"S"},
-  {"quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_right.png","options":[{"text":"左"},{"text":"右"}],"correct":"右"},
-  {"quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
-  {"quiztype":"空間認識力","question":"進行方向は？","image":"images/ookubo.png","options":[{"text":"手前"},{"text":"奥"}],"correct":"手前"},
-  {"quiztype":"形状判断力","question":"若いのは？","image":"images/keropen.png","options":[{"text":"A"},{"text":"B"}],"correct":"B"},
-  {"quiztype":"ドキドキ☆2択クイズ","question":"片方しか助けられない。<br>どっちを助ける？","image":"images/tinmoku.png","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
+  {"stage":"1","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime2.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"stage":"1","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","options":[{"text":"2"},{"text":"3"}],"correct":"2"},
+  {"stage":"1","quiztype":"注意力","question":"文字数が多いのは？","image":"images/ty.png","options":[{"text":"T"},{"text":"Y"}],"correct":"Y"},
+  {"stage":"1","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_left.png","options":[{"text":"左"},{"text":"右"}],"correct":"左"},
+  {"stage":"1","quiztype":"形状判断力","question":"若いのは？","image":"images/otama.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
+  {"stage":"2","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime3.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"stage":"2","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num2.png","options":[{"text":"1"},{"text":"2"}],"correct":"1"},
+  {"stage":"2","quiztype":"問題解決力","question":"片方しか助けられない。<br>どっちを助ける？","image":"","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
+  {"stage":"3","quiztype":"注意力","question":"文字数が多いのは？","image":"images/moji2.png","options":[{"text":"S"},{"text":"A"}],"correct":"S"},
+  {"stage":"3","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_right.png","options":[{"text":"左"},{"text":"右"}],"correct":"右"},
+  {"stage":"3","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"stage":"3","quiztype":"空間認識力","question":"進行方向は？","image":"images/ookubo.png","options":[{"text":"手前"},{"text":"奥"}],"correct":"手前"},
+  {"stage":"3","quiztype":"形状判断力","question":"若いのは？","image":"images/keropen.png","options":[{"text":"A"},{"text":"B"}],"correct":"B"},
+  {"stage":"4","quiztype":"ドキドキ☆2択クイズ","question":"片方しか助けられない。<br>どっちを助ける？","image":"images/tinmoku.png","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
+  {"stage":"4","quiztype":"判断力","question":"長男は？<br>A　　　　B","image":"images/mario.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
+  {"stage":"","quiztype":"記憶力","question":"今何問目？","image":"","options":[{"text":"15"},{"text":"16"}],"correct":"15"},
+  {"stage":"","quiztype":"最終確認","question":"あなたは吉田達彦ですね？","image":"","options":[{"text":"はい"},{"text":"はい"}],"correct":"はい"},
 ];
+
 
 // JSON内のすべての画像URLを抽出してプリロード
 window.addEventListener("load", () => {
@@ -659,14 +637,135 @@ function showCutIn(text, isCorrect) {
 
   // 進捗を更新
   const segments = document.querySelectorAll('.stage-progress-segment');
-  if (segments[currentIndex]) segments[currentIndex].classList.add('filled');
+  if (segments[stageQuizIdx]) segments[stageQuizIdx].classList.add('filled');
 
   cut.addEventListener('animationend', () => {
     cut.remove();
     currentIndex++;
-    if (currentIndex < quizData.length) showQuestion();
-    else endQuiz();
+    stageQuizIdx++;
+    
+    if (currentIndex < quizData.length){
+      if (stageQuizIdx >= nowStage.count){
+        stageCount++;
+        nowStage = stageData[stageCount];
+        showNextStage();
+      }else{
+        showQuestion();
+      }
+    }else{
+      endQuiz();
+    }
   });
+}
+
+
+// --- ステージ情報 ---
+const stageData=[
+  {"stage":"1", "count":"5", "loadMsg":"問題を作成しています…", "startMsg":"まずは肩慣らしです。"},
+  {"stage":"2", "count":"5", "loadMsg":"あなたの回答を解析しています…", "startMsg":"少しレベルを上げますよ！"},
+  {"stage":"3", "count":"5", "loadMsg":"あなたの理解を深めています…", "startMsg":"やりますね！さらにレベルアップ！"},
+  {"stage":"4", "count":"5", "loadMsg":"完全にあなたを理解しました…", "startMsg":"最終ステージです！"},
+]
+
+var stageCount = 0;
+var stageQuizIdx = 0;
+var nowStage = stageData[0];
+
+
+function createProgressSegments(segmentCount) {
+  const stageProgress = document.querySelector('.stage-progress');
+  stageProgress.innerHTML = ''; // 既存をクリア
+  
+  for (let i = 0; i < segmentCount; i++) {
+    const seg = document.createElement('div');
+    seg.className = 'stage-progress-segment';
+    stageProgress.appendChild(seg);
+  }
+}
+
+const stageOverlay = document.getElementById('stage-overlay');
+const stageText = document.getElementById('stage-title');
+const stageProgress = document.getElementById('stageProgress');
+  
+function showNextStage(){
+
+  document.getElementById('quiz-header').style.display = "none";
+  document.getElementById('question').style.display = "none";
+  document.getElementById('timer-container').style.display = "none";
+  document.getElementById('buttons').style.display = "none";
+  
+  document.getElementById('loadingBar').style.display = "";
+  stageOverlay.style.opacity='1';
+  stageOverlay.style.display='';
+  stageText.style.display='none';
+  
+  stageQuizIdx=0;
+  
+  stageText.textContent = `STAGE ` + nowStage.stage;
+  
+  document.getElementById('stage-msg').textContent = nowStage.loadMsg;
+  
+  stageProgress.style.width = "0%";
+
+  stageOverlay.style.display = "flex";
+  // 疑似的に5秒で進捗バーを満タンに
+  setTimeout(()=>{ stageProgress.style.transition = "width 5s linear"; stageProgress.style.width = "100%"; },50);
+
+  setTimeout(()=>{
+  
+    createProgressSegments(nowStage.count);
+    document.getElementById('stage-info-title').textContent = `STAGE ` + nowStage.stage;
+  
+    stageText.style.display='';
+    document.getElementById('loadingBar').style.display = "none";
+    document.getElementById('stage-msg').textContent = nowStage.startMsg;
+    stageProgress.style.transition = "none";
+    stageProgress.style.width = "0%";
+    countNum.style.display = "";
+      
+    setTimeout(()=>{
+      
+      count=3
+      showCountdown();
+    },2000);
+  },5500); // 5秒＋少し余裕
+}
+createProgressSegments(1);
+showNextStage();
+
+// --- カウントダウン処理 ---
+const overlay=document.getElementById('countdown-overlay');
+const countNum=document.getElementById('countNum');
+const container=document.querySelector('.container');
+let count=3;
+
+function showCountdown(){
+  countNum.textContent=count;
+  countNum.style.animation='moveUp 1s ease';
+  countNum.addEventListener('animationend',()=>{
+    countNum.style.animation='none';
+    countNum.style.opacity='0';
+    count--;
+    if(count>0){
+      setTimeout(showCountdown,150);
+    }else{
+    
+      stageOverlay.style.transition='opacity .5s';
+      stageOverlay.style.opacity='0';
+      setTimeout(()=>{
+        stageOverlay.style.display='none';
+  
+        countNum.style.display = "none";
+      
+        document.getElementById('quiz-header').style.display = "";
+        document.getElementById('question').style.display = "";
+        document.getElementById('timer-container').style.display = "";
+        document.getElementById('buttons').style.display = "";
+        
+        showQuestion();
+      },500);
+    }
+  },{once:true});
 }
 
 
