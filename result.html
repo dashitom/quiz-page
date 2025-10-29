@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>脳年齢表示</title>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+  color: #000;
+  position: relative;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+/* 背景格子 */
+body::before {
+  content: "";
+  position: absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  width: 80%;
+  margin: 5vh auto;
+  z-index: 1;
+}
+
+.line1 {
+  font-size: 2em;
+  font-weight: bold;
+  text-align: left;
+  opacity: 0;
+  animation: showLine 0.01s forwards 1s;
+}
+.line2 {
+  font-size: 6em;
+  font-weight: bold;
+  text-align: left;
+  margin-top:-3vh;
+  opacity: 0;
+}
+.line3 {
+  font-size: 2em;
+  font-weight: bold;
+  text-align: left;
+  color: #c00;
+  opacity: 0;
+}
+.line4 {
+  font-size: 1em;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 5vh;
+  opacity: 0;
+}
+
+/* 画像ボックス */
+.face-container {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  top: 10vh;
+  right: -5vw;
+  perspective: 800px;
+}
+.face {
+  width: 30vw;
+  height: 30vw;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0;
+  animation: showLine 0.01s forwards 1s, float 2s ease-in-out infinite;
+  transform-style: preserve-3d;
+  display:block;
+  margin:0 auto;
+    /* ▼ 以下2行を変更・追加 */
+  transition: transform 0.25s ease; /* 幅ではなくtransformで回転演出 */
+  transform-origin: center center;   /* 中央軸で回転 */
+}
+
+/* アニメーション */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+@keyframes showLine {
+  to { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="line1">あなたの脳年齢は</div>
+  <div class="line2">60才</div>
+  <div class="line3">還暦おめでとう！</div>
+  <div class="face-container">
+    <img src="kawashima.png" alt="川島教授" class="face" id="face">
+  </div>
+  <div class="line4">
+    SCORE:XXXX<br><br>
+    <<演出含めてまだまだ要検討！>><br><br>
+    ゲームディレクター：TATSUHIKO<br>
+    Webデザイン・開発：TOMOHIRO<br>
+  </div>
+</div>
+
+<script>
+const face = document.getElementById('face');
+const line2 = document.querySelector('.line2');
+const line3 = document.querySelector('.line3');
+const line4 = document.querySelector('.line4');
+
+// ① 3秒後：横回転開始（裏向き）
+setTimeout(() => {
+  face.style.transition = "transform 0.25s ease";
+  face.style.transform = "translateY(0) scaleX(0)";
+}, 3000);
+
+// ② 回転中に画像差し替え → 正面へ戻す
+setTimeout(() => {
+  face.src = "pico.png"; // 2枚目
+  face.style.transform = "translateY(0) scaleX(1)";
+}, 3250);
+
+// ③ 2秒ふわふわ後、60才を表示
+setTimeout(() => {
+  line2.style.animation = "showLine 0.01s forwards";
+}, 5500);
+
+// ④ 1秒後「還暦おめでとう！」表示
+setTimeout(() => {
+  line3.style.animation = "showLine 0.5s forwards";
+}, 6500);
+
+// ⑤ 直後に画像差替＋ふわふわ速度アップ
+setTimeout(() => {
+  //face.src = "pico.png"; // 3枚目
+  face.style.animation = "showLine 0s forwards, float 0.5s ease-in-out infinite";
+}, 6500);
+
+setTimeout(() => {
+  line4.style.animation = "showLine 0.5s forwards";
+}, 8500);
+</script>
+</body>
+</html>
