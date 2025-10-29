@@ -72,19 +72,17 @@ body::before {
   right: -5vw;
   perspective: 800px;
 }
+.float-wrap {
+  animation: float 2s ease-in-out infinite;
+}
 .face {
   width: 30vw;
   height: 30vw;
   object-fit: contain;
-  object-position: center;
-  opacity: 0;
-  animation: showLine 0.01s forwards 1s, float 2s ease-in-out infinite;
-  transform-style: preserve-3d;
+  opacity: 1;
   display:block;
   margin:0 auto;
-    /* ▼ 以下2行を変更・追加 */
-  transition: transform 0.25s ease; /* 幅ではなくtransformで回転演出 */
-  transform-origin: center center;   /* 中央軸で回転 */
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
 /* アニメーション */
@@ -103,7 +101,9 @@ body::before {
   <div class="line2">60才</div>
   <div class="line3">還暦おめでとう！</div>
   <div class="face-container">
-    <img src="kawashima.png" alt="川島教授" class="face" id="face">
+    <div class="float-wrap">
+      <img src="kawashima.png" class="face" id="face" style="display:none;">
+    </div>
   </div>
   <div class="line4">
     SCORE:XXXX<br><br>
@@ -119,17 +119,35 @@ const line2 = document.querySelector('.line2');
 const line3 = document.querySelector('.line3');
 const line4 = document.querySelector('.line4');
 
-// ① 3秒後：横回転開始（裏向き）
-setTimeout(() => {
-  face.style.transition = "transform 0.25s ease";
-  face.style.transform = "translateY(0) scaleX(0)";
-}, 3000);
+// ふわふわ停止
+function stopFloat() {
+  face.style.animationPlayState = "paused";
+}
 
-// ② 回転中に画像差し替え → 正面へ戻す
+// ふわふわ再開
+function startFloat() {
+  face.style.animation = "float 2s ease-in-out infinite";
+}
+
+setTimeout(() => {
+  face.style.display = '';
+}, 1000);
+
+// ① 3秒後：上昇開始
+setTimeout(() => {
+  stopFloat();
+  face.src = "kawashima2.png";
+  face.style.transition = "transform 1s ease-in";
+  face.style.opacity = "1";
+  face.style.transform = "translateY(-40vh)";
+}, 4000);
+
+// ② 画像差し替え → 下に落ちる
 setTimeout(() => {
   face.src = "pico.png"; // 2枚目
-  face.style.transform = "translateY(0) scaleX(1)";
-}, 3250);
+  face.style.transition = "transform 0.5s ease-out";
+  face.style.transform = "translateY(0)";
+}, 5000);
 
 // ③ 2秒ふわふわ後、60才を表示
 setTimeout(() => {
@@ -144,12 +162,62 @@ setTimeout(() => {
 // ⑤ 直後に画像差替＋ふわふわ速度アップ
 setTimeout(() => {
   //face.src = "pico.png"; // 3枚目
+  startFloat();
   face.style.animation = "showLine 0s forwards, float 0.5s ease-in-out infinite";
 }, 6500);
 
 setTimeout(() => {
   line4.style.animation = "showLine 0.5s forwards";
 }, 8500);
+
+
+//紙吹雪
+function createConfettiPiece() {
+  const confetti = document.createElement('div');
+  const size = Math.random() * 8 + 4; // 大きさ4〜12px
+  confetti.style.position = 'fixed';
+  confetti.style.top = '-10px';
+  confetti.style.left = Math.random() * 100 + 'vw';
+  confetti.style.width = size + 'px';
+  confetti.style.height = size * 0.4 + 'px';
+  confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
+  confetti.style.opacity = Math.random() * 0.8 + 0.2;
+  confetti.style.borderRadius = '2px';
+  confetti.style.zIndex = 9999;
+  confetti.style.pointerEvents = 'none';
+
+  // 初期回転
+  const rotation = Math.random() * 360;
+  confetti.style.transform = `rotate(${rotation}deg)`;
+  document.body.appendChild(confetti);
+
+  // 落下アニメーション
+  const fallDuration = Math.random() * 3 + 4; // 4〜7秒で落下
+  const horizontalShift = Math.random() * 40 - 20; // 左右の揺れ
+
+  confetti.animate([
+    { transform: `translate(0, 0) rotate(${rotation}deg)` },
+    { transform: `translate(${horizontalShift}vw, 100vh) rotate(${rotation + 360}deg)` }
+  ], {
+    duration: fallDuration * 1000,
+    easing: 'linear',
+    fill: 'forwards'
+  });
+
+  // 終了後に削除
+  setTimeout(() => confetti.remove(), fallDuration * 1000);
+}
+
+function startConfetti() {
+  setInterval(() => {
+    for (let i = 0; i < 5; i++) createConfettiPiece();
+  }, 200); // 常時発生（0.2秒ごと）
+}
+
+// 「還暦おめでとう！」表示のタイミングで開始
+setTimeout(() => {
+  startConfetti();
+}, 6500);
 </script>
 </body>
 </html>
