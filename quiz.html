@@ -44,11 +44,6 @@ body {
   background-image: 
     repeating-linear-gradient(90deg, rgba(255,255,255,0.3) 0 1px, transparent 1px 40px),
     repeating-linear-gradient(0deg, rgba(255,255,255,0.3) 0 1px, transparent 1px 40px);
-    //repeating-conic-gradient(from 0deg,rgba(255,255,255,0.1) 0deg 90deg, transparent 90deg 360deg);
-    //conic-gradient(from 0deg at 10% 20%, rgba(255,255,255,0.1) 0 12.5%, transparent 12.5% 100%),
-    //conic-gradient(from 0deg at 60% 80%, rgba(255,255,255,0.15) 0 12.5%, transparent 12.5% 100%);
-    //radial-gradient(circle at 10% 20%, rgba(255,255,255,0.1) 4px, transparent 3px),
-    //radial-gradient(circle at 60% 80%, rgba(255,255,255,0.15) 6px, transparent 4px);
   background-size: 40px 40px, 40px 40px, 200px 200px, 300px 300px;
   animation: movePattern 50s linear infinite;
   mask-repeat: no-repeat;
@@ -222,10 +217,15 @@ body::before {
   flex-direction:column;
   justify-content:center;
   align-items:center;
+  white-space: normal;
 }
 
 .question-box img{
   max-width:25vh; max-height:25vh; margin-top:1vh; border-radius:8px;
+}
+.question-box span{
+  display: inline;
+  color:var(--color-light);
 }
 
 /* === タイマー === */
@@ -478,21 +478,21 @@ const loadingProgress=document.getElementById('loadingProgress');
 
 // --- 問題データ ---
 const quizData=[
-  {"stage":"1","quiztype":"計算力","question":"1 + 1 = ？","image":"","options":[{"text":"1"},{"text":"2"}],"correct":"2"},
+  {"stage":"1","quiztype":"計算力","question":"１＋１＝？","image":"","options":[{"text":"1"},{"text":"2"}],"correct":"2"},
   {"stage":"1","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime2.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
   {"stage":"1","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","options":[{"text":"2"},{"text":"3"}],"correct":"2"},
   {"stage":"1","quiztype":"注意力","question":"文字数が多いのは？","image":"images/ty.png","options":[{"text":"T"},{"text":"Y"}],"correct":"Y"},
-  {"stage":"1","quiztype":"注意力","question":"じゃんけんで勝ってください<br>グー","image":"","options":[{"text":"チョキ"},{"text":"パー"}],"correct":"パー"},
-  {"stage":"2","quiztype":"計算力","question":"35 - 30 = ?","image":"","options":[{"text":"5"},{"text":"6"}],"correct":"5"},
+  {"stage":"1","quiztype":"注意力","question":"じゃんけんで勝ってください<br>「グー」","image":"","options":[{"text":"チョキ"},{"text":"パー"}],"correct":"パー"},
+  {"stage":"2","quiztype":"計算力","question":"３５－３０＝？","image":"","options":[{"text":"5"},{"text":"6"}],"correct":"5"},
   {"stage":"2","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime3.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
   {"stage":"2","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_left.png","options":[{"text":"左"},{"text":"右"}],"correct":"左"},
-  {"stage":"2","quiztype":"形状判断力","question":"若いのは？","image":"images/otama.png","options":[{"text":"A"},{"text":"B"}],"correct":"B"},
+  {"stage":"2","quiztype":"形状判断力","question":"若いのは？","image":"images/otama.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
   {"stage":"2","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki1.png","options":[{"text":"グー"},{"text":"パー"}],"correct":"パー"},
   {"stage":"2","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_right.png","options":[{"text":"左"},{"text":"右"}],"correct":"右"},
   {"stage":"2","quiztype":"問題解決力","question":"片方しか助けられない。<br>どっちを助ける？","image":"","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
   {"stage":"3","quiztype":"記憶力","question":"今何問目？","image":"","options":[{"text":"13"},{"text":"12"}],"correct":"13"},
   {"stage":"3","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num2.png","options":[{"text":"1"},{"text":"2"}],"correct":"1"},
-  {"stage":"3","quiztype":"形状判断力","question":"若いのは？","image":"images/keropen.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
+  {"stage":"3","quiztype":"形状判断力","question":"若いのは？","image":"images/keropen.png","options":[{"text":"A"},{"text":"B"}],"correct":"B"},
   {"stage":"3","quiztype":"注意力","question":"文字数が多いのは？","image":"images/moji2.png","options":[{"text":"S"},{"text":"A"}],"correct":"S"},
   {"stage":"3","quiztype":"判断力","question":"長男は？","image":"images/mario.png","options":[{"text":"左"},{"text":"右"}],"correct":"左"},
   {"stage":"3","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},

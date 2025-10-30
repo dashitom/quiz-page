@@ -115,20 +115,60 @@ body::before {
 
 <script>
 
-// 画像プリロード
-window.addEventListener("load", () => {
-  const imageUrls = ["kawashima2.png", "pico.png"]
-
-  imageUrls.forEach(src => {
-    const img = new Image();
-    img.src = src;
-  });
-});
-
+const imageUrls = ["kawashima.png", "kawashima2.png", "pico.png"];
 const face = document.getElementById('face');
 const line2 = document.querySelector('.line2');
 const line3 = document.querySelector('.line3');
 const line4 = document.querySelector('.line4');
+
+// すべての画像がロード完了してからアニメーション開始
+Promise.all(imageUrls.map(src => new Promise(resolve => {
+  const img = new Image();
+  img.onload = resolve;
+  img.onerror = resolve; // 失敗しても進む
+  img.src = src;
+}))).then(() => {
+  face.style.display = '';
+  face.src = "kawashima.png";
+  
+  // ① 3秒後：上昇開始
+  setTimeout(() => {
+    stopFloat();
+    
+    face.src = "kawashima2.png";
+    // 画像が読み込まれたら上昇を開始
+    face.onload = () => {
+      face.style.transition = "transform 1s ease-in";
+      face.style.opacity = "1";
+      face.style.transform = "translateY(-40vh)";
+    };
+    
+  }, 3000);
+
+  // ② 画像差し替え → 下に落ちる
+  setTimeout(() => {
+    face.src = "pico.png";
+    face.onload = () => {
+      face.style.transition = "transform 0.3s ease-out";
+      face.style.transform = "translateY(0)";
+    }
+  }, 5000);
+
+  // ③ 60才を表示
+  setTimeout(() => { line2.style.animation = "showLine 0.01s forwards"; }, 6000);
+
+  // ④ 「還暦おめでとう！」表示
+  setTimeout(() => { line3.style.animation = "showLine 0.5s forwards"; startConfetti(); }, 7000);
+
+  // ⑤ ふわふわ再開
+  setTimeout(() => {
+    startFloat();
+    face.style.animation = "showLine 0s forwards, float 0.5s ease-in-out infinite";
+  }, 7000);
+
+  // ⑥ 最後のテキスト
+  setTimeout(() => { line4.style.animation = "showLine 0.5s forwards"; }, 8000);
+});
 
 // ふわふわ停止
 function stopFloat() {
@@ -139,47 +179,6 @@ function stopFloat() {
 function startFloat() {
   face.style.animation = "float 2s ease-in-out infinite";
 }
-
-setTimeout(() => {
-  face.style.display = '';
-}, 1000);
-
-// ① 3秒後：上昇開始
-setTimeout(() => {
-  stopFloat();
-  face.src = "kawashima2.png";
-  face.style.transition = "transform 1s ease-in";
-  face.style.opacity = "1";
-  face.style.transform = "translateY(-40vh)";
-}, 4000);
-
-// ② 画像差し替え → 下に落ちる
-setTimeout(() => {
-  face.src = "pico.png"; // 2枚目
-  face.style.transition = "transform 0.3s ease-out";
-  face.style.transform = "translateY(0)";
-}, 5000);
-
-// ③ 落下直後、60才を表示
-setTimeout(() => {
-  line2.style.animation = "showLine 0.01s forwards";
-}, 5300);
-
-// ④ 1秒後「還暦おめでとう！」表示
-setTimeout(() => {
-  line3.style.animation = "showLine 0.5s forwards";
-}, 6500);
-
-// ⑤ 直後に画像差替＋ふわふわ速度アップ
-setTimeout(() => {
-  //face.src = "pico.png"; // 3枚目
-  startFloat();
-  face.style.animation = "showLine 0s forwards, float 0.5s ease-in-out infinite";
-}, 6500);
-
-setTimeout(() => {
-  line4.style.animation = "showLine 0.5s forwards";
-}, 8500);
 
 
 //紙吹雪
@@ -228,7 +227,7 @@ function startConfetti() {
 // 「還暦おめでとう！」表示のタイミングで開始
 setTimeout(() => {
   startConfetti();
-}, 6500);
+}, 7000);
 </script>
 </body>
 </html>
