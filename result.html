@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>脳年齢表示</title>
+<title>リザルト</title>
 <style>
 body {
   margin: 0;
@@ -41,6 +41,8 @@ body::before {
   opacity: 0;
   animation: showLine 0.01s forwards 1s;
 }
+.strike.exec { color:#aaa;text-decoration: line-through; text-decoration-thickness: 5px; }
+
 .line2 {
   font-size: 6em;
   font-weight: bold;
@@ -93,11 +95,21 @@ body::before {
 @keyframes showLine {
   to { opacity: 1; }
 }
+
+.score{font-size:2.5em;font-weight:bold;margin-bottom:0.6em;}
+.note{font-size:0.95em;margin-bottom:1em;}
+.staff{margin-top:0.5em;}
+.member{margin-bottom:0.8em;}
+.role{font-size:0.85em;margin-bottom:0.25em;}
+.row{display:flex;align-items:center;gap:0.6em;}
+.icon{width:35px;height:35px;border-radius:50%;object-fit:cover;}
+.name{padding-left:0.5em;font-weight:bold;font-size:1.3em;}
+
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="line1">あなたの脳年齢は</div>
+  <div class="line1">あなたの<span class="strike">脳</span>年齢は</div>
   <div class="line2">60才</div>
   <div class="line3">還暦おめでとう！</div>
   <div class="face-container">
@@ -105,18 +117,34 @@ body::before {
       <img src="kawashima.png" class="face" id="face" style="display:none;">
     </div>
   </div>
-  <div class="line4">
-    SCORE:XXXX<br><br>
-    <<演出含めてまだまだ要検討！>><br><br>
-    ゲームディレクター：TATSUHIKO<br>
-    Webデザイン・開発：TOMOHIRO<br>
+<div class="line4">
+  <div class="score">SCORE: 12345</div>
+  <br>
+  <div class="staff">
+    <div class="member">
+      <div class="role">ゲームディレクター：</div>
+      <div class="row">
+        <img src="icon1.png" class="icon" alt="">
+        <div class="name">吉田　達彦</div>
+      </div>
+    </div>
+
+    <div class="member">
+      <div class="role">Web開発：</div>
+      <div class="row">
+        <img src="icon2.png" class="icon" alt="">
+        <div class="name">吉田　朋弘</div>
+      </div>
+    </div>
   </div>
+</div>
 </div>
 
 <script>
 
 const imageUrls = ["kawashima.png", "kawashima2.png", "pico.png"];
 const face = document.getElementById('face');
+const strike = document.querySelector('.strike');
 const line2 = document.querySelector('.line2');
 const line3 = document.querySelector('.line3');
 const line4 = document.querySelector('.line4');
@@ -155,7 +183,10 @@ Promise.all(imageUrls.map(src => new Promise(resolve => {
   }, 5000);
 
   // ③ 60才を表示
-  setTimeout(() => { line2.style.animation = "showLine 0.01s forwards"; }, 6000);
+  setTimeout(() => {
+    line2.style.animation = "showLine 0.01s forwards";
+    strike.classList.add("exec");
+  }, 6000);
 
   // ④ 「還暦おめでとう！」表示
   setTimeout(() => { line3.style.animation = "showLine 0.5s forwards"; startConfetti(); }, 7000);
