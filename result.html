@@ -118,7 +118,7 @@ body::before {
     </div>
   </div>
 <div class="line4">
-  <div class="score">SCORE: 12345</div>
+  <div class="score">SCORE <Span id="score-value">12345</span></div>
   <br>
   <div class="staff">
     <div class="member">
@@ -198,7 +198,12 @@ Promise.all(imageUrls.map(src => new Promise(resolve => {
   }, 7000);
 
   // ⑥ 最後のテキスト
-  setTimeout(() => { line4.style.animation = "showLine 0.5s forwards"; }, 8000);
+  setTimeout(() => {
+    const hash = window.location.hash;
+    const scoreValue = hash.replace('#score=', '');
+    document.getElementById('score-value').textContent = scoreValue;
+    line4.style.animation = "showLine 0.5s forwards";
+  }, 8000);
 });
 
 // ふわふわ停止

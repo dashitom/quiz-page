@@ -6,6 +6,42 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>クイズ</title>
+<script>
+// --- 問題データ ---
+const quizData=[
+  {"stage":"1","quiztype":"計算力","question":"１＋１＝？","image":"","image2":"images/tinmoku.png","image2time":"5000","options":[{"text":"1"},{"text":"2"}],"correct":"2"},
+  {"stage":"1","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime2.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"stage":"1","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","options":[{"text":"2"},{"text":"3"}],"correct":"2"},
+  {"stage":"1","quiztype":"注意力","question":"文字数が多いのは？","image":"images/ty.png","options":[{"text":"T"},{"text":"Y"}],"correct":"Y"},
+  {"stage":"1","quiztype":"注意力","question":"じゃんけんで勝ってください<br>「グー」","image":"","options":[{"text":"チョキ"},{"text":"パー"}],"correct":"パー"},
+  {"stage":"2","quiztype":"計算力","question":"３５－３０＝？","image":"","options":[{"text":"5"},{"text":"6"}],"correct":"5"},
+  {"stage":"2","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime3.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"stage":"2","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_left.png","options":[{"text":"左"},{"text":"右"}],"correct":"左"},
+  {"stage":"2","quiztype":"形状判断力","question":"若いのは？","image":"images/otama.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
+  {"stage":"2","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki1.png","options":[{"text":"グー"},{"text":"パー"}],"correct":"パー"},
+  {"stage":"2","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_right.png","options":[{"text":"左"},{"text":"右"}],"correct":"右"},
+  {"stage":"2","quiztype":"問題解決力","question":"片方しか助けられない。<br>どっちを助ける？","image":"","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
+  {"stage":"3","quiztype":"記憶力","question":"今何問目？","image":"","options":[{"text":"13"},{"text":"12"}],"correct":"13"},
+  {"stage":"3","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num2.png","options":[{"text":"1"},{"text":"2"}],"correct":"1"},
+  {"stage":"3","quiztype":"形状判断力","question":"若いのは？","image":"images/keropen.png","options":[{"text":"A"},{"text":"B"}],"correct":"B"},
+  {"stage":"3","quiztype":"注意力","question":"文字数が多いのは？","image":"images/moji2.png","options":[{"text":"S"},{"text":"A"}],"correct":"S"},
+  {"stage":"3","quiztype":"判断力","question":"長男は？","image":"images/mario.png","options":[{"text":"左"},{"text":"右"}],"correct":"左"},
+  {"stage":"3","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
+  {"stage":"4","quiztype":"空間認識力","question":"進行方向は？","image":"images/ookubo.png","options":[{"text":"手前"},{"text":"奥"}],"correct":"手前"},
+  {"stage":"4","quiztype":"ドキドキ☆2択クイズ","question":"片方しか助けられない。<br>どっちを助ける？","image":"images/tinmoku.png","options":[{"text":"娘"},{"text":"息子"}],"correct":null},
+  {"stage":"4","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki2.png","options":[{"text":"グー"},{"text":"パー"}],"correct":"パー"},
+  {"stage":"4","quiztype":"確認","question":"あなたは30才以上ですか？","image":"","options":[{"text":"はい"},{"text":"いいえ"}],"correct":"はい"},
+  {"stage":"4","quiztype":"最終確認","question":"あなたは吉田達彦ですね？","image":"","options":[{"text":"はい"},{"text":"はい"}],"correct":"はい"},
+];
+
+// --- ステージ情報 ---
+const stageData=[
+  {"stage":"1", "count":"5", "loadMsg":"問題を作成しています…", "startMsg":"まずは肩慣らしです。"},
+  {"stage":"2", "count":"7", "loadMsg":"あなたの回答を分析しています…", "startMsg":"少しレベルを上げます！"},
+  {"stage":"3", "count":"6", "loadMsg":"あなたにあわせて調整しています…", "startMsg":"やりますね！さらにレベルアップ！"},
+  {"stage":"4", "count":"5", "loadMsg":"完全にあなたを理解しました…", "startMsg":"レベルMAX！最終ステージです！"},
+]
+</script>
 <style>
 :root {
   --color-dark: #002060;
@@ -488,37 +524,6 @@ button img{
 const loading=document.getElementById('loading-overlay');
 const loadingProgress=document.getElementById('loadingProgress');
 
-
-
-
-// --- 問題データ ---
-const quizData=[
-  {"stage":"1","quiztype":"計算力","question":"１＋１＝？","image":"","options":[{"text":"1"},{"text":"2"}],"correct":"2"},
-  {"stage":"1","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime2.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
-  {"stage":"1","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","options":[{"text":"2"},{"text":"3"}],"correct":"2"},
-  {"stage":"1","quiztype":"注意力","question":"文字数が多いのは？","image":"images/ty.png","options":[{"text":"T"},{"text":"Y"}],"correct":"Y"},
-  {"stage":"1","quiztype":"注意力","question":"じゃんけんで勝ってください<br>「グー」","image":"","options":[{"text":"チョキ"},{"text":"パー"}],"correct":"パー"},
-  {"stage":"2","quiztype":"計算力","question":"３５－３０＝？","image":"","options":[{"text":"5"},{"text":"6"}],"correct":"5"},
-  {"stage":"2","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime3.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
-  {"stage":"2","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_left.png","options":[{"text":"左"},{"text":"右"}],"correct":"左"},
-  {"stage":"2","quiztype":"形状判断力","question":"若いのは？","image":"images/otama.png","options":[{"text":"A"},{"text":"B"}],"correct":"A"},
-  {"stage":"2","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki1.png","options":[{"text":"グー"},{"text":"パー"}],"correct":"パー"},
-  {"stage":"2","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_right.png","options":[{"text":"左"},{"text":"右"}],"correct":"右"},
-  {"stage":"2","quiztype":"問題解決力","question":"片方しか助けられない。<br>どっちを助ける？","image":"","options":[{"text":"母親"},{"text":"恋人"}],"correct":null},
-  {"stage":"3","quiztype":"記憶力","question":"今何問目？","image":"","options":[{"text":"13"},{"text":"12"}],"correct":"13"},
-  {"stage":"3","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num2.png","options":[{"text":"1"},{"text":"2"}],"correct":"1"},
-  {"stage":"3","quiztype":"形状判断力","question":"若いのは？","image":"images/keropen.png","options":[{"text":"A"},{"text":"B"}],"correct":"B"},
-  {"stage":"3","quiztype":"注意力","question":"文字数が多いのは？","image":"images/moji2.png","options":[{"text":"S"},{"text":"A"}],"correct":"S"},
-  {"stage":"3","quiztype":"判断力","question":"長男は？","image":"images/mario.png","options":[{"text":"左"},{"text":"右"}],"correct":"左"},
-  {"stage":"3","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/slime.png","options":[{"text":"黒"},{"text":"青"}],"correct":"青"},
-  {"stage":"4","quiztype":"空間認識力","question":"進行方向は？","image":"images/ookubo.png","options":[{"text":"手前"},{"text":"奥"}],"correct":"手前"},
-  {"stage":"4","quiztype":"ドキドキ☆2択クイズ","question":"片方しか助けられない。<br>どっちを助ける？","image":"images/tinmoku.png","options":[{"text":"娘"},{"text":"息子"}],"correct":null},
-  {"stage":"4","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki2.png","options":[{"text":"グー"},{"text":"パー"}],"correct":"パー"},
-  {"stage":"4","quiztype":"確認","question":"あなたは30才以上ですか？","image":"","options":[{"text":"はい"},{"text":"いいえ"}],"correct":"はい"},
-  {"stage":"4","quiztype":"最終確認","question":"あなたは吉田達彦ですね？","image":"","options":[{"text":"はい"},{"text":"はい"}],"correct":"はい"},
-];
-
-
 // JSON内のすべての画像URLを抽出してプリロード
 window.addEventListener("load", () => {
   const imageUrls = new Set();
@@ -572,12 +577,17 @@ function stopTimer(){
   timerProgress.style.width=width;
 }
 
+//2枚目の画像切替用タイマー
+let imageSwitchTimer;
 
 function showQuestion(){
   answered=false;
+  
+  clearTimeout(imageSwitchTimer);
+  
   const q=quizData[currentIndex];
   quizNo.innerHTML="Q" + (currentIndex + 1) + "　" + q.quiztype;
-  questionBox.innerHTML=q.question + (q.image?`<br><img src="${q.image}">`:"");
+  questionBox.innerHTML=q.question + (q.image?`<br><img src="${q.image}" class="quiz-img">`:"");
   buttonsDiv.innerHTML="";
   q.options.forEach(opt=>{
     const btn=document.createElement('button');
@@ -587,47 +597,18 @@ function showQuestion(){
   });
   initButtonTouchEvents();
   startTimer();
+  
+  if (q.image2 && q.image2time) {
+    const switchMs = q.image2time;
+    imageSwitchTimer = setTimeout(() => {
+      const img = questionBox.querySelector('.quiz-img');
+      if (img && !answered) {
+        img.src = q.image2;
+      }
+    }, switchMs);
+  }
 }
 
-// ==== スマホ向けボタン押下制御 ====
-function initButtonTouchEvents() {
-  const buttons = document.querySelectorAll('.buttons button');
-  buttons.forEach(btn => {
-    let isInside = false;
-
-    btn.addEventListener('touchstart', () => {
-      isInside = true;
-      btn.classList.add('pressed');
-    });
-
-    btn.addEventListener('touchmove', e => {
-      const touch = e.touches[0];
-      const rect = btn.getBoundingClientRect();
-      const inside =
-        touch.clientX >= rect.left &&
-        touch.clientX <= rect.right &&
-        touch.clientY >= rect.top &&
-        touch.clientY <= rect.bottom;
-      if (inside && !isInside) {
-        btn.classList.add('pressed');
-        isInside = true;
-      } else if (!inside && isInside) {
-        btn.classList.remove('pressed');
-        isInside = false;
-      }
-    });
-
-    btn.addEventListener('touchend', () => {
-      if (isInside) {
-        //btn.classList.remove('pressed');
-        btn.click();
-      } else {
-        btn.classList.remove('pressed');
-      }
-      isInside = false;
-    });
-  });
-}
 
 function handleAnswer(selected){
   if(answered) return;
@@ -697,15 +678,6 @@ function showCutIn(text, isCorrect) {
   });
 }
 
-
-// --- ステージ情報 ---
-const stageData=[
-  {"stage":"1", "count":"5", "loadMsg":"問題を作成しています…", "startMsg":"まずは肩慣らしです。"},
-  {"stage":"2", "count":"7", "loadMsg":"あなたの回答を分析しています…", "startMsg":"少しレベルを上げます！"},
-  {"stage":"3", "count":"6", "loadMsg":"あなたにあわせて調整しています…", "startMsg":"やりますね！さらにレベルアップ！"},
-  {"stage":"4", "count":"5", "loadMsg":"完全にあなたを理解しました…", "startMsg":"レベルMAX！最終ステージです！"},
-]
-
 var stageCount = 0;
 var stageQuizIdx = 0;
 var nowStage = stageData[0];
@@ -749,30 +721,45 @@ function showNextStage(){
   document.getElementById('loading-msg').textContent = nowStage.loadMsg;
   
   stageProgress.style.width = "0%";
-
   stageOverlay.style.display = "flex";
-  // 疑似的に5秒で進捗バーを満タンに
-  setTimeout(()=>{ stageProgress.style.transition = "width 5s linear"; stageProgress.style.width = "100%"; },50);
 
-  setTimeout(()=>{
-  
-    createProgressSegments(nowStage.count);
-    document.getElementById('stage-info-title').textContent = `STAGE ` + nowStage.stage;
+  let progress = 0;
+  stageProgress.style.transition = "none";
+  stageProgress.style.width = "0%";
 
-    stageOverlayTitle.style.display = "";
-    stageOverlayLoading.style.display = "none";
-  
-    stageText.style.display='';
-    document.getElementById('stage-msg').textContent = nowStage.startMsg;
-    stageProgress.style.transition = "none";
-    stageProgress.style.width = "0%";
+  const timer = setInterval(() => {
+    // ランダムに進行量を変える（1/2は進行なし、1/2は0～9％）
+    var upPt = Math.random() * 18 - 9;
+    if(upPt < 0) upPt = 0;
+    progress += upPt;
+    if (progress >= 100) progress = 100;
+
+    // 更新のたびに短いトランジションで滑らかに
+    stageProgress.style.transition = "width 0.2s ease-out";
+    stageProgress.style.width = progress + "%";
+
+    // 100%に到達したら完了処理
+    if (progress >= 100) {
+      clearInterval(timer);
       
-    setTimeout(()=>{
-      count=3
-      showCountdown();
-    },2000);
-  },5500); // 5秒＋少し余裕
+      setTimeout(() => {
+        createProgressSegments(nowStage.count);
+        document.getElementById('stage-info-title').textContent = `STAGE ` + nowStage.stage;
+        stageOverlayTitle.style.display = "";
+        stageOverlayLoading.style.display = "none";
+        stageText.style.display = '';
+        document.getElementById('stage-msg').textContent = nowStage.startMsg;
+        stageProgress.style.width = "0%";
+
+        setTimeout(() => {
+          count = 3;
+          showCountdown();
+        }, 2000);
+      }, 1000);
+    }
+  }, 100); 
 }
+
 createProgressSegments(1);
 showNextStage();
 
@@ -837,9 +824,51 @@ function endQuiz(){
   }, 100);
 
   setTimeout(() => {
-    window.location.href = 'result.html'; // 遷移先HTMLを指定
+    window.location.href = 'result.html#score=' + score; // 遷移先HTMLを指定
   }, 3500);
 }
+
+
+// ==== スマホ向けボタン押下制御 ====
+function initButtonTouchEvents() {
+  const buttons = document.querySelectorAll('.buttons button');
+  buttons.forEach(btn => {
+    let isInside = false;
+
+    btn.addEventListener('touchstart', () => {
+      isInside = true;
+      btn.classList.add('pressed');
+    });
+
+    btn.addEventListener('touchmove', e => {
+      const touch = e.touches[0];
+      const rect = btn.getBoundingClientRect();
+      const inside =
+        touch.clientX >= rect.left &&
+        touch.clientX <= rect.right &&
+        touch.clientY >= rect.top &&
+        touch.clientY <= rect.bottom;
+      if (inside && !isInside) {
+        btn.classList.add('pressed');
+        isInside = true;
+      } else if (!inside && isInside) {
+        btn.classList.remove('pressed');
+        isInside = false;
+      }
+    });
+
+    btn.addEventListener('touchend', () => {
+      if (isInside) {
+        //btn.classList.remove('pressed');
+        btn.click();
+      } else {
+        btn.classList.remove('pressed');
+      }
+      isInside = false;
+    });
+  });
+}
+
 </script>
 </body>
 </html>
