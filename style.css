@@ -492,7 +492,7 @@ button img{
 
 /* 消えるアニメ適用用クラス */
 .cutin.disappear {
-  animation: cutinDisappear 0.3s ease-in forwards;
+  animation: cutinDisappear 0.2s ease-in forwards;
 }
 
 

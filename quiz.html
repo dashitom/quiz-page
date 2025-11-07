@@ -291,7 +291,7 @@ function handleAnswer(selected){
   }else{
     
     cutinScoreValue.textContent = '0';
-    showCutIn(false, "BAD…");
+    showCutIn(false, "BAD..");
     setRankStyle('blue');
     
   }
@@ -345,7 +345,7 @@ function showCutIn(isCorrect, text) {
   if (segments[stageQuizIdx]) segments[stageQuizIdx].classList.add('filled');
 
   // 終了処理（帯拡大アニメーション終了後に非表示）
-  cutin.addEventListener('animationend', (e) => {
+  cutinContent.addEventListener('animationend', (e) => {
     if (e.animationName === 'bandExpand') {
   
       setTimeout(() => {
