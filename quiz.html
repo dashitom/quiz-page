@@ -345,9 +345,7 @@ function showCutIn(isCorrect, text) {
   if (segments[stageQuizIdx]) segments[stageQuizIdx].classList.add('filled');
 
   // 終了処理（帯拡大アニメーション終了後に非表示）
-  cutinContent.addEventListener('animationend', (e) => {
-    if (e.animationName === 'bandExpand') {
-  
+
       setTimeout(() => {
         cutin.classList.remove('active');
         cutin.classList.add('disappear');
@@ -367,9 +365,7 @@ function showCutIn(isCorrect, text) {
           endQuiz();
         }
         
-      }, 1000);
-    }
-  }, { once: true });
+      }, 1500);
 }
 
 var stageCount = 0;
