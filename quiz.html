@@ -42,7 +42,7 @@ const quizData=[
 const stageData=[
   {"stage":"1", "count":"6", "loadMsg":"問題を作成しています…", "startMsg":"まずは肩慣らしです。"},
   {"stage":"2", "count":"8", "loadMsg":"あなたの回答を分析しています…", "startMsg":"少しレベルを上げます！"},
-  {"stage":"3", "count":"6", "loadMsg":"あなたにあわせて調整しています…", "startMsg":"やりますね！さらにレベルアップ！"},
+  {"stage":"3", "count":"7", "loadMsg":"あなたにあわせて調整しています…", "startMsg":"やりますね！さらにレベルアップ！"},
   {"stage":"4", "count":"5", "loadMsg":"完全にあなたを理解しました…", "startMsg":"レベルMAX！最終ステージです！"},
 ]
 </script>
@@ -53,13 +53,13 @@ const stageData=[
 <svg id="rankSvg" >
   <defs>
     <!-- 各グラデーション定義 -->
-  <linearGradient id="pinkgold" x1="0%" y1="0%" x2="0%" y2="100%">
-    <stop offset="0%" stop-color="#ffe6f2"/>
-    <stop offset="25%" stop-color="#ffb3d9"/>
-    <stop offset="50%" stop-color="#ff99cc"/>
-    <stop offset="75%" stop-color="#ff66b3"/>
-    <stop offset="100%" stop-color="#ffd6e6"/>
-  </linearGradient>
+    <linearGradient id="pinkgold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffe6f2"/>
+      <stop offset="25%" stop-color="#ffb3d9"/>
+      <stop offset="50%" stop-color="#ff99cc"/>
+      <stop offset="75%" stop-color="#ff66b3"/>
+      <stop offset="100%" stop-color="#ffd6e6"/>
+    </linearGradient>
   
     <linearGradient id="rainbow" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#ff8080"/>
@@ -92,14 +92,18 @@ const stageData=[
       <stop offset="100%" stop-color="#ffcc99"/>
     </linearGradient>
     
-  <linearGradient id="blue" x1="0%" y1="0%" x2="0%" y2="100%">
-    <stop offset="0%" stop-color="#e0f7ff"/>
-    <stop offset="30%" stop-color="#66ccff"/>
-    <stop offset="60%" stop-color="#3399ff"/>
-    <stop offset="100%" stop-color="#0066cc"/>
-  </linearGradient>
+    <linearGradient id="blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e0f7ff"/>
+      <stop offset="30%" stop-color="#66ccff"/>
+      <stop offset="60%" stop-color="#3399ff"/>
+      <stop offset="100%" stop-color="#0066cc"/>
+    </linearGradient>
   </defs>
 
+  <text id="rankTextBG" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+        fill="url(#rainbow)" stroke="#fff" stroke-width="12" stroke-linejoin="round">
+    EXCELLENT!
+  </text>
   <!-- メイン文字 -->
   <text id="rankText" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
         fill="url(#rainbow)" stroke="#333" stroke-width="10" stroke-linejoin="round">
@@ -107,7 +111,7 @@ const stageData=[
   </text>
   <!-- 光沢ハイライト -->
   <text id="rankTextHighlight" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
-        fill="url(#rainbow)" stroke="rgba(255,255,255,0.3)" stroke-width="1">
+        fill="url(#rainbow)" stroke="rgba(255,255,255,1)" stroke-width="1">
     EXCELLENT!
   </text>
 </svg>
@@ -185,21 +189,6 @@ const questionBox=document.getElementById('question');
 const buttonsDiv=document.getElementById('buttons');
 const timerProgress=document.getElementById('timerProgress');
 
-function startTimerOld(){
-  startTime = Date.now();
-  endTime = startTime + 10000; // 10秒
-  timerProgress.style.transition="none";
-  timerProgress.style.width="100%";
-  setTimeout(()=>{
-    timerProgress.style.transition="width 10s linear";
-    timerProgress.style.width="0%";
-  },50);
-
-  timerTimeout=setTimeout(()=>{
-    if(!answered) handleAnswer(null);
-  },10000);
-}
-
 let timerFrame;
 
 function startTimer(){
@@ -218,7 +207,7 @@ function startTimer(){
     timerProgress.style.width = (progress * 100) + "%";
 
     // 緑→黄→赤 のグラデーション補間
-    const color = getHPColor(progress);
+    const color = getProgressColor(progress);
     timerProgress.style.backgroundColor = color;
 
     if (!answered) {
@@ -234,10 +223,10 @@ function startTimer(){
   timerFrame = requestAnimationFrame(update);
 }
 
-function getHPColor(p) {
-  if (p > 0.5) {
+function getProgressColor(progress) {
+  if (progress > q.great / q.answertime) {
     return "#a8e6a1"; // パステルグリーン
-  } else if (p > 0.2) {
+  } else if (progress > q.good / q.answertime) {
     return "#fff59d"; // パステルイエロー
   } else {
     return "#ff9e9e"; // パステルレッド
@@ -258,15 +247,6 @@ function stopTimer() {
   timerProgress.style.width = `${widthPercent}%`;
 }
 
-function stopTimerOld(){
-  clearTimeout(timerTimeout);
-  const now = Date.now();
-  timeLeftMs = Math.max(endTime - now, 0); // 残りミリ秒
-  const computedStyle=window.getComputedStyle(timerProgress);
-  const width=computedStyle.width;
-  timerProgress.style.transition="none";
-  timerProgress.style.width=width;
-}
 
 //2枚目の画像切替用タイマー
 let imageSwitchTimer;
@@ -304,7 +284,7 @@ function showQuestion(){
   }
 }
 
-
+const rankTextBG = document.getElementById('rankTextBG');
 const rankText = document.getElementById('rankText');
 const rankHighlight = document.getElementById('rankTextHighlight');
 const cutinScoreValue=document.getElementById('cutinScoreValue');
@@ -406,8 +386,10 @@ function showCutIn(isCorrect, text) {
   void cutin.offsetWidth; // ★ 強制reflow：これで確実にリセット
   cutin.classList.add('cutin', isCorrect ? 'correct' : 'wrong');
   
+  rankTextBG.textContent = text;
   rankText.textContent = text;
   rankHighlight.textContent = text;
+  
   cutin.classList.remove('disappear');
   // アニメ発動
   cutin.classList.add('active');
@@ -417,29 +399,29 @@ function showCutIn(isCorrect, text) {
 
   // 終了処理（帯拡大アニメーション終了後に非表示）
 
-      setTimeout(() => {
-        cutin.classList.add('disappear');        
-      }, 1500);
+  setTimeout(() => {
+    cutin.classList.add('disappear');        
+  }, 1500);
       
-      setTimeout(() => {
-        cutin.classList.remove('active');
-        
-        currentIndex++;
-        stageQuizIdx++;
+  setTimeout(() => {
+    cutin.classList.remove('active');
+  
+    currentIndex++;
+    stageQuizIdx++;
     
-        if (currentIndex < quizData.length){
-          if (stageQuizIdx >= nowStage.count){
-            stageCount++;
-            nowStage = stageData[stageCount];
-            showNextStage();
-          }else{
-            showQuestion();
-          }
-        }else{
-          endQuiz();
-        }
+    if (currentIndex < quizData.length){
+      if (stageQuizIdx >= nowStage.count){
+        stageCount++;
+        nowStage = stageData[stageCount];
+        showNextStage();
+      }else{
+        showQuestion();
+      }
+    }else{
+      endQuiz();
+    }
         
-      }, 2250);
+  }, 2250);
 }
 
 var stageCount = 0;
