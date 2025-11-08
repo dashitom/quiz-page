@@ -272,7 +272,7 @@ body::before {
 .buttons{
   flex: 1 1 auto;
   display:flex;
-  height: 15vh;
+  height: 10vh;
   justify-content:space-between;
   align-items:stretch;
   gap:4vw;
@@ -292,6 +292,10 @@ body::before {
 .buttons:has(button:nth-child(3):last-child) button {
   width: 30%;
   font-size: clamp(1rem, 1.5rem, 3rem);
+}
+
+.buttons:has(button:nth-child(4):last-child) button {
+  width: 45%;
 }
 
 button{
