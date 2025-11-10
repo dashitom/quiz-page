@@ -10,7 +10,6 @@
 <script>
 // --- 問題データ ---
 const quizData=[
-  {"stage":"1","quiztype":"運動神経伝達力","question":"交互に連打して！","image":"images/karate_left.png","image2":"images/karate_right.png","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"renda":20},
   {"stage":"1","quiztype":"計算力","question":"１＋１＝？","image":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":""},{"text":""}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"1","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot1.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"1","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
@@ -23,6 +22,7 @@ const quizData=[
   {"stage":"2","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_left.png","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"左","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"2","quiztype":"形状判断力","question":"若いのは？","image":"images/otama.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"A","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"2","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki1.png","image2":"","image2time":"","options":[{"text":"グー"},{"text":"チョキ"},{"text":"パー"},{"text":""}],"correct":"パー","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"2","quiztype":"運動神経伝達力","question":"交互に連打して！","image":"images/karate_left.png","image2":"images/karate_right.png","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"renda":20},
   {"stage":"2","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_right.png","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"2","quiztype":"問題解決力","question":"片方しか助けられない。<br>どっちを助ける？","image":"","image2":"","image2time":"","options":[{"text":"母親"},{"text":"恋人"},{"text":""},{"text":""}],"correct":null,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"2","quiztype":"運動神経伝達力","question":"位置について　よーい…","image":"images/start1.png","image2":"images/start2.png","image2time":"3000","options":[{"text":"スタート"},{"text":""},{"text":""},{"text":""}],"correct":"スタート","answertime":20000,"answerstart":17000,"perfect":16500,"excellent":15500,"great":14500,"good":13000},
@@ -30,7 +30,7 @@ const quizData=[
   {"stage":"3","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num2.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"1","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"3","quiztype":"形状判断力","question":"若いのは？","image":"images/keropen.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"B","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"3","quiztype":"注意力","question":"文字数が多いのは？","image":"images/moji2.png","image2":"","image2time":"","options":[{"text":"S"},{"text":"A"},{"text":""},{"text":""}],"correct":"S","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"1","quiztype":"運動神経伝達力","question":"もぐらが出たらたたけ！","image":"images/mogudot1.png","image2":"images/mogudot2.png","image2time":"8000","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answertime":20000,"answerstart":12000,"perfect":11500,"excellent":10500,"great":9500,"good":8000},
+  {"stage":"3","quiztype":"運動神経伝達力","question":"もぐらが出たらたたけ！","image":"images/mogudot1.png","image2":"images/mogudot2.png","image2time":"8000","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answertime":20000,"answerstart":12000,"perfect":11500,"excellent":10500,"great":9500,"good":8000},
   {"stage":"3","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot3.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黒","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"4","quiztype":"空間認識力","question":"進行方向は？","image":"images/ookubo.png","image2":"","image2time":"","options":[{"text":"手前"},{"text":"奥"},{"text":""},{"text":""}],"correct":"手前","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"4","quiztype":"ドキドキ☆2択クイズ","question":"片方しか助けられない。<br>どっちを助ける？","image":"images/white.png","image2":"images/tinmoku.png","image2time":"5000","options":[{"text":"娘"},{"text":"息子"},{"text":""},{"text":""}],"correct":null,"answertime":10000,"answerstart":1,"perfect":-100,"excellent":-200,"great":-300,"good":-400},
@@ -41,9 +41,9 @@ const quizData=[
 
 // --- ステージ情報 ---
 const stageData=[
-  {"stage":"1", "count":"6", "loadMsg":"問題を作成しています…", "startMsg":"まずは肩慣らしです。"},
-  {"stage":"2", "count":"8", "loadMsg":"あなたの回答を分析しています…", "startMsg":"少しレベルを上げます！"},
-  {"stage":"3", "count":"7", "loadMsg":"あなたにあわせて調整しています…", "startMsg":"やりますね！さらにレベルアップ！"},
+  {"stage":"1", "count":"7", "loadMsg":"問題を作成しています…", "startMsg":"まずは肩慣らしです。"},
+  {"stage":"2", "count":"9", "loadMsg":"あなたの回答を分析しています…", "startMsg":"少しレベルを上げます！"},
+  {"stage":"3", "count":"6", "loadMsg":"あなたにあわせて調整しています…", "startMsg":"やりますね！さらにレベルアップ！"},
   {"stage":"4", "count":"5", "loadMsg":"完全にあなたを理解しました…", "startMsg":"レベルMAX！最終ステージです！"},
 ]
 </script>
@@ -664,7 +664,7 @@ function initButtonTouchEvents() {
       }
     });
 
-    btn.addEventListener('touchend', () => {
+    btn.addEventListener('touchend', e => {
       e.preventDefault(); // ←追加：ブラウザのclick発火を防ぐ    
       if (isInside) {
         //btn.classList.remove('pressed');
