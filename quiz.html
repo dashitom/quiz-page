@@ -648,9 +648,11 @@ function initButtonTouchEvents() {
     });
 
     btn.addEventListener('touchend', () => {
+      e.preventDefault(); // ←追加：ブラウザのclick発火を防ぐ    
       if (isInside) {
         //btn.classList.remove('pressed');
         btn.click();
+        //handleAnswer(btn.innerHTML); // click()呼ばず、直接呼ぶ
       } else {
         btn.classList.remove('pressed');
       }

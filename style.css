@@ -319,7 +319,6 @@ button{
   border:7px solid var(--color-dark);
   outline:3px solid white;
   border-radius:12px;
-  font-size:3rem;
   font-weight:bold;
   padding:3vh 0;
   box-shadow:0 12px var(--color-shadow);
@@ -332,6 +331,8 @@ button{
   white-space: nowrap;     /* 改行を禁止 */
   text-overflow: ellipsis; /* はみ出しを防止 */
   font-size: clamp(1rem, 3rem, 3rem); /* ←自動スケール 最小、推奨、最大 */
+  
+  touch-action: manipulation;
 }
 
 button.pressed{
