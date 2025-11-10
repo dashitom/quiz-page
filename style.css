@@ -200,7 +200,7 @@ body::before {
 /* === 問題エリア === */
 .question-box{
   flex:3;
-  height: 20vh;
+  height: 35vh;
   background:white;
   border-radius:10px;
   padding:1vh 2vw;
@@ -219,6 +219,21 @@ body::before {
 .question-box img{
   max-width:25vh; max-height:25vh; margin-top:1vh; border-radius:8px;
 }
+
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-5px, 0); }
+  40% { transform: translate(5px, 0); }
+  60% { transform: translate(-3px, 0); }
+  80% { transform: translate(3px, 0); }
+}
+
+.question-box img.shake {
+  animation: shake 0.2s ease;
+}
+
+
+
 .question-box span{
   display: inline;
   color:var(--color-light);
@@ -329,6 +344,12 @@ button.pressed{
 
 button img{
   max-width:60%; margin-top:0.5vh; border-radius:6px;
+}
+
+
+.banner{
+  flex: 1;
+  background:black;
 }
 
 /* === カットイン === */
