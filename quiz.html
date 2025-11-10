@@ -319,6 +319,8 @@ function handleRenda(selected){
       btn.classList.remove('pressed');
     });
   }, 50);
+  
+  if(answered) return;
       
   if (!q.image2 || (rendaCount % 2 === 0 && selected === '左') || (rendaCount % 2 === 1 && selected === '右')){
     rendaCount++;
