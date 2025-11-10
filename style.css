@@ -28,6 +28,12 @@ img {
   pointer-events: none; /* ドラッグや右クリック防止 */
 }
 
+* {
+  touch-action: manipulation; /* ダブルタップ拡大防止 */
+  -webkit-user-select: none; /* テキスト選択も防ぐ場合 */
+  -webkit-tap-highlight-color: transparent; /* iOSのタップハイライト除去 */
+}
+
 /* 背景パターン定義 */
 body {
   position:fixed;
@@ -331,8 +337,6 @@ button{
   white-space: nowrap;     /* 改行を禁止 */
   text-overflow: ellipsis; /* はみ出しを防止 */
   font-size: clamp(1rem, 3rem, 3rem); /* ←自動スケール 最小、推奨、最大 */
-  
-  touch-action: manipulation;
 }
 
 button.pressed{

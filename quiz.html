@@ -10,11 +10,10 @@
 <script>
 // --- 問題データ ---
 const quizData=[
-  {"stage":"1","quiztype":"計算力","question":"連打しろ！","image":"images/dot3.png","image2":"","image2time":"","options":[{"text":"タップ！"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"renda":10},
-  {"stage":"1","quiztype":"計算力","question":"連打しろ！","image":"images/mogu2.png","image2":"","image2time":"","options":[{"text":"タップ！"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"renda":100},
   {"stage":"1","quiztype":"計算力","question":"１＋１＝？","image":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":""},{"text":""}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"1","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot1.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"1","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"1","quiztype":"運動神経伝達力","question":"連打しろ！","image":"images/renda.png","image2":"","image2time":"","options":[{"text":"タップ！"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"renda":20},
   {"stage":"1","quiztype":"注意力","question":"文字数が多いのは？","image":"images/ty.png","image2":"","image2time":"","options":[{"text":"T"},{"text":"Y"},{"text":""},{"text":""}],"correct":"Y","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"1","quiztype":"注意力","question":"じゃんけんで勝ってください<br>「グー」","image":"","image2":"","image2time":"","options":[{"text":"グー"},{"text":"チョキ"},{"text":"パー"},{"text":""}],"correct":"パー","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
   {"stage":"1","quiztype":"運動神経伝達力","question":"もぐらが出たらたたけ！","image":"images/mogu1.png","image2":"images/mogu2.png","image2time":"6000","options":[{"text":"たたく"},{"text":""},{"text":""},{"text":""}],"correct":"たたく","answertime":20000,"answerstart":14000,"perfect":13500,"excellent":12500,"great":11000,"good":10000},
@@ -651,7 +650,7 @@ function initButtonTouchEvents() {
       e.preventDefault(); // ←追加：ブラウザのclick発火を防ぐ    
       if (isInside) {
         //btn.classList.remove('pressed');
-        btn.click();
+        btn.onclick();
         //handleAnswer(btn.innerHTML); // click()呼ばず、直接呼ぶ
       } else {
         btn.classList.remove('pressed');
