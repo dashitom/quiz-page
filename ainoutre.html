@@ -25,6 +25,43 @@ html,body{
   -ms-user-select:none;
   user-select:none; /* ← 選択禁止 */
 }
+
+body {
+  margin:0; padding:0; height:100%; overflow:hidden;
+  background: linear-gradient(to bottom, #3399FF, #0056b3);
+  position: relative;
+  font-family:'Helvetica Neue',sans-serif;
+}
+
+/* パーティクル用 */
+.particle-bg {
+  position: fixed;   /* BODY全体に固定 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;        /* 最背面 */
+}
+
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  bottom: -10px;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0.5; }
+  100% { transform: translateY(-110vh); opacity: 0; }
+}
+
+
+
+
 .container{
   display:flex;
   flex-direction:column;
@@ -34,15 +71,81 @@ html,body{
   padding:1vh 5vw;
   box-sizing:border-box;
 }
-.logo{
-  height:40vh;
+.logo-wrapper {
   margin-top:2vh;
   display:block;
   -webkit-touch-callout: none; /* iOS長押しメニュー無効化 */
   -webkit-user-drag: none;     /* 画像ドラッグ防止 */
   user-drag: none;
   pointer-events: auto;
+  position: relative;
+  /* position: sticky; 上に固定 */
+  height:40vh;
+  width: 100%; /* 横長画像の余白分を追加 */
+  margin: 0 auto;
 }
+
+.logo {
+  position: absolute;
+  top: 0;
+  left: 50%; 
+  height: 100%;      /* ← 高さを親に合わせる */
+  width: auto;       /* ← 横を自動調整（アスペクト比維持） */
+  transform: translateX(-50%); /* ← 中央寄せ */
+  user-select: none;
+  pointer-events: none;
+}
+
+.logo-bg-wrapper {
+  position: absolute;
+  top: 0;
+  left: -5vw;
+  width: 100vw;      /* 親要素いっぱい */
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.scroll-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  height: 100%;
+  /* 幅は自動で横長画像に合わせる */
+  animation: scroll 20s linear infinite;
+}
+
+.scroll-bg img {
+  height: 100%;      /* 縦100% */
+  width: auto;       /* 横長比率維持 */
+  flex-shrink: 0;    /* 横幅自動縮小禁止 */
+}
+
+@keyframes scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* 1枚分左に移動 */
+}
+
+.logo-icon-bg {
+  z-index: 2;
+}
+.logo-icon {
+  z-index: 3;
+}
+.logo-text {
+  z-index: 4;
+}
+
+
+.content {
+  height: calc(100vh - 40vh); /* ロゴ部分を除いた高さ */
+  overflow-y: auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+
 .version{
   margin-top:0;
   height:3vh;line-height:3vh;
@@ -72,9 +175,10 @@ html,body{
   transition:all .1s ease;
 }
 .line{
-  width:80%;height:1px;
+  width:95%;height:1px;
   background:white;margin:3vh 0;
 }
+
 .notice{
   width:85%;
   background:rgba(255,255,255,0.15);
@@ -92,7 +196,19 @@ html,body{
   padding:1px 12px;
   border-radius:20px;
   font-weight:bold;
-  margin-bottom:0.6em;
+}
+.notice-headline {
+  display: flex;
+  align-items: center;
+  gap: 0.6em; /* ← ラベルとタイトルの間隔 */
+  margin-bottom: 0.6em;
+}
+
+.notice-title {
+  font-weight: bold;
+  font-size: 0.8rem;
+  margin-top:-0.1rem;
+  color: #fff;
 }
 .notice b{
   color:#fff;
@@ -100,28 +216,98 @@ html,body{
   font-size:0.8rem;
   margin-bottom:0.3em;
 }
+.highlight-date {
+  font-weight: bold;
+  color: #ffc840;
+}
+
+
 .footer{
   font-size:0.8rem;
   opacity:0.7;
   margin-bottom:1vh;
 }
+
+
+
+/* 初期状態 */
+.logo-icon, .logo-text, .logo-icon-bg {
+  opacity: 0;
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+.version, .start-btn, .line, .notice, .footer {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.scroll-bg{
+  opacity: 0;
+}
+
+@keyframes showImg {
+  to { opacity: 1; }
+}
+@keyframes iconAppear {
+  0% {
+    opacity: 0;
+    transform:  translateX(-50%) scale(1.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes textAppear {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scaleX(0.7); /* 幅0％、中央寄せ */
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scaleX(1); /* 幅100％、中央寄せ */
+  }
+}
+
 </style>
 </head>
 <body>
+<div class="particle-bg"></div>
 <div class="container">
-  <img src="logo.png" alt="ロゴ" class="logo" oncontextmenu="return false;" draggable="false">
+  <div class="logo-wrapper">
+    <div class="logo-bg-wrapper">
+      <div class="scroll-bg">
+        <img src="images/logo_bg.png" alt="背景1">
+        <img src="images/logo_bg.png" alt="背景2">
+      </div>
+    </div>
+    <img src="images/logo_iconbg.png" alt="ロゴアイコン背景" class="logo logo-icon-bg" oncontextmenu="return false;" draggable="false">
+    <img src="images/logo_icon.png" alt="ロゴアイコン" class="logo logo-icon" oncontextmenu="return false;" draggable="false">
+    <img src="images/logo_text.png" alt="ロゴ文字" class="logo logo-text" oncontextmenu="return false;" draggable="false">
+  </div>
+  
   <div class="version">ver.1.0.0.1</div>
   <button class="start-btn" onclick="delayedStart()">START</button>
   <div class="line"></div>
+  
+  
   <div class="notice">
-    <label class="notice-header">お知らせ</label>
-    <b>2025年12月31日まで無料公開中！</b>
-    リリースを記念して、2025年12月31日23:59まで、会員登録不要でどなたでも無料で楽しむことができます！
+    <div class="notice-headline">
+      <label class="notice-header">お知らせ</label>
+      <span class="notice-title">無料期間終了のお知らせ</span>
+    </div>
+    ご好評につきアクセスが増加し、AIのAPIコストが高騰しているため、無料公開は<span class="highlight-date">2025年12月31日まで</span>とさせていただきます。  
+    今後ともよろしくお願いいたします。
   </div>
+
+  
   <div class="footer">©TEAM STAND WITH FREAND</div>
+  
 </div>
 
 <script>
+
 const btn = document.querySelector('.start-btn');
 let isInside = false;
 
@@ -164,6 +350,63 @@ function delayedStart() {
     location.href = 'quiz.html';
   }, 500);
 }
+
+
+
+
+const particleCount = 30; // お好みで増減
+const container = document.querySelector('.particle-bg');
+
+for(let i=0; i<particleCount; i++){
+  const p = document.createElement('div');
+  p.classList.add('particle');
+  const size = Math.random()*10 + 5; // 5〜15px
+  p.style.width = `${size}px`;
+  p.style.height = `${size}px`;
+  p.style.left = `${Math.random()*100}%`;
+  p.style.animationDuration = `${5 + Math.random()*5}s`;
+  p.style.animationDelay = `${Math.random()*5}s`;
+  container.appendChild(p);
+}
+
+window.addEventListener('load', () => {
+  const bg = document.querySelector('.scroll-bg');
+  const iconbg = document.querySelector('.logo-icon-bg');
+  const icon = document.querySelector('.logo-icon');
+  const text = document.querySelector('.logo-text');
+  const rest = [
+    document.querySelector('.version'),
+    document.querySelector('.start-btn'),
+    document.querySelector('.line'),
+    document.querySelector('.notice'),
+    document.querySelector('.footer')
+  ];
+  
+  // 0. 背景フェードイン
+  setTimeout(() => {
+    bg.style.animation = "scroll 20s linear infinite, showImg 4s forwards";
+  }, 500);
+
+  // 1. アイコン拡大→縮小セット＆フェードイン
+  setTimeout(() => {
+    iconbg.style.animation = "showImg 2s ease forwards";
+    icon.style.animation = "iconAppear 2s ease forwards";
+  }, 1500);
+
+  // 2. テキストスライド＆フェードイン
+  setTimeout(() => {
+    text.style.animation = "textAppear 0.8s ease forwards";
+  }, 3000);
+
+  // 3. その他コンテンツフェードイン
+  setTimeout(() => {
+    rest.forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    });
+  }, 4000);
+});
+
 
 </script>
 </body>
