@@ -5,6 +5,8 @@
   --color-bg-bottom: #0056b3;
   --color-shadow: #555555;
   --color-text: white;
+  --color-mikiri: #B8860B;
+  --color-renda: #953735;
 }
 
 /* === 共通設定 === */
@@ -33,10 +35,9 @@ img {
   -webkit-user-select: none; /* テキスト選択も防ぐ場合 */
   -webkit-tap-highlight-color: transparent; /* iOSのタップハイライト除去 */
 }
-
 /* 背景パターン定義 */
 body {
-  position:fixed;
+  position:relative;
   inset:0;
   background-image: 
     repeating-linear-gradient(90deg, rgba(255,255,255,0.3) 0 1px, transparent 1px 40px),
@@ -50,10 +51,20 @@ body {
   padding-top: env(safe-area-inset-top);
 }
 
+body {
+  display: flex;
+  justify-content: center; /* 横方向中央 */
+  align-items: center;     /* 縦方向中央 */
+  height: 100vh;
+  width: 100vw;
+  margin: 0; /* 不要な余白を除去 */
+}
+
 
 body::before {
   content:'';
-  position:fixed;
+  position:absolute;
+  inset:0;
   top:0;
   left:0;
   width:100%;
@@ -69,12 +80,14 @@ body::before {
 }
 
 .container{
+  position: relative;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  height:85vh;
+  height:95vh;
+  width: 100%;
   max-width:60vh;
-  margin: 2vh 5vw;
+  margin: 5vh 5vw;
   box-sizing:border-box;
 }
 
@@ -294,11 +307,25 @@ body::before {
   flex: 1 1 auto;
   display:flex;
   height: 10vh;
+  width: 100%;
   justify-content:space-between;
   align-items:stretch;
   gap:4vw;
+  gap:15px;
   margin-bottom:1vh;
   flex-wrap: nowrap; /* 折り返さない */
+}
+
+.buttons.two-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2列 */
+  grid-template-rows: repeat(2, 1fr);    /* 2行 */
+  width: 100%;
+  margin-bottom: 1vh;
+}
+
+.buttons.two-row button {
+  font-size: clamp(1rem, 2rem, 2.5rem);
 }
 
 /* ボタン数に応じた幅調整 */
@@ -316,7 +343,7 @@ body::before {
 }
 
 .buttons:has(button:nth-child(4):last-child) button {
-  width: 45%;
+  /*width: 45%;*/
 }
 
 button{
@@ -326,14 +353,12 @@ button{
   outline:3px solid white;
   border-radius:12px;
   font-weight:bold;
-  padding:3vh 0;
   box-shadow:0 12px var(--color-shadow);
   color:var(--color-dark);
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-
   white-space: nowrap;     /* 改行を禁止 */
   text-overflow: ellipsis; /* はみ出しを防止 */
   font-size: clamp(1rem, 3rem, 3rem); /* ←自動スケール 最小、推奨、最大 */
@@ -347,6 +372,42 @@ button.pressed{
   transition:all .1s ease;
 }
 
+.mikiri button{
+  border:7px solid var(--color-mikiri);
+  color:var(--color-mikiri);
+  background-image: url("images/mikiri.png");
+  background-size: contain;     /* 正方形画像の比率維持 */
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.mikiri button.pressed{
+  background:var(--color-mikiri);
+  color:var(--color-text);
+  background-image: url("images/mikiri_press.png");
+  background-size: contain;     /* 正方形画像の比率維持 */
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.renda button{
+  border:7px solid var(--color-renda);
+  color:var(--color-renda);
+  background-image: url("images/renda.png");
+  background-size: contain;     /* 正方形画像の比率維持 */
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.renda button.pressed{
+  background:#FFFFFF;
+  color:var(--color-renda);
+  background-image: url("images/renda.png");
+  background-size: contain;     /* 正方形画像の比率維持 */
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 button img{
   max-width:60%; margin-top:0.5vh; border-radius:6px;
 }
@@ -354,7 +415,6 @@ button img{
 
 .banner{
   flex: 1;
-  background:black;
 }
 
 /* === カットイン === */
@@ -364,7 +424,7 @@ button img{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size:2.5rem; 
+  font-size:2rem; 
   font-weight:bold;
   z-index: 9000;
   opacity: 0;
@@ -432,24 +492,12 @@ button img{
   }
 }
 
-/* 背景の赤丸（中央から拡大） */
-.cutin::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10em;
-  height: 10em;
-  background: radial-gradient(
-    circle,
-    transparent 50%,
-    rgba(255, 40, 40, 1) 51%,
-    rgba(255, 40, 40, 1) 65%,
-    transparent 66%
-  );
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  /* animation: redCircleExpand 0.4s ease-out forwards; */
+/* カットイン〇×画像 */
+.cutin-img {
+  width:20vh; 
+  height:20vh; 
+  margin-top:1vh; margin-bottom:1vh; 
+  animation: redCircleExpand 0.4s ease-out forwards;
   z-index: -1;
 }
 
@@ -471,7 +519,7 @@ button img{
 /* EXCELLENTのはねる動き */
 #rankSvg {
   width: auto;
-  height: 2.5rem;
+  height: 2rem;
   overflow: visible;
   display: block;
   margin-top:0.8rem;
@@ -497,7 +545,7 @@ button img{
   display: inline-block;
   padding: 0em 0em;
   
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: white;
   text-shadow:
@@ -564,6 +612,10 @@ button img{
   animation: cutinDisappear 0.3s ease-out forwards;
 }
 .cutin.disappear #rankSvg {
+  animation: cutinDisappear 0.3s ease-out forwards;
+}
+
+.cutin.disappear .cutin-img {
   animation: cutinDisappear 0.3s ease-out forwards;
 }
 
