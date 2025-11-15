@@ -339,7 +339,7 @@ body::before {
 
 .buttons:has(button:nth-child(3):last-child) button {
   max-width: 30%;
-  font-size: clamp(1rem, 1.5rem, 2.5rem);
+  font-size: clamp(1rem, 1.2rem, 2.5rem);
 }
 
 .buttons:has(button:nth-child(4):last-child) button {
