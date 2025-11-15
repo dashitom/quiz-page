@@ -361,7 +361,7 @@ button{
   align-items:center;
   white-space: nowrap;     /* 改行を禁止 */
   text-overflow: ellipsis; /* はみ出しを防止 */
-  font-size: clamp(1rem, 3rem, 3rem); /* ←自動スケール 最小、推奨、最大 */
+  font-size: clamp(1rem, 2.5rem, 3rem); /* ←自動スケール 最小、推奨、最大 */
 }
 
 button.pressed{
@@ -496,7 +496,8 @@ button img{
 .cutin-img {
   width:20vh; 
   height:20vh; 
-  margin-top:1vh; margin-bottom:1vh; 
+  margin-top:1vh; 
+  margin-bottom:0vh; 
   animation: redCircleExpand 0.4s ease-out forwards;
   z-index: -1;
 }
@@ -522,7 +523,7 @@ button img{
   height: 2rem;
   overflow: visible;
   display: block;
-  margin-top:0.8rem;
+  margin-top:-1rem;
 }
 
 @keyframes popIn {
