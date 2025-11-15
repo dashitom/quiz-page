@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="style2.css">
+<title>AI脳トレ</title>
+<script>
+// --- 問題データ ---
+const quizData=[
+{"stage":"1","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"2","answertime":20000000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  
+  {"stage":"1","quiztype":"計算力","question":"１＋１＝？","image":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":""},{"text":""}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"1","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot1.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"1","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"1","quiztype":"運動神経伝達力","question":"連打して！","image":"images/renda.png","image2":"","image2time":"","options":[{"text":"タップ！"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"renda":20},
+  {"stage":"1","quiztype":"注意力","question":"文字数が多いのは？","image":"images/ty.png","image2":"","image2time":"","options":[{"text":"T"},{"text":"Y"},{"text":""},{"text":""}],"correct":"Y","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"1","quiztype":"注意力","question":"じゃんけんで勝ってください<br>「グー」","image":"","image2":"","image2time":"","options":[{"text":"グー"},{"text":"チョキ"},{"text":"パー"},{"text":""}],"correct":"パー","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"1","quiztype":"運動神経伝達力","question":"もぐらが出たらたたけ！","image":"images/mogu1.png","image2":"images/mogu2.png","image2time":"6000","options":[{"text":"たたく"},{"text":""},{"text":""},{"text":""}],"correct":"たたく","answertime":20000,"answerstart":14000,"perfect":13500,"excellent":12500,"great":11000,"good":10000},
+  {"stage":"2","quiztype":"計算力","question":"３５－３０＝？","image":"","image2":"","image2time":"","options":[{"text":"4"},{"text":"5"},{"text":"6"},{"text":"7"}],"correct":"5","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"2","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot2.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"2","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_left.png","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"左","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"2","quiztype":"形状判断力","question":"若いのは？","image":"images/otama.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"A","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"2","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki1.png","image2":"","image2time":"","options":[{"text":"グー"},{"text":"チョキ"},{"text":"パー"},{"text":""}],"correct":"パー","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"2","quiztype":"運動神経伝達力","question":"交互に連打して！","image":"images/karate_left.png","image2":"images/karate_right.png","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"renda":20},
+  {"stage":"2","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_right.png","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"2","quiztype":"問題解決力","question":"片方しか助けられない。<br>どっちを助ける？","image":"","image2":"","image2time":"","options":[{"text":"母親"},{"text":"恋人"},{"text":""},{"text":""}],"correct":null,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"2","quiztype":"運動神経伝達力","question":"位置について　よーい…","image":"images/start1.png","image2":"images/start2.png","image2time":"3000","options":[{"text":"スタート"},{"text":""},{"text":""},{"text":""}],"correct":"スタート","answertime":20000,"answerstart":17000,"perfect":16500,"excellent":15500,"great":14500,"good":13000},
+  {"stage":"3","quiztype":"記憶力","question":"今何問目？","image":"","image2":"","image2time":"","options":[{"text":"14"},{"text":"15"},{"text":"16"},{"text":"17"}],"correct":"17","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"3","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num2.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"1","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"3","quiztype":"形状判断力","question":"若いのは？","image":"images/keropen.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"B","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"3","quiztype":"注意力","question":"文字数が多いのは？","image":"images/moji2.png","image2":"","image2time":"","options":[{"text":"S"},{"text":"A"},{"text":""},{"text":""}],"correct":"S","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"3","quiztype":"運動神経伝達力","question":"もぐらが出たらたたけ！","image":"images/mogudot1.png","image2":"images/mogudot2.png","image2time":"8000","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answertime":20000,"answerstart":12000,"perfect":11500,"excellent":10500,"great":9500,"good":8000},
+  {"stage":"3","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot3.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黒","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"4","quiztype":"空間認識力","question":"進行方向は？","image":"images/ookubo.png","image2":"","image2time":"","options":[{"text":"手前"},{"text":"奥"},{"text":""},{"text":""}],"correct":"手前","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
+  {"stage":"4","quiztype":"ドキドキ☆2択クイズ","question":"片方しか助けられない。<br>どっちを助ける？","image":"images/white.png","image2":"images/tinmoku.png","image2time":"5000","options":[{"text":"娘"},{"text":"息子"},{"text":""},{"text":""}],"correct":null,"answertime":10000,"answerstart":1,"perfect":-100,"excellent":-200,"great":-300,"good":-400},
+  {"stage":"4","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki2.png","image2":"","image2time":"","options":[{"text":"グー"},{"text":"チョキ"},{"text":"パー"},{"text":""}],"correct":"パー","answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500},
+  {"stage":"4","quiztype":"確認","question":"あなたは30才以上ですか？","image":"","image2":"","image2time":"","options":[{"text":"はい"},{"text":"いいえ"},{"text":""},{"text":""}],"correct":"はい","answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500},
+  {"stage":"4","quiztype":"最終確認","question":"あなたは吉田達彦ですね？","image":"","image2":"","image2time":"","options":[{"text":"はい"},{"text":"はい"},{"text":""},{"text":""}],"correct":"はい","answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500},
+];
+
+// --- ステージ情報 ---
+const stageData=[
+  {"stage":"1", "count":"7", "loadMsg":"問題を作成しています…", "startMsg":"まずは肩慣らしです。"},
+  {"stage":"2", "count":"9", "loadMsg":"あなたの回答を分析しています…", "startMsg":"少しレベルを上げます！"},
+  {"stage":"3", "count":"6", "loadMsg":"あなたにあわせて調整しています…", "startMsg":"やりますね！さらにレベルアップ！"},
+  {"stage":"4", "count":"5", "loadMsg":"完全にあなたを理解しました…", "startMsg":"レベルMAX！最終ステージです！"},
+]
+</script>
+</head>
+<body>
+
+<div class="cutin">
+<div class="cutin-content">
+  <img src="images/batsu.png" class="cutin-img">
+  <svg id="rankSvg" >
+  <defs>
+    <!-- 各グラデーション定義 -->
+    <linearGradient id="pinkgold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffe6f2"/>
+      <stop offset="25%" stop-color="#ffb3d9"/>
+      <stop offset="50%" stop-color="#ff99cc"/>
+      <stop offset="75%" stop-color="#ff66b3"/>
+      <stop offset="100%" stop-color="#ffd6e6"/>
+    </linearGradient>
+  
+    <linearGradient id="rainbow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff8080"/>
+      <stop offset="16%" stop-color="#ffc080"/>
+      <stop offset="33%" stop-color="#ffff80"/>
+      <stop offset="50%" stop-color="#80ff80"/>
+      <stop offset="66%" stop-color="#80ffff"/>
+      <stop offset="83%" stop-color="#8080ff"/>
+      <stop offset="100%" stop-color="#ff80ff"/>
+    </linearGradient>
+
+    <linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff2a8"/>
+      <stop offset="30%" stop-color="#ffd700"/>
+      <stop offset="60%" stop-color="#caa400"/>
+      <stop offset="100%" stop-color="#fff4b3"/>
+    </linearGradient>
+
+    <linearGradient id="silver" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="30%" stop-color="#d9d9d9"/>
+      <stop offset="60%" stop-color="#b0b0b0"/>
+      <stop offset="100%" stop-color="#e6e6e6"/>
+    </linearGradient>
+
+    <linearGradient id="bronze" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffe0b3"/>
+      <stop offset="30%" stop-color="#cd7f32"/>
+      <stop offset="60%" stop-color="#8b4513"/>
+      <stop offset="100%" stop-color="#ffcc99"/>
+    </linearGradient>
+    
+    <linearGradient id="blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e0f7ff"/>
+      <stop offset="30%" stop-color="#66ccff"/>
+      <stop offset="60%" stop-color="#3399ff"/>
+      <stop offset="100%" stop-color="#0066cc"/>
+    </linearGradient>
+  </defs>
+
+  <text id="rankTextBG" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+        fill="url(#rainbow)" stroke="#fff" stroke-width="12" stroke-linejoin="round">
+    EXCELLENT!
+  </text>
+  <!-- メイン文字 -->
+  <text id="rankText" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+        fill="url(#rainbow)" stroke="#333" stroke-width="10" stroke-linejoin="round">
+    EXCELLENT!
+  </text>
+  <!-- 光沢ハイライト -->
+  <text id="rankTextHighlight" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+        fill="url(#rainbow)" stroke="rgba(255,255,255,1)" stroke-width="1">
+    EXCELLENT!
+  </text>
+</svg>
+<div class="cutin-score">スコア&nbsp;<span id="cutinScoreValue">9999</span></div>
+</div>
+</div>
+
+<script>
+
+const rankTextBG = document.getElementById('rankTextBG');
+const rankText = document.getElementById('rankText');
+const rankHighlight = document.getElementById('rankTextHighlight');
+const cutinScoreValue=document.getElementById('cutinScoreValue');
+function showCutIn(isCorrect, text) {
+  const cutin = document.querySelector('.cutin');
+  const score = document.querySelector('.cutin-score');
+
+  // 前回のアニメをリセット
+  cutin.classList.remove('cutin', 'correct', 'wrong');
+  void cutin.offsetWidth; // ★ 強制reflow：これで確実にリセット
+  cutin.classList.add('cutin', isCorrect ? 'correct' : 'wrong');
+  
+  rankTextBG.textContent = text;
+  rankText.textContent = text;
+  rankHighlight.textContent = text;
+  
+  cutin.classList.remove('disappear');
+  // アニメ発動
+  cutin.classList.add('active');
+  // 進捗バー更新
+  const segments = document.querySelectorAll('.stage-progress-segment');
+  if (segments[stageQuizIdx]) segments[stageQuizIdx].classList.add('filled');
+
+  // 終了処理（帯拡大アニメーション終了後に非表示）
+
+  setTimeout(() => {
+    cutin.classList.add('disappear');        
+  }, 1500);
+      
+  setTimeout(() => {
+    cutin.classList.remove('active');
+  
+    currentIndex++;
+    stageQuizIdx++;
+    
+    if (currentIndex < quizData.length){
+      if (stageQuizIdx >= nowStage.count){
+        stageCount++;
+        nowStage = stageData[stageCount];
+        showNextStage();
+      }else{
+        showQuestion();
+      }
+    }else{
+      endQuiz();
+    }
+        
+  }, 2250);
+}
+
+function setRankStyle(style) {
+  rankText.setAttribute("fill", `url(#${style})`);
+  rankTextHighlight.setAttribute("fill", `url(#${style})`);
+}
+</script>
+
+<div class="container">
+  <!-- === ステージ情報バー === -->
+  <div class="stage-info">
+    <div class="stage-left" id="stage-info-title">STAGE 1</div>
+    <div class="stage-center">
+      <div class="stage-progress"><div class="stage-progress-segment"></div><div class="stage-progress-segment"></div><div class="stage-progress-segment"></div><div class="stage-progress-segment"></div><div class="stage-progress-segment"></div><div class="stage-progress-segment"></div><div class="stage-progress-segment"></div></div>
+    </div>
+    <div class="stage-right">
+      <span class="score-label">SCORE</span>
+      <span class="score-value">0000</span>
+    </div>
+  </div>
+  <div class="quiz-header" id="quiz-header" style="">
+    <span id="quiz-no">Q1　パターン認識力</span>
+  </div>
+  <div class="question-box" id="question" style="">？にあてはまるのは<br><img src="images/num1.png" class="quiz-img"></div>
+  <div class="timer-container" id="timer-container" style="">
+    <div class="timer-label">TIME</div>
+    <div class="timer-bar"><div class="timer-progress" id="timerProgress" style="transition: none; width: 99.909%; background-color: rgb(168, 230, 161);"></div></div>
+  </div>
+  
+  <div class="buttons ttttwo-row" id="buttons2" style="display:none;">
+    <button onclick='document.getElementById("buttons2").style.display="none";document.getElementById("buttons").style.display="";';>グー</button>
+    <button onclick="setRankStyle('gold');showCutIn(true, 'GREAT!');">チョキ</button>
+    <button onclick="setRankStyle('blue');showCutIn(false, 'BAD');">パー</button>
+<!--
+    <button>4</button>
+-->
+  </div>
+  
+  <div class="buttons mikiri" id="buttons" style="display:;">
+    <button class="" onclick='document.getElementById("buttons2").style.display="";document.getElementById("buttons").style.display="none";';>左</button>
+    <button class="" >右</button>
+  </div>
+  
+<!--
+  <div class="buttons renda" id="buttons" style="">
+    <button class="" onclick='document.getElementById("buttons2").style.display="";document.getElementById("buttons").style.display="none";';>連打!</button>
+  </div>
+
+-->
+  <div class="banner" id="banner" style=""></div>
+</div>
+
+
+</body>
