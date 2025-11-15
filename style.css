@@ -496,7 +496,8 @@ button img{
 .cutin-img {
   width:20vh; 
   height:20vh; 
-  margin-top:1vh; margin-bottom:1vh; 
+  margin-top:1vh; 
+  margin-bottom:0vh; 
   animation: redCircleExpand 0.4s ease-out forwards;
   z-index: -1;
 }
@@ -522,7 +523,7 @@ button img{
   height: 2rem;
   overflow: visible;
   display: block;
-  margin-top:0.8rem;
+  margin-top:-1rem;
 }
 
 @keyframes popIn {
