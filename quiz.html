@@ -5,38 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style2.css">
 <title>AI脳トレ</title>
 <script>
 // --- 問題データ ---
 const quizData=[
-  {"stage":"1","mode":"","quiztype":"計算力","question":"１＋１＝？","image":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":""},{"text":""}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"1","mode":"","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot1.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"1","mode":"","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"1","mode":"renda","quiztype":"運動神経伝達力","question":"連打して！","image":"images/yubirenda.png","image2":"","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"renda":200},
-  {"stage":"1","mode":"","quiztype":"注意力","question":"文字数が多いのは？","image":"images/ty.png","image2":"","image2time":"","options":[{"text":"T"},{"text":"Y"},{"text":""},{"text":""}],"correct":"Y","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"1","mode":"","quiztype":"注意力","question":"じゃんけんで勝ってください<br>「グー」","image":"","image2":"","image2time":"","options":[{"text":"グー"},{"text":"チョキ"},{"text":"パー"},{"text":""}],"correct":"パー","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"1","mode":"mikiri","quiztype":"運動神経伝達力","question":"もぐらが出たらたたけ！","image":"images/mogu1.png","image2":"images/mogu2.png","image2time":"6000","options":[{"text":"たたく"},{"text":""},{"text":""},{"text":""}],"correct":"たたく","answertime":20000,"answerstart":14000,"perfect":13500,"excellent":12500,"great":11000,"good":10000},
-  {"stage":"2","mode":"","quiztype":"計算力","question":"３５－３０＝？","image":"","image2":"","image2time":"","options":[{"text":"4"},{"text":"5"},{"text":"6"},{"text":"7"}],"correct":"5","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"2","mode":"","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot2.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"2","mode":"","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_left.png","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"左","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"2","mode":"","quiztype":"形状判断力","question":"若いのは？","image":"images/otama.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"A","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"2","mode":"","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki1.png","image2":"","image2time":"","options":[{"text":"グー"},{"text":"チョキ"},{"text":"パー"},{"text":""}],"correct":"パー","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"2","mode":"renda","quiztype":"運動神経伝達力","question":"連打して！","image":"images/karate_left.png","image2":"images/karate_right.png","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"renda":200},
-  {"stage":"2","mode":"","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_right.png","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"2","mode":"","quiztype":"問題解決力","question":"片方しか助けられない。<br>どっちを助ける？","image":"","image2":"","image2time":"","options":[{"text":"母親"},{"text":"恋人"},{"text":""},{"text":""}],"correct":null,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"2","mode":"mikiri","quiztype":"運動神経伝達力","question":"位置について　よーい…","image":"images/start1.png","image2":"images/start2.png","image2time":"3000","options":[{"text":"スタート"},{"text":""},{"text":""},{"text":""}],"correct":"スタート","answertime":20000,"answerstart":17000,"perfect":16500,"excellent":15500,"great":14500,"good":13000},
-  {"stage":"3","mode":"","quiztype":"記憶力","question":"今何問目？","image":"","image2":"","image2time":"","options":[{"text":"14"},{"text":"15"},{"text":"16"},{"text":"17"}],"correct":"17","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"3","mode":"","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num2.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"1","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"3","mode":"","quiztype":"形状判断力","question":"若いのは？","image":"images/keropen.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"B","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"3","mode":"","quiztype":"注意力","question":"文字数が多いのは？","image":"images/moji2.png","image2":"","image2time":"","options":[{"text":"S"},{"text":"A"},{"text":""},{"text":""}],"correct":"S","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"3","mode":"mikiri","quiztype":"運動神経伝達力","question":"もぐらが出たらたたけ！","image":"images/mogudot1.png","image2":"images/mogudot2.png","image2time":"8000","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answertime":20000,"answerstart":12000,"perfect":11500,"excellent":10500,"great":9500,"good":8000},
-  {"stage":"3","mode":"","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot3.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黒","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"4","mode":"","quiztype":"空間認識力","question":"進行方向は？","image":"images/ookubo.png","image2":"","image2time":"","options":[{"text":"手前"},{"text":"奥"},{"text":""},{"text":""}],"correct":"手前","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000},
-  {"stage":"4","mode":"","quiztype":"ドキドキ☆2択クイズ","question":"片方しか助けられない。<br>どっちを助ける？","image":"images/white.png","image2":"images/tinmoku.png","image2time":"5000","options":[{"text":"娘"},{"text":"息子"},{"text":""},{"text":""}],"correct":null,"answertime":10000,"answerstart":1,"perfect":-100,"excellent":-200,"great":-300,"good":-400},
-  {"stage":"4","mode":"","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki2.png","image2":"","image2time":"","options":[{"text":"グー"},{"text":"チョキ"},{"text":"パー"},{"text":""}],"correct":"パー","answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500},
-  {"stage":"4","mode":"","quiztype":"確認","question":"あなたは30才以上ですか？","image":"","image2":"","image2time":"","options":[{"text":"はい"},{"text":"いいえ"},{"text":""},{"text":""}],"correct":"はい","answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500},
-  {"stage":"4","mode":"","quiztype":"最終確認","question":"あなたは吉田達彦ですね？","image":"","image2":"","image2time":"","options":[{"text":"はい"},{"text":"はい"},{"text":""},{"text":""}],"correct":"はい","answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500},
+  {"stage":"2","mode":"renda","quiztype":"運動神経伝達力","question":"連打して！","image":"images/karate_left.png","image2":"images/karate_right.png","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":10000,"answerstart":10000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10,"renda":200},
+
+  {"stage":"1","mode":"","quiztype":"計算力","question":"１＋１＝？","image":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":""},{"text":""}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"1","mode":"","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot1.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"1","mode":"","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num1.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"1","mode":"renda","quiztype":"運動神経伝達力","question":"連打して！","image":"images/yubirenda.png","image2":"","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10,"renda":200},
+  {"stage":"1","mode":"","quiztype":"注意力","question":"文字数が多いのは？","image":"images/ty.png","image2":"","image2time":"","options":[{"text":"T"},{"text":"Y"},{"text":""},{"text":""}],"correct":"Y","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"1","mode":"","quiztype":"注意力","question":"じゃんけんで勝ってください<br>「グー」","image":"","image2":"","image2time":"","options":[{"text":"グー"},{"text":"チョキ"},{"text":"パー"},{"text":""}],"correct":"パー","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"1","mode":"mikiri","quiztype":"運動神経伝達力","question":"もぐらが出たらたたけ！","image":"images/mogu1.png","image2":"images/mogu2.png","image2time":"6000","options":[{"text":"たたく"},{"text":""},{"text":""},{"text":""}],"correct":"たたく","answertime":20000,"answerstart":14000,"perfect":13500,"excellent":12500,"great":11000,"good":10000,"safe":0},
+  {"stage":"2","mode":"","quiztype":"計算力","question":"３５－３０＝？","image":"","image2":"","image2time":"","options":[{"text":"4"},{"text":"5"},{"text":"6"},{"text":"7"}],"correct":"5","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"2","mode":"","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot2.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"2","mode":"","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_left.png","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"左","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"2","mode":"","quiztype":"形状判断力","question":"若いのは？","image":"images/otama.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"A","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"2","mode":"","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki1.png","image2":"","image2time":"","options":[{"text":"グー"},{"text":"チョキ"},{"text":"パー"},{"text":""}],"correct":"パー","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"2","mode":"renda","quiztype":"運動神経伝達力","question":"連打して！","image":"images/karate_left.png","image2":"images/karate_right.png","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10,"renda":200},
+  {"stage":"2","mode":"","quiztype":"空間認識力","question":"進行方向は？","image":"images/bus_right.png","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"2","mode":"","quiztype":"問題解決力","question":"片方しか助けられない。<br>どっちを助ける？","image":"","image2":"","image2time":"","options":[{"text":"母親"},{"text":"恋人"},{"text":""},{"text":""}],"correct":null,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"2","mode":"mikiri","quiztype":"運動神経伝達力","question":"位置について　よーい…","image":"images/start1.png","image2":"images/start2.png","image2time":"3000","options":[{"text":"スタート"},{"text":""},{"text":""},{"text":""}],"correct":"スタート","answertime":20000,"answerstart":17000,"perfect":16500,"excellent":15500,"great":14500,"good":13000,"safe":0},
+  {"stage":"3","mode":"","quiztype":"記憶力","question":"今何問目？","image":"","image2":"","image2time":"","options":[{"text":"14"},{"text":"15"},{"text":"16"},{"text":"17"}],"correct":"17","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"3","mode":"","quiztype":"パターン認識力","question":"？にあてはまるのは","image":"images/num2.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"1","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"3","mode":"","quiztype":"形状判断力","question":"若いのは？","image":"images/keropen.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"B","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"3","mode":"","quiztype":"注意力","question":"文字数が多いのは？","image":"images/moji2.png","image2":"","image2time":"","options":[{"text":"S"},{"text":"A"},{"text":""},{"text":""}],"correct":"S","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"3","mode":"mikiri","quiztype":"運動神経伝達力","question":"もぐらが出たらたたけ！","image":"images/mogudot1.png","image2":"images/mogudot2.png","image2time":"8000","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answertime":20000,"answerstart":12000,"perfect":11500,"excellent":10500,"great":9500,"good":8000,"safe":0},
+  {"stage":"3","mode":"","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot3.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黒","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"4","mode":"","quiztype":"空間認識力","question":"進行方向は？","image":"images/ookubo.png","image2":"","image2time":"","options":[{"text":"手前"},{"text":"奥"},{"text":""},{"text":""}],"correct":"手前","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"4","mode":"","quiztype":"ドキドキ☆2択クイズ","question":"片方しか助けられない。<br>どっちを助ける？","image":"images/white.png","image2":"images/tinmoku.png","image2time":"5000","options":[{"text":"娘"},{"text":"息子"},{"text":""},{"text":""}],"correct":null,"answertime":10000,"answerstart":1,"perfect":-100,"excellent":-200,"great":-300,"good":-400,"safe":-500},
+  {"stage":"4","mode":"","quiztype":"注意力","question":"じゃんけんで負けてください","image":"images/tyoki2.png","image2":"","image2time":"","options":[{"text":"グー"},{"text":"チョキ"},{"text":"パー"},{"text":""}],"correct":"パー","answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500,"safe":0},
+  {"stage":"4","mode":"","quiztype":"確認","question":"あなたは30才以上ですか？","image":"","image2":"","image2time":"","options":[{"text":"はい"},{"text":"いいえ"},{"text":""},{"text":""}],"correct":"はい","answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500,"safe":0},
+  {"stage":"4","mode":"","quiztype":"最終確認","question":"あなたは吉田達彦ですね？","image":"","image2":"","image2time":"","options":[{"text":"はい"},{"text":"はい"},{"text":""},{"text":""}],"correct":"はい","answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500,"safe":0},
 ];
 
 // --- ステージ情報 ---
@@ -167,6 +169,12 @@ const loadingProgress=document.getElementById('loadingProgress');
 window.addEventListener("load", () => {
   const imageUrls = new Set();
 
+  imageUrls.add('images/maru.png');
+  imageUrls.add('images/batsu.png');
+  imageUrls.add('images/renda.png');
+  imageUrls.add('images/mikiri.png');
+  imageUrls.add('images/mikiri_press.png');
+  
   quizData.forEach(q => {
     if (q.image) imageUrls.add(q.image);
     if (q.image2) imageUrls.add(q.image2);
@@ -217,7 +225,12 @@ function startTimer(){
       if (elapsed < duration){
         timerFrame = requestAnimationFrame(update);
       } else {
-        handleAnswer(null);
+      
+        if(q.mode=='renda'){
+          rendaResult();
+        }else{
+          handleAnswer(null);
+        }
       }
     }
   }
@@ -293,6 +306,10 @@ function showQuestion(){
   const count = buttonsDiv.querySelectorAll('button').length;
   buttonsDiv.className = 'buttons ' + (count <= 3 ? 'one-row ' : 'two-row ') + q.mode;
 
+  if(q.mode=='renda'){
+    setRenda();
+  }
+  
   initButtonTouchEvents();
   startTimer();
   
@@ -305,6 +322,28 @@ function showQuestion(){
       }
     }, switchMs);
   }
+}
+
+function setRenda(){
+
+  rendaCount = 0;
+
+  questionBox.innerHTML=q.question + `<br><img src="${q.image}" class="quiz-img"><div id="tap-gauge"><div id="tap-count">0</div><div id="tap-fill"></div></div>`
+  buttonsDiv.innerHTML="";
+  q.options.forEach((opt, i) => {
+    if(opt.text != ''){
+      const btn=document.createElement('button');
+      btn.innerHTML=opt.text;
+      
+      btn.onclick=()=> {
+        handleRenda(opt.text);
+      };
+      
+      buttonsDiv.appendChild(btn);
+    }
+  });
+  
+
 }
 
 function handleRenda(selected){
@@ -333,10 +372,45 @@ function handleRenda(selected){
       img.src = q.image2;
     }
   }
-    
-  if(rendaCount == q.renda){
-    handleAnswer('');
+  
+  var bg = document.getElementById('tap-gauge');
+  var fill = document.getElementById('tap-fill');
+  var count = document.getElementById('tap-count');
+  
+  var percent;
+  
+  //--pastel-yellow: #fff4a8;
+  //--pastel-orange: #ffd3a8;
+  //--pastel-red:    #ffb3b3;
+  
+  if(q.perfect < rendaCount){
+    percent = 1;
+    fill.style.background = 'var(--pastel-red)';
+  }else if(q.excellent < rendaCount){
+    percent = (rendaCount - q.excellent) / (q.perfect - q.excellent);
+    fill.style.background = 'var(--pastel-red)';
+    bg.style.background = 'var(--pastel-orange)';
+  }else if(q.great < rendaCount){
+    percent = (rendaCount - q.great) / (q.excellent - q.great);
+    fill.style.background = 'var(--pastel-orange)';
+    bg.style.background = 'var(--pastel-yellow)';
+  }else if(q.good < rendaCount){
+    percent = (rendaCount - q.good) / (q.great - q.good);
+    fill.style.background = 'var(--pastel-yellow)';
+    bg.style.background = 'var(--pastel-green)';
+  }else if(q.safe < rendaCount){
+    percent = (rendaCount - q.safe) / (q.good - q.safe);
+    fill.style.background = 'var(--pastel-green)';
+    bg.style.background = 'var(--pastel-blue)';
+  }else{
+    percent = rendaCount / q.safe;
+    fill.style.background = 'var(--pastel-blue)';
+    bg.style.background = '#fff';
   }
+  
+  fill.style.height = percent * 100 + "%";
+  count.textContent = rendaCount;
+
 }
 
 
@@ -399,6 +473,44 @@ function handleAnswer(selected){
   }
 }
 
+function rendaResult(){
+
+  answered=true;
+  stopTimer();
+  const q=quizData[currentIndex];
+  
+    if(q.perfect < rendaCount){
+      gained = 600;
+      cutinTitle = "PERFECT!!"
+      setRankStyle('pinkgold');
+      
+    }else if(q.excellent < rendaCount){
+      //ポイント＝評価基礎点＋評価倍率×評価範囲の​下限超過時間​（％）​
+      gained = 500 + Math.floor(5 * (rendaCount - q.excellent) / (q.perfect - q.excellent));
+      cutinTitle = "EXCELLENT!"
+      setRankStyle('rainbow');
+      
+    }else if(q.great < rendaCount){
+      gained = 300 + Math.floor(3 * (rendaCount - q.great) / (q.excellent - q.great));
+      cutinTitle = "GREAT!"
+      setRankStyle('gold');
+      
+    }else if(q.good < rendaCount){
+      gained = 200 + Math.floor(2 * (rendaCount - q.good) / (q.great - q.good));
+      cutinTitle = "GOOD"
+      setRankStyle('silver');
+      
+    }else if(q.safe < rendaCount){
+      gained = 100 + Math.floor(1 * (rendaCount - q.safe) / (q.good - q.safe));
+      cutinTitle = "SAFE"
+      setRankStyle('bronze');
+      
+    }
+    
+    addScore(gained);
+    
+    showCutIn(true, cutinTitle);
+}
 
 let score = 0;
 let displayScore = 0;

@@ -7,6 +7,12 @@
   --color-text: white;
   --color-mikiri: #B8860B;
   --color-renda: #953735;
+  
+--pastel-blue:   #6ec5ff;
+--pastel-green:  #7ff2a4;
+--pastel-yellow: #fff06a;
+--pastel-orange: #ffb56a;
+--pastel-red:    #ff7f7f;
 }
 
 /* === 共通設定 === */
@@ -251,11 +257,42 @@ body::before {
   animation: shake 0.2s ease;
 }
 
-
-
 .question-box span{
   display: inline;
   color:var(--color-light);
+}
+
+#tap-gauge {
+  position: absolute;
+  right: 20px;
+  top: 35vh;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 25vh;
+  background: #FFF;
+  border: 3px solid var(--color-dark);
+  border-radius: 0px;
+}
+
+#tap-count{
+  color:var(--color-dark);
+  position: absolute;
+  top: -30px;
+  width: 50px;
+  text-align: center;
+  font-size: 18px;
+  right:-18px;
+}
+
+#tap-fill {
+  position: absolute;
+  bottom: -3px;
+  left: -3px;
+  width: 100%;
+  height: 0%;
+  background: #ff3b3b;
+  border: 3px solid var(--color-dark);
+  /* transition: height 0.1s linear; */
 }
 
 /* === タイマー === */
