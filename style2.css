@@ -680,8 +680,13 @@ button img{
   justify-content:center;z-index:2000;
 }
 .count-number{
+  color:#FFF;
   font-size:5rem;font-weight:bold;margin-bottom:10vh;
   opacity: 0;
+}
+.buttons .count-number{
+  width:100%;
+  text-align: center;
 }
 @keyframes moveUp{
   0%{transform:translateY(100%);opacity:0}

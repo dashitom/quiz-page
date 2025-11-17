@@ -10,7 +10,8 @@
 <script>
 // --- 問題データ ---
 const quizData=[
-  {"stage":"2","mode":"renda","quiztype":"運動神経伝達力","question":"連打して！","image":"images/karate_left.png","image2":"images/karate_right.png","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":10000,"answerstart":10000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10,"renda":200},
+  {"stage":"1","mode":"mikiri","quiztype":"運動神経伝達力","question":"もぐらが出たらたたけ！","image":"images/mogu1.png","image2":"images/mogu2.png","image2time":"6000","options":[{"text":"たたく"},{"text":""},{"text":""},{"text":""}],"correct":"たたく","answertime":20000,"answerstart":14000,"perfect":13500,"excellent":12500,"great":11000,"good":10000,"safe":0},
+  {"stage":"2","mode":"renda","quiztype":"運動神経伝達力","question":"連打して！","image":"images/karate_left.png","image2":"images/karate_right.png","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":5000,"answerstart":5000,"perfect":40,"excellent":30,"great":20,"good":10,"safe":5,"renda":200},
 
   {"stage":"1","mode":"","quiztype":"計算力","question":"１＋１＝？","image":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":""},{"text":""}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"","quiztype":"色彩認識力","question":"ピクセル数が多いのは？","image":"images/dot1.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
@@ -121,9 +122,9 @@ const stageData=[
     
     <linearGradient id="white" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#fff"/>
-      <stop offset="45%" stop-color="#fff"/>
-      <stop offset="55%" stop-color="#bbb"/>
-      <stop offset="100%" stop-color="#bbb"/>
+      <stop offset="49%" stop-color="#fff"/>
+      <stop offset="51%" stop-color="#B4FFFF"/>
+      <stop offset="100%" stop-color="#B4FFFF"/>
     </linearGradient>
   </defs>
 
@@ -221,9 +222,16 @@ let timeLeftMs = 0;
 const quizNo=document.getElementById('quiz-no');
 const questionBox=document.getElementById('question');
 const buttonsDiv=document.getElementById('buttons');
+const timerLabel = document.querySelector('.timer-label');
+const timerBar = document.querySelector('.timer-bar');
 const timerProgress=document.getElementById('timerProgress');
 
 let timerFrame;
+
+function hideTimer(){
+  timerLabel.style.display = 'none';
+  timerBar.style.display = 'none';
+}
 
 function startTimer(){
   const duration = q.answertime;
@@ -231,8 +239,10 @@ function startTimer(){
   endTime = startTime + duration; 
   cancelAnimationFrame(timerFrame); // 前のループを止める
   
+  timerLabel.style.display = '';
   timerProgress.style.transition = "none";
   timerProgress.style.width = "100%";
+  timerBar.style.display = '';
   void timerProgress.offsetWidth;
 
   function update(now){
@@ -293,6 +303,8 @@ let imageSwitchTimer;
 let q;
 let rendaCount;
 
+
+//出題処理
 function showQuestion(){
   answered=false;
   
@@ -307,6 +319,55 @@ function showQuestion(){
   
   rendaCount = 0;
   
+  if(q.mode=='renda'){
+    questionBox.innerHTML=q.question + (q.image?`<br><img src="${q.image}" class="quiz-img">`:"");
+    hideTimer();
+    buttonsDiv.innerHTML="";
+    buttonsDiv.className = 'buttons';
+    
+    startQuizCountdown();
+
+  }else{
+    showQuestionMain();
+  }
+}
+
+//出題時カウントダウン処理(連打用)
+let quizCountNum;
+let quizCountdownCount=3;
+
+function startQuizCountdown(){
+  buttonsDiv.innerHTML='<div class="count-number" id="quizCountNum" >3</div>';
+  quizCountNum = document.querySelector('#quizCountNum');
+  quizCountdownCount=3;
+  showQuizCountdown();
+}
+
+function showQuizCountdown(){
+  quizCountNum.textContent=quizCountdownCount;
+  quizCountNum.style.opacity='1';
+  quizCountNum.style.animation='moveUp 1s ease';
+  
+  quizCountNum.addEventListener('animationend',()=>{
+    quizCountNum.style.animation='none';
+    quizCountNum.style.opacity='0';
+    quizCountdownCount--;
+  
+    if(quizCountdownCount>0){
+      setTimeout(showQuizCountdown,150);
+    }else{
+      quizCountNum.style.opacity='0';
+      
+      setTimeout(()=>{
+        showQuestionMain();
+      },500);
+    }
+  },{once:true});
+}
+
+
+function showQuestionMain(){
+
   questionBox.innerHTML=q.question + (q.image?`<br><img src="${q.image}" class="quiz-img">`:"");
   buttonsDiv.innerHTML="";
   q.options.forEach((opt, i) => {
@@ -401,10 +462,6 @@ function handleRenda(selected){
   var count = document.getElementById('tap-count');
   
   var percent;
-  
-  //--pastel-yellow: #fff4a8;
-  //--pastel-orange: #ffd3a8;
-  //--pastel-red:    #ffb3b3;
   
   if(q.perfect < rendaCount){
     percent = 1;
