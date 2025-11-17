@@ -53,7 +53,23 @@ const stageData=[
 <body>
 <div class="cutin">
 <div class="cutin-content">
-<img src="images/batsu.png" class="cutin-img">
+<img src="images/batsu.png" class="cutin-img" style="display:none;">
+<svg id="countSvg" >
+  <text id="cutinCountTxtBG" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+        fill="url(#white)" stroke="#fff" stroke-width="17" stroke-linejoin="round">
+    0.32 sec
+  </text>
+  <!-- メイン文字 -->
+  <text id="cutinCountTxt" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+        fill="url(#white)" stroke="#333" stroke-width="15" stroke-linejoin="round">
+    0.32 sec
+  </text>
+  <!-- 光沢ハイライト -->
+  <text id="cutinCountTxtHighlight" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+        fill="url(#white)" stroke="rgba(255,255,255,1)" stroke-width="1">
+    0.32 sec
+  </text>
+</svg>
 <svg id="rankSvg" >
   <defs>
     <!-- 各グラデーション定義 -->
@@ -101,6 +117,13 @@ const stageData=[
       <stop offset="30%" stop-color="#66ccff"/>
       <stop offset="60%" stop-color="#3399ff"/>
       <stop offset="100%" stop-color="#0066cc"/>
+    </linearGradient>
+    
+    <linearGradient id="white" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="45%" stop-color="#fff"/>
+      <stop offset="55%" stop-color="#bbb"/>
+      <stop offset="100%" stop-color="#bbb"/>
     </linearGradient>
   </defs>
 
@@ -548,6 +571,12 @@ function setRankStyle(style) {
 function showCutIn(isCorrect, text) {
   const cutin = document.querySelector('.cutin');
   const cutinImg = document.querySelector('.cutin-img');
+  const countSvg = document.getElementById('countSvg');
+  
+  const cutinCountTxtBG = document.querySelector('#cutinCountTxtBG');
+  const cutinCountTxt = document.querySelector('#cutinCountTxt');
+  const cutinCountTxtHighlight = document.querySelector('#cutinCountTxtHighlight');
+  
   const score = document.querySelector('.cutin-score');
 
   // 前回のアニメをリセット
@@ -555,17 +584,34 @@ function showCutIn(isCorrect, text) {
   void cutin.offsetWidth; // ★ 強制reflow：これで確実にリセット
   cutin.classList.add('cutin', isCorrect ? 'correct' : 'wrong');
   
-  if(isCorrect){
-    cutinImg.src = 'images/maru.png';
-  } else {
-    cutinImg.src = 'images/batsu.png';
+  if(q.mode=='renda' || q.mode=='mikiri'){
+    countSvg.style.display = '';
+    cutinImg.style.display = 'none';
+    
+    if(q.mode=='renda'){
+      cutinCountTxtBG.textContent = rendaCount + '回';
+      cutinCountTxt.textContent = rendaCount + '回';
+      cutinCountTxtHighlight.textContent = rendaCount + '回';
+    }else if(q.mode=='mikiri'){
+      cutinCountTxtBG.textContent = rendaCount + ' sec';
+      cutinCountTxt.textContent = rendaCount + ' sec';
+      cutinCountTxtHighlight.textContent = rendaCount + ' sec';
+    }
+    
+  }else{
+    countSvg.style.display = 'none';
+    cutinImg.style.display = '';
+    
+    if(isCorrect){
+      cutinImg.src = 'images/maru.png';
+    } else {
+      cutinImg.src = 'images/batsu.png';
+    }
   }
   
   rankTextBG.textContent = text;
   rankText.textContent = text;
   rankHighlight.textContent = text;
-  
-  
   
   cutin.classList.remove('disappear');
   // アニメ発動
