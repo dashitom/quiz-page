@@ -7,12 +7,37 @@
   --color-text: white;
   --color-mikiri: #B8860B;
   --color-renda: #953735;
+
+  --color-dark-2: #005020;      /* 深いグリーン系の濃色 */
+  --color-light-2: #33cc66;     /* 明るい黄緑寄りのライトカラー */
+  --color-bg-top-2: #33cc66;    /* 上部グラデの明るめグリーン */
+  --color-bg-bottom-2: #007a3d; /* 下部グラデの締め色 */
+  /* -3 Orange */
+  --color-dark-3: #7a3d00;
+  --color-light-3: #ffa64d;
+  --color-bg-top-3: #ffb366;
+  --color-bg-bottom-3: #cc5c00;
+  /* -4 Red */
+  --color-dark-4: #7a0010;
+  --color-light-4: #ff6675;
+  --color-bg-top-4: #ff808c;
+  --color-bg-bottom-4: #b3001f;
+
   
---pastel-blue:   #6ec5ff;
---pastel-green:  #7ff2a4;
---pastel-yellow: #fff06a;
---pastel-orange: #ffb56a;
---pastel-red:    #ff7f7f;
+  --pastel-blue:   #6ec5ff;
+  --pastel-green:  #7ff2a4;
+  --pastel-yellow: #fff06a;
+  --pastel-orange: #ffb56a;
+  --pastel-red:    #ff7f7f;
+}
+
+.change-color-target {
+  transition:
+    color 2s linear,
+    background-color 2s linear,
+    border-color 2s linear,
+    fill 2s linear,
+    stroke 2s linear;
 }
 
 /* === 共通設定 === */
@@ -20,6 +45,10 @@ html,body{
   margin:0;padding:0;height:100%;
   background:linear-gradient(to bottom,var(--color-bg-top),var(--color-bg-bottom));
   font-family:'Helvetica Neue',sans-serif;overflow:hidden;
+}
+
+body .change-color-target {
+    transition:background-color 2s linear;
 }
 
 /* 文字選択・画像保存などを禁止 */
@@ -294,6 +323,20 @@ body::before {
   border: 3px solid var(--color-dark);
   /* transition: height 0.1s linear; */
 }
+
+#sukaText {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: #333;
+  font-weight: bold;
+  display: none;
+  pointer-events: none;
+  z-index: 1000;
+}
+
 
 /* === タイマー === */
 .timer-container{
@@ -698,7 +741,7 @@ button img{
 /* === ローディング画面 === */
 #loading-overlay{
   position:fixed;top:0;left:0;width:100%;height:100%;
-  //background:#333;
+  /*background:#333;*/
   color:white;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
@@ -706,12 +749,14 @@ button img{
 }
 .loading-bar{
   width:60%;height:10px;
-  background:#555;border-radius:10px;
+  border: 3px solid var(--color-dark);
+  background:var(--color-dark);
+  border-radius:10px;
   overflow:hidden;margin-top:1rem;
 }
 .loading-progress{
   width:0%;height:100%;
-  background:#00ccff;
+  background:var(--color-light);
   border-radius:10px;
   transition:width 3s linear;
 }
