@@ -46,13 +46,14 @@ const stageData=[
   {"stage":"1", "count":"7", "loadMsg":"問題を作成しています…", "startMsg":"まずは肩慣らしです。"},
   {"stage":"2", "count":"9", "loadMsg":"あなたの回答を分析しています…", "startMsg":"少しレベルを上げます！"},
   {"stage":"3", "count":"6", "loadMsg":"あなたにあわせて調整しています…", "startMsg":"やりますね！さらにレベルアップ！"},
-  {"stage":"4", "count":"6", "loadMsg":"完全にあなたを理解しました…", "startMsg":"レベルMAX！最終ステージです！"},
+  {"stage":"4", "count":"7", "loadMsg":"完全にあなたを理解しました…", "startMsg":"レベルMAX！最終ステージです！"},
 ]
 </script>
 </head>
 <body>
 <audio id="bgm" src="bgm/Specification.mp3" autoplay loop></audio>
 <audio id="sound" src="bgm/seikai.mp3" ></audio>
+<audio id="sound2" src="bgm/seikai.mp3" ></audio>
 
 <div class="cutin">
 <div class="cutin-content">
@@ -370,6 +371,7 @@ function showQuizCountdown(){
   quizCountNum.textContent=quizCountdownCount;
   quizCountNum.style.opacity='1';
   quizCountNum.style.animation='moveUp 1s ease';
+  playSound('count');
   
   quizCountNum.addEventListener('animationend',()=>{
     quizCountNum.style.animation='none';
@@ -446,6 +448,8 @@ function suka(){
   const sukaText = document.getElementById('sukaText');
   sukaText.style.display = 'block';
 
+  playSound('huseikai');
+
   setTimeout(() => {
     sukaText.style.display = 'none';
     Array.from(buttonsDiv.children).forEach(btn=>{
@@ -495,6 +499,8 @@ function handleRenda(selected){
   img.classList.remove('shake');
   void img.offsetWidth; // ← 強制リフローで再適用可能に
   img.classList.add('shake');
+
+  playSound('hit');
     
   if (q.image2) {
     if(rendaCount % 2 === 0){
@@ -564,11 +570,10 @@ function handleAnswer(selected){
 
   document.getElementById('bgm').play();
   if(isCorrect){
-    document.getElementById('sound').src = 'bgm/seikai.mp3'
+    playSound('seikai', 'point');
   }else{
-    document.getElementById('sound').src = 'bgm/huseikai.mp3'
+    playSound('huseikai');
   }
-  document.getElementById('sound').play();
   
   if(isCorrect && q.answerstart > timeLeftMs){
     var gained = 0;
@@ -650,6 +655,12 @@ function rendaResult(){
       gained = 0;
       cutinTitle = "BAD"
       setRankStyle('blue');
+    }
+
+    if(cutinTitle != "BAD"){
+      playSound('seikai', 'point');
+    }else{
+      playSound('huseikai');
     }
     
     addScore(gained);
@@ -950,6 +961,8 @@ function showCountdown(){
   countNum.textContent=count;
   countNum.style.opacity='1';
   countNum.style.animation='moveUp 1s ease';
+
+  playSound('count');
   
   countNum.addEventListener('animationend',()=>{
     countNum.style.animation='none';
@@ -1005,6 +1018,19 @@ function endQuiz(){
   }, 3500);
 }
 
+// ==== 音声処理 ====
+function playSound(target){
+  playSound(target, '');
+}
+
+function playSound(target, target2){
+  document.getElementById('sound').src = 'bgm/'+target+'.mp3'
+  document.getElementById('sound').play();
+  if(target2!=''){
+    document.getElementById('sound2').src = 'bgm/'+target2+'.mp3'
+    document.getElementById('sound2').play();
+  }
+}
 
 // ==== スマホ向けボタン押下制御 ====
 function initButtonTouchEvents() {
