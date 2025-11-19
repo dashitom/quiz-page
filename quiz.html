@@ -52,8 +52,6 @@ const stageData=[
 </head>
 <body>
 <audio id="bgm" src="bgm/Specification.mp3" autoplay loop></audio>
-<audio id="sound" src="bgm/seikai.mp3" ></audio>
-<audio id="sound2" src="bgm/seikai.mp3" ></audio>
 
 <div class="cutin">
 <div class="cutin-content">
@@ -570,7 +568,8 @@ function handleAnswer(selected){
 
   document.getElementById('bgm').play();
   if(isCorrect){
-    playSound('seikai', 'point');
+    playSound('seikai');
+    playSound('point', 0.5);
   }else{
     playSound('huseikai');
   }
@@ -658,7 +657,8 @@ function rendaResult(){
     }
 
     if(cutinTitle != "BAD"){
-      playSound('seikai', 'point');
+      playSound('seikai');
+      playSound('point', 0.5);
     }else{
       playSound('huseikai');
     }
@@ -1019,18 +1019,13 @@ function endQuiz(){
 }
 
 // ==== 音声処理 ====
-function playSound(target){
-  playSound(target, '');
+function playSound(name, vol = 1.0){
+  const a = new Audio('bgm/' + name + '.mp3');
+  a.volume = vol;   // 0.0〜1.0
+  a.play();
+  a.addEventListener('ended', () => a.remove());
 }
 
-function playSound(target, target2){
-  document.getElementById('sound').src = 'bgm/'+target+'.mp3'
-  document.getElementById('sound').play();
-  if(target2!=''){
-    document.getElementById('sound2').src = 'bgm/'+target2+'.mp3'
-    document.getElementById('sound2').play();
-  }
-}
 
 // ==== スマホ向けボタン押下制御 ====
 function initButtonTouchEvents() {
