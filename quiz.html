@@ -10,6 +10,10 @@
 <script>
 // --- 問題データ ---
 const quizData=[
+    {"stage":"1","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"じゃんけんで勝ってください","image":"images/goo.png","image2":"","image2time":"","options":[{"text":"images/goo.png"},{"text":"images/tyoki.png"},{"text":"images/paa.png"},{"text":""}],"correct":"images/paa.png","answertime":2000000,"answerstart":2000000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+
+    {"stage":"2","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"あてはまるのは？","image":"images/jigsaw.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"A","answertime":2000000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+
   {"stage":"1","mode":"","quiztype":"計算力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"１＋１＝？","image":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":""},{"text":""}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"ピクセル数が多いのは？","image":"images/dot1.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"","quiztype":"パターン認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"？にあてはまるのは","image":"images/num1.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
@@ -416,7 +420,19 @@ function setButtons(){
   q.options.forEach((opt, i) => {
     if(opt.text != ''){
       const btn=document.createElement('button');
-      btn.innerHTML=opt.text;
+
+      if (opt.text.endsWith('.png')) {
+        btn.style.backgroundImage = `url(${opt.text})`;
+        btn.textContent = '';
+        
+//        btn.style.backgroundSize = 'contain';
+        btn.style.backgroundSize = 'calc(100% - 24px) auto';
+        btn.style.backgroundRepeat = 'no-repeat';
+        btn.style.backgroundPosition = 'center';
+        btn.style.padding = '10px'; 
+      } else {
+        btn.textContent = opt.text;
+      }
 
       if(opt.text.length==3){
         btn.classList.add('three-word');

@@ -271,7 +271,7 @@ body::before {
 }
 
 .question-box img{
-  max-width:25vh; max-height:25vh; margin-top:1vh; border-radius:8px;
+  max-width:80vw; max-height:25vh; margin-top:1vh; border-radius:8px;
 }
 
 @keyframes shake {
@@ -494,6 +494,9 @@ button.pressed{
 
 button img{
   max-width:60%; margin-top:0.5vh; border-radius:6px;
+}
+button.pressed {
+  /*filter: invert(1);    押した瞬間に白反転 */
 }
 
 
