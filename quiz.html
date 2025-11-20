@@ -56,6 +56,11 @@ const stageData=[
 </head>
 <body>
 <audio id="bgm" src="bgm/Specification.mp3" autoplay loop></audio>
+<audio id="sound_seikai" src="bgm/seikai.mp3"></audio>
+<audio id="sound_huseikai" src="bgm/huseikai.mp3"></audio>
+<audio id="sound_point" src="bgm/point.mp3"></audio>
+<audio id="sound_hit" src="bgm/hit.mp3"></audio>
+<audio id="sound_count" src="bgm/count.mp3"></audio>
 
 <div class="cutin">
 <div class="cutin-content">
@@ -153,7 +158,7 @@ const stageData=[
 </div>
 
 
-<div id="stage-overlay" >
+<div id="stage-overlay" style="display:none;">
   <div id="stage-overlay-title" >
     <div id="stage-title" >STAGE 1</div>
     <div id="stage-msg" ></div>
@@ -425,7 +430,6 @@ function setButtons(){
         btn.style.backgroundImage = `url(${opt.text})`;
         btn.textContent = '';
         
-//        btn.style.backgroundSize = 'contain';
         btn.style.backgroundSize = 'calc(100% - 24px) auto';
         btn.style.backgroundRepeat = 'no-repeat';
         btn.style.backgroundPosition = 'center';
@@ -585,7 +589,7 @@ function handleAnswer(selected){
   document.getElementById('bgm').play();
   if(isCorrect){
     playSound('seikai');
-    playSound('point', 0.5);
+    playSound('point', 0.2);
   }else{
     playSound('huseikai');
   }
@@ -674,7 +678,7 @@ function rendaResult(){
 
     if(cutinTitle != "BAD"){
       playSound('seikai');
-      playSound('point', 0.5);
+      playSound('point', 0.2);
     }else{
       playSound('huseikai');
     }
@@ -964,8 +968,10 @@ function accelerateBackground() {
   setTimeout(() => animateDuration(fastDuration, originalDuration, decelTime), accelTime);
 }
 
-createProgressSegments(1);
-showNextStage();
+document.body.addEventListener('click', () => {
+  createProgressSegments(1);
+  showNextStage();
+}, { once:true });
 
 // --- カウントダウン処理 ---
 const overlay=document.getElementById('countdown-overlay');
@@ -1036,10 +1042,9 @@ function endQuiz(){
 
 // ==== 音声処理 ====
 function playSound(name, vol = 1.0){
-  const a = new Audio('bgm/' + name + '.mp3');
+  const a = document.getElementById('sound_'+name);
   a.volume = vol;   // 0.0〜1.0
   a.play();
-  a.addEventListener('ended', () => a.remove());
 }
 
 
