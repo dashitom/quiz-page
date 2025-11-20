@@ -12,11 +12,11 @@
 // --- 問題データ ---
 const quizData=[
   {"stage":"1","mode":"","quiztype":"計算力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"１＋１＝？","image":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":""},{"text":""}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"1","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"ピクセル数が多いのは？","image":"images/dot1.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"1","mode":"","quiztype":"パターン認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"？にあてはまるのは","image":"images/num1.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"1","mode":"renda","quiztype":"運動神経伝達力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"連打して！","image":"images/yubirenda.png","image2":"","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10},
-  {"stage":"1","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"文字数が多いのは？","image":"images/ty.png","image2":"","image2time":"","options":[{"text":"T"},{"text":"Y"},{"text":""},{"text":""}],"correct":"Y","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"1","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"じゃんけんで勝ってください","image":"images/goo.png","image2":"","image2time":"","options":[{"text":"images/goo.png"},{"text":"images/tyoki.png"},{"text":"images/paa.png"},{"text":""}],"correct":"images/paa.png","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"2","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"ピクセル数が多いのは？","image":"images/dot1.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"3","mode":"","quiztype":"パターン認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"？にあてはまるのは","image":"images/num1.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"4","mode":"renda","quiztype":"運動神経伝達力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"連打して！","image":"images/yubirenda.png","image2":"","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10},
+  {"stage":"5","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"文字数が多いのは？","image":"images/ty.png","image2":"","image2time":"","options":[{"text":"T"},{"text":"Y"},{"text":""},{"text":""}],"correct":"Y","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  /*{"stage":"1","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"じゃんけんで勝ってください","image":"images/goo.png","image2":"","image2time":"","options":[{"text":"images/goo.png"},{"text":"images/tyoki.png"},{"text":"images/paa.png"},{"text":""}],"correct":"images/paa.png","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"mikiri","quiztype":"運動神経伝達力","beforeTxt":"もぐらが出たらたたけ！","beforeImg":"images/mogu1.png","beforeMusic":"","beforeTime":"8000","question":"もぐらが出たらたたけ！","image":"images/mogu2.png","image2":"","image2time":"","options":[{"text":"たたく"},{"text":""},{"text":""},{"text":""}],"correct":"たたく","answertime":4000,"answerstart":4000,"perfect":3500,"excellent":3000,"great":2000,"good":1000,"safe":0},
   {"stage":"2","mode":"","quiztype":"計算力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"３５－３０＝？","image":"","image2":"","image2time":"","options":[{"text":"4"},{"text":"5"},{"text":"6"},{"text":"7"}],"correct":"5","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"2","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"ピクセル数が多いのは？","image":"images/dot2.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
@@ -41,24 +41,21 @@ const quizData=[
   {"stage":"4","mode":"renda","quiztype":"運動神経伝達力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"連打して！","image":"images/pico_up.png","image2":"images/pico_down.png","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10},
   {"stage":"4","mode":"","quiztype":"確認","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"あなたは30才以上ですか？","image":"","image2":"","image2time":"","options":[{"text":"はい"},{"text":"いいえ"},{"text":""},{"text":""}],"correct":"はい","answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500,"safe":0},
   {"stage":"4","mode":"","quiztype":"最終確認","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"あなたは吉田達彦ですね？","image":"","image2":"","image2time":"","options":[{"text":"はい"},{"text":"はい"},{"text":""},{"text":""}],"correct":"はい","answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500,"safe":0},
+  */
 ];
 
 // --- ステージ情報 ---
 const stageData=[
   {"stage":"1", "loadMsg":"問題を作成しています…", "startMsg":"まずは肩慣らしです。"},
   {"stage":"2", "loadMsg":"あなたの回答を分析しています…", "startMsg":"少しレベルを上げます！"},
-  {"stage":"3", "loadMsg":"あなたにあわせて調整しています…", "startMsg":"やりますね！さらにレベルアップ！"},
-  {"stage":"4", "loadMsg":"完全にあなたを理解しました…", "startMsg":"レベルMAX！最終ステージです！"},
+  {"stage":"3", "loadMsg":"さらに分析しています…", "startMsg":"やりますね！さらにレベルアップ！"},
+  {"stage":"4", "loadMsg":"あなたにあわせて調整しています…", "startMsg":"あなたに合った問題を作成しました！"},
+  {"stage":"5", "loadMsg":"完全にあなたを理解しました…", "startMsg":"レベルMAX！最終ステージです！"},
 ]
 </script>
 </head>
 <body>
 <audio id="bgm" src="bgm/Specification.mp3" loop></audio>
-<audio id="sound_seikai" src="bgm/seikai.mp3"></audio>
-<audio id="sound_huseikai" src="bgm/huseikai.mp3"></audio>
-<audio id="sound_point" src="bgm/point.mp3"></audio>
-<audio id="sound_hit" src="bgm/hit.mp3"></audio>
-<audio id="sound_count" src="bgm/count.mp3"></audio>
 
 <div id="first-confirm" >
   <b>AI脳トレへようこそ</b><br>
@@ -1080,9 +1077,31 @@ function endQuiz(){
 }
 
 // ==== 音声処理 ====
+
+/*
+<audio id="sound_seikai" src="bgm/seikai.mp3"></audio>
+<audio id="sound_huseikai" src="bgm/huseikai.mp3"></audio>
+<audio id="sound_point" src="bgm/point.mp3"></audio>
+<audio id="sound_hit" src="bgm/hit.mp3"></audio>
+<audio id="sound_count" src="bgm/count.mp3"></audio>
+*/
+
+const soundCache = {};
+preloadSounds(['seikai','huseikai','point','hit','count']);
+
+function preloadSounds(list){
+  list.forEach(name=>{
+    const a = new Audio('bgm/' + name + '.mp3');
+    a.preload = 'auto';
+    soundCache[name] = a;
+  });
+}
+
 function playSound(name, vol = 1.0){
-  const a = document.getElementById('sound_'+name);
-  a.currentTime = 0;
+  /*const a = document.getElementById('sound_'+name);
+  const a = new Audio('bgm/sound_' + name + '.mp3');
+  a.currentTime = 0;*/
+  const a = soundCache[name].cloneNode();
   a.volume = vol;   // 0.0〜1.0
   a.play();
 }
