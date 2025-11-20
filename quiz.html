@@ -907,6 +907,7 @@ function showNextStage(){
           //BGMスピードを変更
           const bgm = document.getElementById('bgm');
           bgm.playbackRate = 0.9 + 0.1 * nowStage.stage;
+          bgm.volume = 1.0;
           bgm.play();
 
           count = 3;
@@ -993,9 +994,11 @@ function accelerateBackground() {
 
 function init(){
   
-          const bgm = document.getElementById('bgm');
-          bgm.playbackRate = 0.9;
-          bgm.play();
+  //後からだと鳴らないので0で流しておく
+  playSound('count', 0);
+  const bgm = document.getElementById('bgm');
+  bgm.volume = 0;
+  bgm.play();
 
   // stageData.count を quizData から自動生成
   const stageCounts = quizData.reduce((acc, q) => {
