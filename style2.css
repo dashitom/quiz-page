@@ -234,9 +234,9 @@ body::before {
 .score-value.bump {
   transform: scale(1.2);
   text-shadow:
-    0 0 8px rgba(180,220,255,1),
-    0 0 16px rgba(120,200,255,0.9),
-    0 0 28px rgba(100,180,255,0.7);
+    0 0 8px rgba(255,255,255,0.9),
+    0 0 16px rgba(255,255,255,0.8),
+    0 0 28px rgba(255,255,255,0.6);
 }
 
 /* === クイズジャンルヘッダー === */
@@ -495,10 +495,6 @@ button.pressed{
 button img{
   max-width:60%; margin-top:0.5vh; border-radius:6px;
 }
-button.pressed {
-  /*filter: invert(1);    押した瞬間に白反転 */
-}
-
 
 .banner{
   flex: 1;
