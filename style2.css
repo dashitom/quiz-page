@@ -1,27 +1,38 @@
 :root {
-  --color-dark: #002060;
-  --color-light: #3399FF;
-  --color-bg-top: #3399FF;
-  --color-bg-bottom: #0056b3;
   --color-shadow: #555555;
   --color-text: white;
   --color-mikiri: #B8860B;
   --color-renda: #953735;
-
-  --color-dark-2: #005020;      /* 深いグリーン系の濃色 */
-  --color-light-2: #33cc66;     /* 明るい黄緑寄りのライトカラー */
-  --color-bg-top-2: #33cc66;    /* 上部グラデの明るめグリーン */
-  --color-bg-bottom-2: #007a3d; /* 下部グラデの締め色 */
-  /* -3 Orange */
-  --color-dark-3: #7a3d00;
-  --color-light-3: #ffa64d;
-  --color-bg-top-3: #ffb366;
-  --color-bg-bottom-3: #cc5c00;
-  /* -4 Red */
-  --color-dark-4: #7a0010;
-  --color-light-4: #ff6675;
-  --color-bg-top-4: #ff808c;
-  --color-bg-bottom-4: #b3001f;
+  /* -1 blue */
+  --color-dark: #002060;
+  --color-light: #3399FF;
+  --color-bg-top: #3399FF;
+  --color-bg-bottom: #0056b3;
+  /* -2 green */
+  --color-dark-2: #005020;   
+  --color-light-2: #33cc66;    
+  --color-bg-top-2: #33cc66;  
+  --color-bg-bottom-2: #007a3d; 
+  /* -3 Yellow 
+  --color-dark-3: #7a7500;
+  --color-light-3: #fff24d;
+  --color-bg-top-3: #fff266;
+  --color-bg-bottom-3: #b3a800;*/
+  /* -3 Yellow */
+  --color-dark-3: #6f6a00;
+  --color-light-3: #f2e36b;
+  --color-bg-top-3: #f2e37f;
+  --color-bg-bottom-3: #a89f00;
+  /* -4 Orange */
+  --color-dark-4: #7a3d00;
+  --color-light-4: #ffa64d;
+  --color-bg-top-4: #ffb366;
+  --color-bg-bottom-4: #cc5c00;
+  /* -5 Red */
+  --color-dark-5: #7a0010;
+  --color-light-5: #ff6675;
+  --color-bg-top-5: #ff808c;
+  --color-bg-bottom-5: #b3001f;
 
   
   --pastel-blue:   #6ec5ff;

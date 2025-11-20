@@ -992,6 +992,10 @@ function accelerateBackground() {
 }
 
 function init(){
+  
+          const bgm = document.getElementById('bgm');
+          bgm.playbackRate = 0.9;
+          bgm.play();
 
   // stageData.count を quizData から自動生成
   const stageCounts = quizData.reduce((acc, q) => {
