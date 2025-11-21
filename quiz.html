@@ -33,7 +33,7 @@ const stageData=[
 <audio id="se_count" src="bgm/count.mp3"></audio>
 
 <div id="first-confirm" >
-  <b>AI脳トレへようこそ ver6</b><br>
+  <b>AI脳トレへようこそ ver7</b><br>
   このアプリはあなたの回答をもとに<br>
   あなただけの脳トレーニングを<br>
   実行します。
@@ -1090,7 +1090,14 @@ function playSound(name, vol = 1.0){
     se_count.pause();
     se_count.volume = vol;
     se_count.currentTime = 0;
-    se_count.play();
+    se_count.play().then(()=>{
+      // 再生が終わったら自動でリセットして pause
+      se_count.addEventListener('ended', () => {
+        se_count.currentTime = 0;
+        se_count.pause();
+      }, { once: true });
+    }).catch(()=>{});
+
   }else if(name == 'bgm'){
     bgm.volume = vol;
     bgm.currentTime = 0;
