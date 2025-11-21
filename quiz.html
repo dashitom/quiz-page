@@ -32,7 +32,7 @@ const stageData=[
 <audio id="bgm" src="bgm/Specification.mp3" loop></audio>
 
 <div id="first-confirm" >
-  <b>AI脳トレへようこそ ver3</b><br>
+  <b>AI脳トレへようこそ ver4</b><br>
   このアプリはあなたの回答をもとに<br>
   あなただけの脳トレーニングを<br>
   実行します。
@@ -976,10 +976,11 @@ function init(){
   
   //後からだと鳴らないので一瞬流しておく
   const bgm = document.getElementById('bgm');
-  bgm.volume = 0.1;
-  //bgm.play();
+  bgm.volume = 0.0;
+  bgm.play();
+  bgm.pause();
 
-  playSound('Specification', 0.0);
+  //playSound('Specification', 0.0);
 
   // stageData.count を quizData から自動生成
   const stageCounts = quizData.reduce((acc, q) => {
