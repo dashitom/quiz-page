@@ -32,7 +32,7 @@ const stageData=[
 <audio id="bgm" src="bgm/Specification.mp3" loop></audio>
 
 <div id="first-confirm" >
-  <b>AI脳トレへようこそ ver2</b><br>
+  <b>AI脳トレへようこそ ver3</b><br>
   このアプリはあなたの回答をもとに<br>
   あなただけの脳トレーニングを<br>
   実行します。
@@ -188,7 +188,7 @@ const loadingProgress=document.getElementById('loadingProgress');
 // JSON内のすべての画像URLを抽出してプリロード
 window.addEventListener("load", () => {
   //音声プリロード
-  preloadSounds(['count','point','seikai','huseikai','hit']);
+  preloadSounds(['Specification', 'count','point','seikai','huseikai','hit']);
 
   //初回確認を表示し、裏でプリロード
   document.getElementById('first-confirm').style.opacity = '1';
@@ -977,7 +977,9 @@ function init(){
   //後からだと鳴らないので一瞬流しておく
   const bgm = document.getElementById('bgm');
   bgm.volume = 0.1;
-  bgm.play();
+  //bgm.play();
+
+  playSound('Specification', 0.0);
 
   // stageData.count を quizData から自動生成
   const stageCounts = quizData.reduce((acc, q) => {
