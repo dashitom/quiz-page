@@ -11,7 +11,7 @@
 <script>
 // --- 問題データ ---
 const quizData=[
-  {"stage":"1","mode":"","quiztype":"計算力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"１＋１＝？","image":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":""},{"text":""}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"1","mode":"kioku","quiztype":"記憶力","beforeTxt":"画像を覚えて！","beforeImg":"images/animals.png","beforeMusic":"","beforeTime":"5000","question":"野鳥の数は？","image":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":""},{"text":""}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"ピクセル数が多いのは？","image":"images/dot1.png","image2":"","image2time":"","options":[{"text":"黒"},{"text":"黄"},{"text":""},{"text":""}],"correct":"黄","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"","quiztype":"パターン認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"？にあてはまるのは","image":"images/num1.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"2","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"renda","quiztype":"運動神経伝達力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"連打して！","image":"images/yubirenda.png","image2":"","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10},
@@ -23,10 +23,11 @@ const quizData=[
   {"stage":"2","mode":"","quiztype":"空間認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"進行方向は？","image":"images/bus_left.png","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"左","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"2","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"若いのは？","image":"images/otama.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"A","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"2","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"あてはまるのは？","image":"images/jigsaw.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"A","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"2","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"じゃんけんで負けてください","image":"images/tyoki1.png","image2":"","image2time":"","options":[{"text":"images/goo.png"},{"text":"images/tyoki.png"},{"text":"images/paa.png"},{"text":""}],"correct":"images/paa.png","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"3","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"じゃんけんで負けてください","image":"images/tyoki1.png","image2":"","image2time":"","options":[{"text":"images/goo.png"},{"text":"images/tyoki.png"},{"text":"images/paa.png"},{"text":""}],"correct":"images/paa.png","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"3","mode":"renda","quiztype":"運動神経伝達力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"連打して！","image":"images/karate_left.png","image2":"images/karate_right.png","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10},
   {"stage":"3","mode":"","quiztype":"空間認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"進行方向は？","image":"images/bus_right.png","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"3","mode":"","quiztype":"問題解決力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"片方しか助けられない。<br>どっちを助ける？","image":"","image2":"","image2time":"","options":[{"text":"母親"},{"text":"恋人"},{"text":""},{"text":""}],"correct":null,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"3","mode":"mikiri","quiztype":"運動神経伝達力","beforeTxt":"On your marks.","beforeImg":"images/OnYourMarks.png","beforeMusic":"","beforeTime":"5000","question":"On your marks.  Set.","image":"images/start1.png","image2":"","image2time":"","options":[{"text":"START"},{"text":""},{"text":""},{"text":""}],"correct":"START","answertime":4000,"answerstart":4000,"perfect":3500,"excellent":3000,"great":2000,"good":1000,"safe":0},
   {"stage":"3","mode":"","quiztype":"記憶力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"今何問目？","image":"","image2":"","image2time":"","options":[{"text":"14"},{"text":"15"},{"text":"16"},{"text":"17"}],"correct":"18","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"4","mode":"","quiztype":"パターン認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"？にあてはまるのは","image":"images/num2.png","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"1","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"4","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"若いのは？","image":"images/keropen.png","image2":"","image2time":"","options":[{"text":"A"},{"text":"B"},{"text":""},{"text":""}],"correct":"B","answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
@@ -57,16 +58,17 @@ const stageData=[
 <audio id="se_count" src="bgm/count.mp3"></audio>
 
 <div id="first-confirm" >
-  <b>AI脳トレへようこそ ver9</b><br>
+  <br>
+  <b>AI脳トレへようこそ ver10</b><br>
   このアプリはあなたの回答をもとに<br>
-  あなただけの脳トレーニングを<br>
-  実行します。
+  あなただけの脳トレを提供します。
   <br>
   <br>
-  一部の問題は音声を使用して出題されます。<br>
-  ヘッドホンを利用するか、ミュートの解除をお願いします。<br>
+  一部の問題は音声を使用します。<br>
+  ヘッドホンを利用するか、<br>
+  ミュートの解除をお願いします。<br>
   <br>
-  このウインドウはもうちょっとカッコよくします
+  このウインドウはもっとカッコよくします
   <br>
   <div id="first-confirm-buttons" >
     <button onclick="this.classList.add('pressed');init();">START</button>
@@ -364,7 +366,7 @@ function showQuestion(){
     startQuizCountdown();
 
   }else if(q.beforeTxt != '' || q.beforeImg != ''){
-    questionBox.innerHTML=q.question + (q.beforeImg?`<br><img src="${q.beforeImg}" class="quiz-img">`:"");
+    questionBox.innerHTML=q.beforeTxt + (q.beforeImg?`<br><img src="${q.beforeImg}" class="quiz-img">`:"");
     hideTimer();
     
     if(q.mode=='mikiri'){
@@ -375,7 +377,11 @@ function showQuestion(){
     }
     
     setTimeout(()=>{
-      showQuestionMain();
+      if(q.mode=='kioku'){
+        startQuizCountdown();
+      }else{
+        showQuestionMain();
+      }
     },q.beforeTime);
     
   }else{
@@ -898,11 +904,6 @@ function showNextStage(){
 
         //ステージ背景色の変更
         if(nowStage.stage > 1){
-          //BGMスピードを変更
-          bgm.playbackRate = 0.9 + 0.1 * nowStage.stage;
-          bgm.volume = 1.0;
-          bgm.play();
-
           applyColor('--color-dark', '--color-dark-' + nowStage.stage);
           applyColor('--color-light', '--color-light-' + nowStage.stage);
           //accelerateBackground(); //背景モーションを加速
@@ -910,6 +911,10 @@ function showNextStage(){
         }
 
         setTimeout(() => {
+          if(nowStage.stage > 1){
+            //BGMを徐々にフェードアウト
+            //fadeOutAudio(bgm, 3000);
+          }
           count = 3;
           showCountdown();
         }, 2000);
@@ -1058,9 +1063,9 @@ function showCountdown(){
         document.getElementById('timer-container').style.display = "";
         document.getElementById('buttons').style.display = "";
         
-        if(nowStage.stage=='1'){
-          playSound('bgm');
-        }
+        //BGMスピードを変更
+        bgm.playbackRate = 0.9 + 0.1 * nowStage.stage;
+        playSound('bgm');
 
         showQuestion();
       },500);
@@ -1071,6 +1076,8 @@ function showCountdown(){
 
 function endQuiz(){
   stopTimer();
+
+  fadeOutAudio(bgm,3500);
   
   // 白フェード用のdivを生成
   const fade = document.createElement('div');
@@ -1124,7 +1131,7 @@ function playSound(name, vol = 1.0){
 
   }else if(name == 'bgm'){
     bgm.volume = vol;
-    bgm.currentTime = 0;
+    //bgm.currentTime = 0;
     bgm.play();
   }else{
     const a = soundCache[name].cloneNode();
@@ -1132,6 +1139,20 @@ function playSound(name, vol = 1.0){
     a.play();
   }
 }
+
+function fadeOutAudio(audio, duration = 500){
+  const step = 50;
+  const volDown = audio.volume / (duration / step);
+  const timer = setInterval(() => {
+    audio.volume = Math.max(0, audio.volume - volDown);
+    if(audio.volume <= 0){
+      clearInterval(timer);
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  }, step);
+}
+
 
 
 // ==== スマホ向けボタン押下制御 ====
