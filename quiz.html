@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="stylesheet" href="style2.css">
+<link rel="stylesheet" href="style.css">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>AI脳トレ</title>
 <script>
@@ -993,12 +993,15 @@ function accelerateBackground() {
 }
 
 function init(){
+  //音声無効化を解除
+  const a = new Audio();
+  a.play().catch(()=>{});
   
-  //後からだと鳴らないので0で流しておく
-  playSound('count', 0);
+  //後からだと鳴らないので一瞬流しておく
   const bgm = document.getElementById('bgm');
-  bgm.volume = 0;
-  bgm.play();
+  //bgm.volume = 0;
+  //bgm.play();
+  //bgm.stop();
 
   // stageData.count を quizData から自動生成
   const stageCounts = quizData.reduce((acc, q) => {
