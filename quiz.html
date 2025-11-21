@@ -33,7 +33,7 @@ const stageData=[
 <audio id="se_count" src="bgm/count.mp3"></audio>
 
 <div id="first-confirm" >
-  <b>AI脳トレへようこそ ver5</b><br>
+  <b>AI脳トレへようこそ ver6</b><br>
   このアプリはあなたの回答をもとに<br>
   あなただけの脳トレーニングを<br>
   実行します。
@@ -874,6 +874,11 @@ function showNextStage(){
 
         //ステージ背景色の変更
         if(nowStage.stage > 1){
+          //BGMスピードを変更
+          bgm.playbackRate = 0.9 + 0.1 * nowStage.stage;
+          bgm.volume = 1.0;
+          bgm.play();
+
           applyColor('--color-dark', '--color-dark-' + nowStage.stage);
           applyColor('--color-light', '--color-light-' + nowStage.stage);
           //accelerateBackground(); //背景モーションを加速
@@ -881,12 +886,6 @@ function showNextStage(){
         }
 
         setTimeout(() => {
-          //BGMスピードを変更
-          const bgm = document.getElementById('bgm');
-          bgm.playbackRate = 0.9 + 0.1 * nowStage.stage;
-          bgm.volume = 1.0;
-          bgm.play();
-
           count = 3;
           showCountdown();
         }, 2000);
@@ -976,7 +975,6 @@ function init(){
   a.play().catch(()=>{});
   
   //後からだと鳴らないので一瞬流しておく
-  const bgm = document.getElementById('bgm');
   bgm.volume = 0.0;
   bgm.play();
   bgm.pause();
@@ -1036,6 +1034,10 @@ function showCountdown(){
         document.getElementById('timer-container').style.display = "";
         document.getElementById('buttons').style.display = "";
         
+        if(nowStage.stage=='1'){
+          playSound('bgm');
+        }
+
         showQuestion();
       },500);
     }
@@ -1070,15 +1072,8 @@ function endQuiz(){
 }
 
 // ==== 音声処理 ====
-
-/*
-<audio id="sound_seikai" src="bgm/seikai.mp3"></audio>
-<audio id="sound_huseikai" src="bgm/huseikai.mp3"></audio>
-<audio id="sound_point" src="bgm/point.mp3"></audio>
-<audio id="sound_hit" src="bgm/hit.mp3"></audio>
-<audio id="sound_count" src="bgm/count.mp3"></audio>
-*/
-
+const bgm = document.getElementById('bgm');
+const se_count = document.getElementById('se_count');
 const soundCache = {};
 
 function preloadSounds(list){
@@ -1092,16 +1087,19 @@ function preloadSounds(list){
 function playSound(name, vol = 1.0){
 
   if(name == 'count'){
-    const se_count = document.getElementById('se_count');
     se_count.pause();
     se_count.volume = vol;
     se_count.currentTime = 0;
     se_count.play();
+  }else if(name == 'bgm'){
+    bgm.volume = vol;
+    bgm.currentTime = 0;
+    bgm.play();
+  }else{
+    const a = soundCache[name].cloneNode();
+    a.volume = vol;   // 0.0〜1.0
+    a.play();
   }
-
-  const a = soundCache[name].cloneNode();
-  a.volume = vol;   // 0.0〜1.0
-  a.play();
 }
 
 
