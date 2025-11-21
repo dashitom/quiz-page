@@ -30,9 +30,10 @@ const stageData=[
 </head>
 <body>
 <audio id="bgm" src="bgm/Specification.mp3" loop></audio>
+<audio id="se_count" src="bgm/count.mp3"></audio>
 
 <div id="first-confirm" >
-  <b>AI脳トレへようこそ ver4</b><br>
+  <b>AI脳トレへようこそ ver5</b><br>
   このアプリはあなたの回答をもとに<br>
   あなただけの脳トレーニングを<br>
   実行します。
@@ -188,7 +189,7 @@ const loadingProgress=document.getElementById('loadingProgress');
 // JSON内のすべての画像URLを抽出してプリロード
 window.addEventListener("load", () => {
   //音声プリロード
-  preloadSounds(['Specification', 'count','point','seikai','huseikai','hit']);
+  preloadSounds(['count','point','seikai','huseikai','hit']);
 
   //初回確認を表示し、裏でプリロード
   document.getElementById('first-confirm').style.opacity = '1';
@@ -980,7 +981,10 @@ function init(){
   bgm.play();
   bgm.pause();
 
-  //playSound('Specification', 0.0);
+  const se_count = document.getElementById('se_count');
+  se_count.volume = 0.0;
+  se_count.play();
+  se_count.pause();
 
   // stageData.count を quizData から自動生成
   const stageCounts = quizData.reduce((acc, q) => {
@@ -1086,9 +1090,15 @@ function preloadSounds(list){
 }
 
 function playSound(name, vol = 1.0){
-  /*const a = document.getElementById('sound_'+name);
-  const a = new Audio('bgm/sound_' + name + '.mp3');
-  a.currentTime = 0;*/
+
+  if(name == 'count'){
+    const se_count = document.getElementById('se_count');
+    se_count.pause();
+    se_count.volume = vol;
+    se_count.currentTime = 0;
+    se_count.play();
+  }
+
   const a = soundCache[name].cloneNode();
   a.volume = vol;   // 0.0〜1.0
   a.play();
