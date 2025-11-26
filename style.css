@@ -496,6 +496,11 @@ button{
   white-space: nowrap;     /* 改行を禁止 */
   text-overflow: ellipsis; /* はみ出しを防止 */
   font-size: clamp(1rem, 2.5rem, 3rem); /* ←自動スケール 最小、推奨、最大 */
+  background-Size:calc(100% - 24px) auto;
+}
+
+.buttons.two-row button{
+  background-Size:calc(8vh), auto;
 }
 
 button.three-word{
@@ -503,7 +508,7 @@ button.three-word{
 }
 
 button.pressed{
-  background:var(--color-dark);
+  background-color:var(--color-dark);
   color:var(--color-text);
   transform:translateY(6px);
   box-shadow:0 2px #002f66;
@@ -548,6 +553,18 @@ button.pressed{
 
 button img{
   max-width:60%; margin-top:0.5vh; border-radius:6px;
+}
+
+button.imgbtn{
+  background-Repeat:no-repeat;
+  background-Position:center;
+  padding:10px; 
+}
+button.imgbtn.pressed{
+  background-Repeat:no-repeat;
+  background-Position:center;
+  padding:10px; 
+  background-color:#FFFFFF;
 }
 
 .banner{
