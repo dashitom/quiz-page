@@ -1225,7 +1225,7 @@ function playSound(name, vol = 1.0){
     se_lvup.pause();
     se_lvup.volume = vol;
     se_lvup.currentTime = 0;
-    se_cose_lvupunt.play().then(()=>{
+    se_lvup.play().then(()=>{
       // 再生が終わったら自動でリセットして pause
       se_lvup.addEventListener('ended', () => {
         se_lvup.currentTime = 0;
