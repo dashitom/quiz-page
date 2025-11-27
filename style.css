@@ -307,11 +307,11 @@ body::before {
 
 /* === 問題エリア === */
 .question-box{
-  flex:3;
-  height: 35vh;
+  /*flex:3;*/
+  height: 30vh;
   background:white;
   border-radius:10px;
-  padding:1vh 2vw;
+  padding:2vh 2vw;
   text-align:center;
   font-size:1.3rem;
   font-weight:bold;
@@ -351,7 +351,7 @@ body::before {
   top: 35vh;
   transform: translateY(-50%);
   width: 15px;
-  height: 25vh;
+  height: 20vh;
   background: #FFF;
   border: 3px solid var(--color-dark);
   border-radius: 0px;
@@ -394,7 +394,8 @@ body::before {
 
 /* === タイマー === */
 .timer-container{
-  flex:0.8;
+  /*flex:0.8;*/
+  height:8vh;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -440,7 +441,7 @@ body::before {
 .buttons{
   flex: 1 1 auto;
   display:flex;
-  height: 10vh;
+  height: 20vh;
   width: 100%;
   justify-content:space-between;
   align-items:stretch;
@@ -500,7 +501,7 @@ button{
 }
 
 .buttons.two-row button{
-  background-Size:calc(8vh), auto;
+  background-Size:calc(16vh), auto;
 }
 
 button.three-word{
