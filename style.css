@@ -441,7 +441,7 @@ body::before {
 .buttons{
   flex: 1 1 auto;
   display:flex;
-  height: 20vh;
+  height: 15vh;
   width: 100%;
   justify-content:space-between;
   align-items:stretch;
@@ -453,6 +453,7 @@ body::before {
 
 .buttons.two-row {
   display: grid;
+  height: 20vh;
   grid-template-columns: repeat(2, 1fr); /* 2列 */
   grid-template-rows: repeat(2, 1fr);    /* 2行 */
   width: 100%;
@@ -652,8 +653,9 @@ button.imgbtn.pressed{
 
 /* カットイン〇×画像 */
 .cutin-img {
-  width:20vh; 
-  height:20vh; 
+  width:80vw; 
+  height:25vh; 
+  object-fit: contain; /* 比率維持で収める */
   margin-top:1vh; 
   margin-bottom:0vh; 
   animation: redCircleExpand 0.4s ease-out forwards;
