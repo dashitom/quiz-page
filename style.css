@@ -130,7 +130,7 @@ body::before {
   position:fixed;
   width:80vw;
   top:5vw;
-  height:80vh;
+  height:85vh;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -138,10 +138,11 @@ body::before {
   z-index:3000;
   color:white;
   background:rgba(255,255,255,0.15);
-  border:1px solid rgba(255,255,255,0.6);
+  border:1.5px solid rgba(255,255,255,1.0);
   border-radius:8px;
-  padding:1.2em;
+  padding:1em 1.2em;
   font-size:1rem;
+  font-weight: bold;
   line-height:1.6;
   box-shadow:0 3px 6px rgba(0,0,0,0.15);
 
@@ -149,6 +150,69 @@ body::before {
   transform: translateY(20px);
   transition: transform 0.8s ease, opacity 0.8s ease;
 }
+
+.first-confirm-title{
+  color: white;
+  font-size:1.2rem;
+  margin-bottom: 10px;
+}
+.first-confirm-title::before {
+  content: "";
+  position: absolute;
+  top: calc(5vw + 1em - 0.25em);
+  left: 0;
+  width: 80vw;
+  height: 1.5em;            /* 高さは文字サイズに合わせる */
+  transform: translateY(-50%); /* 縦中央に揃える */
+  background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.2), rgba(0,0,0,0));
+  z-index: -1;               /* 背景として文字の下に配置 */
+  border-radius: 4px;        /* 角を丸めたい場合 */
+}
+
+
+.highlight {
+  font-weight: bold;
+  color: #ffc840;
+  
+  display: inline;       /* インラインにする */
+  white-space: normal;   /* 改行を許可しない */
+}
+
+.first-confirm-image {
+  width: 80vw;
+  border:1px solid rgba(255,255,255,0.6);
+  border-radius:8px;
+  margin-bottom: 10px;
+}
+
+.divider {
+  border: none;
+  border-bottom: 1.5px solid #fff; 
+  width: 80vw;                   
+  margin: 15px auto;            
+}
+
+.audio-info {
+  display: flex;
+  align-items: flex-start; /* アイコンを上に揃える */
+  gap: 8px;                /* アイコンとテキストの間隔 */
+  margin-top: 10px;
+}
+
+.audio-info .icon {
+  width: 24vw;  /* 正方形サイズ */
+  height: 24vw;
+  flex-shrink: 0; /* アイコンの縮小を防ぐ */
+  border:1px solid rgba(255,255,255,0.6);
+  border-radius:8px;
+}
+
+.audio-info .audio-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* 行間の調整 */
+}
+
 
 #first-confirm button {
     width: 50vw;
@@ -199,6 +263,8 @@ body::before {
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   z-index: 1500;
   backdrop-filter: blur(3px);
+
+  opacity: 0;
 }
 
 .stage-right {
