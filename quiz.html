@@ -241,9 +241,8 @@ window.addEventListener("load", () => {
 
   setTimeout(() => {
     //初回確認を表示し、裏でプリロード
-    document.getElementById('first-confirm').style.opacity = '1';
-    document.getElementById('first-confirm').style.transform = 'translateY(0)';
-  }, 1500);
+    document.getElementById('first-confirm').classList.add('show');
+  }, 0);
 
   const imageUrls = new Set();
   imageUrls.add('images/maru.png');
@@ -1119,12 +1118,13 @@ function init(){
   });
 
   setTimeout(() => {
-    document.getElementById('first-confirm').style.display = 'none';
-
-
     document.body.classList.remove('grid-restart');
+    document.getElementById('first-confirm').classList.remove('show');
+
     void document.body.offsetWidth; // 再生リセット
+
     document.body.classList.add('grid-restart');
+    document.getElementById('first-confirm').classList.add('hide');
   }, 500);
   
   setTimeout(() => {
