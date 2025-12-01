@@ -89,6 +89,7 @@ body {
     repeating-linear-gradient(90deg, rgba(255,255,255,0.3) 0 1px, transparent 1px 40px),
     repeating-linear-gradient(0deg, rgba(255,255,255,0.3) 0 1px, transparent 1px 40px);
   background-size: 40px 40px, 40px 40px, 200px 200px, 300px 300px;
+  background-position: 100% 100%;
   animation: movePattern 50s linear infinite;
   mask-repeat: no-repeat;
   mask-position: center;
@@ -104,8 +105,11 @@ body {
   height: 100vh;
   width: 100vw;
   margin: 0; /* 不要な余白を除去 */
-}
 
+  opacity:0;
+  animation: fadeInGrid 0.5s ease-out forwards,
+             flashGrid 1.5s ease-out forwards;
+}
 
 body::before {
   content:'';
@@ -119,6 +123,31 @@ body::before {
   z-index:9999;
 }
 
+/* ボタン押下で付与するクラス */
+body.grid-restart {
+  animation: flashGrid 0.5s ease-out forwards,
+             movePattern 50s linear infinite;
+}
+
+@keyframes fadeInGrid {
+  0%   { opacity:0; }
+  100% { opacity:1; }
+}
+
+@keyframes flashGrid {
+  0%   { opacity:0; }
+  8%   { opacity:0.4; }
+  12%  { opacity:0; }
+  18%  { opacity:0.6; }
+  24%  { opacity:0; }
+  32%  { opacity:0.8; }
+  38%  { opacity:0.2; }
+  45%  { opacity:0.9; }
+  55%  { opacity:0.1; }
+  70%  { opacity:1; }
+  100% { opacity:1; }
+}
+
 /* 背景を右下→右上へ */
 @keyframes movePattern {
   from { background-position: 100% 100%; }
@@ -130,7 +159,7 @@ body::before {
   position:fixed;
   width:80vw;
   top:5vw;
-  height:85vh;
+  height:80vh;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -159,7 +188,7 @@ body::before {
 .first-confirm-title::before {
   content: "";
   position: absolute;
-  top: calc(5vw + 1em - 0.25em);
+  top: calc(5vw + 1em - 0.5em);
   left: 0;
   width: 80vw;
   height: 1.5em;            /* 高さは文字サイズに合わせる */
@@ -197,6 +226,7 @@ body::before {
   align-items: flex-start; /* アイコンを上に揃える */
   gap: 8px;                /* アイコンとテキストの間隔 */
   margin-top: 10px;
+  width: 80vw;
 }
 
 .audio-info .icon {
@@ -217,7 +247,6 @@ body::before {
 #first-confirm button {
     width: 50vw;
     height: 10vh;
-    margin: 15px;
     padding: 5px;
     font-size: 1.5rem;
     border-radius: 10px;
@@ -229,6 +258,7 @@ body::before {
     color:var(--color-shadow);
     border: 5px solid var(--color-shadow);
     border-radius: 10px;
+    margin-top: 15px;
 }
 
 /* === クイズコンテナ === */
@@ -265,6 +295,27 @@ body::before {
   backdrop-filter: blur(3px);
 
   opacity: 0;
+  top: 5vw;
+  left: 50%;
+  transform: translate(-50%, -50%) scaleX(0); /* ← 幅0から開始 */
+  transform-origin: center; /* ← 中央から左右に広がる */
+}
+
+.stage-info.appear{
+  animation: bandExpand 1s ease-out forwards;
+}
+
+.stage-info *{
+  opacity: 0;
+}
+.stage-info.appear *{
+  animation: stageInfoPartsAppear 1s ease-out forwards;
+}
+
+@keyframes stageInfoPartsAppear {
+  0%   { opacity:0; }
+  80%   { opacity:0; }
+  100% { opacity:1; }
 }
 
 .stage-right {

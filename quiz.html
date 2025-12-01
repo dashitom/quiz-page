@@ -10,7 +10,7 @@
 <title>AI脳トレ</title>
 <script>
 
-const testMode = true; //テスト時にローディングを高速化できる
+const testMode = false; //テスト時にローディングを高速化できる
 const FINAL_STAGE = 5;
 
 // --- 問題データ ---
@@ -94,7 +94,7 @@ const stageData=[
   <hr class="divider">
   <div id="first-confirm-buttons" >
     <button onclick="this.classList.add('pressed');init();">START</button>
-    <button id='back' onclick="this.classList.add('pressed');location.href = 'ainoutre.html';">戻る</button>
+    <button id='back' onclick="this.classList.add('pressed');location.href = 'start.html';">戻る</button>
   </div>
 </div>
 
@@ -239,9 +239,11 @@ window.addEventListener("load", () => {
   //音声プリロード
   preloadSounds(['count','point','seikai','huseikai', 'lvup']);
 
-  //初回確認を表示し、裏でプリロード
-  document.getElementById('first-confirm').style.opacity = '1';
-  document.getElementById('first-confirm').style.transform = 'translateY(0)';
+  setTimeout(() => {
+    //初回確認を表示し、裏でプリロード
+    document.getElementById('first-confirm').style.opacity = '1';
+    document.getElementById('first-confirm').style.transform = 'translateY(0)';
+  }, 1500);
 
   const imageUrls = new Set();
   imageUrls.add('images/maru.png');
@@ -955,8 +957,11 @@ function showNextStage(){
         document.getElementById('stage-msg').textContent = nowStage.startMsg;
         stageProgress.style.width = "0%";
 
-        //ステージ背景色の変更
-        if(nowStage.stage > 1){
+        if(nowStage.stage == 1){
+          //背景の演出
+          document.getElementById('stage-info').classList.add('appear');
+        }else if(nowStage.stage > 1){
+          //ステージ背景色の変更
           applyColor('--color-dark', '--color-dark-' + nowStage.stage);
           applyColor('--color-light', '--color-light-' + nowStage.stage);
           //accelerateBackground(); //背景モーションを加速
@@ -1115,10 +1120,17 @@ function init(){
 
   setTimeout(() => {
     document.getElementById('first-confirm').style.display = 'none';
-    showNextStage();
-  }, 500);
 
-  document.getElementById('stage-info').style.opacity = '1';
+
+    document.body.classList.remove('grid-restart');
+    void document.body.offsetWidth; // 再生リセット
+    document.body.classList.add('grid-restart');
+  }, 500);
+  
+  setTimeout(() => {
+    showNextStage();
+  }, 1500);
+
 }
 
 // --- カウントダウン処理 ---

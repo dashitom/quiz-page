@@ -2,73 +2,455 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>クイズスタート</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>AI脳トレ</title>
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background: linear-gradient(to bottom, #aee6ff, #0056b3);
-  font-family: 'Helvetica Neue', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  overscroll-behavior: none;
+:root {
+  --color-dark: #002060;
+  --color-light: #3399FF;
+  --color-bg-top: #3399FF;
+  --color-bg-bottom: #0056b3;
+  --color-shadow: #555555;
+  --color-text: white;
+}
+html,body{
+  margin:0;padding:0;height:100%;
+  background:linear-gradient(to bottom,var(--color-bg-top),var(--color-bg-bottom));
+  font-family:'Helvetica Neue',sans-serif;
+  color:var(--color-text);
+  text-align:center;
+  overflow:hidden;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none; /* ← 選択禁止 */
 }
 
-button {
-  background: white;
-  border: 4px solid #004a99;          /* 濃い青の外枠 */
-  border-radius: 12px;
-  font-size: 1.6rem;
-  font-weight: bold;
-  padding: 8vh 5vw;
-  color: #004a99;
-  box-shadow: 0 8px #004a99;          /* 押し込み感の影 */
-  transition: all 0.15s ease;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+body {
+  margin:0; padding:0; height:100%; overflow:hidden;
+  background: linear-gradient(to bottom, #3399FF, #0056b3);
   position: relative;
+  font-family:'Helvetica Neue',sans-serif;
 }
 
-/* 押下時の色反転＋凹み */
-button.pressed {
-  background: #004a99;
-  color: white;
-  transform: translateY(6px);
-  box-shadow: 0 2px #002f66;
-  transition: all 0.1s ease;
+/* パーティクル用 */
+.particle-bg {
+  position: fixed;   /* BODY全体に固定 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;        /* 最背面 */
 }
+
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  bottom: -20px;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0.5; }
+  100% { transform: translateY(-110vh); opacity: 0; }
+}
+
+
+
+
+.container{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  height:100%;
+  padding:1vh 5vw;
+  box-sizing:border-box;
+}
+.logo-wrapper {
+  margin-top:2vh;
+  display:block;
+  -webkit-touch-callout: none; /* iOS長押しメニュー無効化 */
+  -webkit-user-drag: none;     /* 画像ドラッグ防止 */
+  user-drag: none;
+  pointer-events: auto;
+  position: relative;
+  /* position: sticky; 上に固定 */
+  height:40vh;
+  width: 100%; /* 横長画像の余白分を追加 */
+  margin: 0 auto;
+}
+
+.logo {
+  position: absolute;
+  top: 0;
+  left: 50%; 
+  height: 100%;      /* ← 高さを親に合わせる */
+  width: auto;       /* ← 横を自動調整（アスペクト比維持） */
+  transform: translateX(-50%); /* ← 中央寄せ */
+  user-select: none;
+  pointer-events: none;
+}
+
+.logo-bg-wrapper {
+  position: absolute;
+  top: 0;
+  left: -5vw;
+  width: 100vw;      /* 親要素いっぱい */
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.scroll-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  height: 100%;
+  /* 幅は自動で横長画像に合わせる */
+  animation: scroll 20s linear infinite;
+}
+
+.scroll-bg img {
+  height: 100%;      /* 縦100% */
+  width: auto;       /* 横長比率維持 */
+  flex-shrink: 0;    /* 横幅自動縮小禁止 */
+}
+
+@keyframes scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* 1枚分左に移動 */
+}
+
+.logo-icon-bg {
+  z-index: 2;
+}
+.logo-icon {
+  z-index: 3;
+}
+.logo-text {
+  z-index: 4;
+}
+
+
+.content {
+  height: calc(100vh - 40vh); /* ロゴ部分を除いた高さ */
+  overflow-y: auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+
+.version{
+  margin-top:0;
+  height:3vh;line-height:3vh;
+  background:white;color:var(--color-light);
+  border-radius:20px;width:35%;
+  font-weight:bold;
+}
+.start-btn{
+  background:white;
+  border:7px solid var(--color-dark);
+  outline:3px solid white;
+  border-radius:12px;
+  font-size:1.5rem;
+  font-weight:bold;
+  padding:3vh 0;
+  box-shadow:0 12px var(--color-shadow);
+  color:var(--color-dark);
+  width:60%;
+  margin-top:3vh;
+  cursor:pointer;
+}
+.start-btn.pressed{
+  background:var(--color-dark);
+  color:var(--color-text);
+  transform:translateY(6px);
+  box-shadow:0 2px #002f66;
+  transition:all .1s ease;
+}
+.line{
+  width:95%;height:1px;
+  background:white;margin:3vh 0;
+}
+
+.notice{
+  width:85%;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.6);
+  border-radius:8px;
+  padding:1.2em;
+  font-size:0.7rem;
+  text-align:left;
+  line-height:1.6;
+  box-shadow:0 3px 6px rgba(0,0,0,0.15);
+}
+.notice-header{
+  display:inline-block;
+  border:1.5px solid #fff;
+  padding:1px 12px;
+  border-radius:20px;
+  font-weight:bold;
+}
+.notice-headline {
+  display: flex;
+  align-items: center;
+  gap: 0.6em; /* ← ラベルとタイトルの間隔 */
+  margin-bottom: 0.6em;
+}
+
+.notice-title {
+  font-weight: bold;
+  font-size: 0.8rem;
+  margin-top:-0.1rem;
+  color: #fff;
+}
+.notice b{
+  color:#fff;
+  display:block;
+  font-size:0.8rem;
+  margin-bottom:0.3em;
+}
+.highlight-date {
+  font-weight: bold;
+  color: #ffc840;
+}
+
+
+.footer{
+  font-size:0.8rem;
+  opacity:0.7;
+  margin-bottom:1vh;
+}
+
+
+
+/* 初期状態 */
+.logo-icon, .logo-text, .logo-icon-bg {
+  opacity: 0;
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+.version, .start-btn, .line, .notice, .footer {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.scroll-bg{
+  opacity: 0;
+}
+
+@keyframes showImg {
+  to { opacity: 1; }
+}
+@keyframes iconAppear {
+  0% {
+    opacity: 0;
+    transform:  translateX(-50%) scale(1.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes textAppear {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scaleX(0.7); /* 幅0％、中央寄せ */
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scaleX(1); /* 幅100％、中央寄せ */
+  }
+}
+
+
+/* 非表示アニメーション */
+.fade-out {
+  opacity: 0 !important;
+  transform: scale(0.9);
+  transition: all 0.6s ease;
+}
+
+/* パーティクル高速上昇 */
+.fast {
+  animation-duration: 1s !important;
+}
+
+
 </style>
 </head>
 <body>
-  <button id="startBtn">スタート</button>
+<div class="particle-bg"></div>
+<div class="container">
+  <div class="logo-wrapper">
+    <div class="logo-bg-wrapper">
+      <div class="scroll-bg">
+        <img src="images/logo_bg.png" alt="背景1">
+        <img src="images/logo_bg.png" alt="背景2">
+      </div>
+    </div>
+    <img src="images/logo_iconbg.png" alt="ロゴアイコン背景" class="logo logo-icon-bg" oncontextmenu="return false;" draggable="false">
+    <img src="images/logo_icon.png" alt="ロゴアイコン" class="logo logo-icon" oncontextmenu="return false;" draggable="false">
+    <img src="images/logo_text.png" alt="ロゴ文字" class="logo logo-text" oncontextmenu="return false;" draggable="false">
+  </div>
+  
+  <div class="version">ver.1.0.0.1</div>
+  <button class="start-btn" onclick="delayedStart()">START</button>
+  <div class="line"></div>
+  
+  
+  <div class="notice">
+    <div class="notice-headline">
+      <label class="notice-header">お知らせ</label>
+      <span class="notice-title">無料期間終了のお知らせ</span>
+    </div>
+    ご好評につきアクセスが増加し、AIのAPIコストが高騰しているため、無料公開は<span class="highlight-date">2025年12月31日まで</span>とさせていただきます。  
+    今後ともよろしくお願いいたします。
+  </div>
+
+  
+  <div class="footer">©TEAM STAND WITH FREAND</div>
+  
+</div>
 
 <script>
-// クイズページと同じ押下アニメに統一
-const startBtn = document.getElementById('startBtn');
 
-startBtn.addEventListener('touchstart', e => { 
-  e.preventDefault(); 
-  startBtn.classList.add('pressed'); 
-}, {passive: false});
+const btn = document.querySelector('.start-btn');
+let isInside = false;
 
-startBtn.addEventListener('touchend', e => { 
-  e.preventDefault(); 
-  startBtn.classList.remove('pressed'); 
-  // クイズページへ遷移
-  location.href = 'sample.html';
-}, {passive: false});
+btn.addEventListener('touchstart', e => {
+  isInside = true;
+  btn.classList.add('pressed');
+});
 
-startBtn.addEventListener('mousedown', () => startBtn.classList.add('pressed'));
-startBtn.addEventListener('mouseup', () => startBtn.classList.remove('pressed'));
-startBtn.addEventListener('mouseleave', () => startBtn.classList.remove('pressed'));
+btn.addEventListener('touchmove', e => {
+  const touch = e.touches[0];
+  const rect = btn.getBoundingClientRect();
+  const inside =
+    touch.clientX >= rect.left &&
+    touch.clientX <= rect.right &&
+    touch.clientY >= rect.top &&
+    touch.clientY <= rect.bottom;
+  if (inside && !isInside) {
+    btn.classList.add('pressed');
+    isInside = true;
+  } else if (!inside && isInside) {
+    btn.classList.remove('pressed');
+    isInside = false;
+  }
+});
+
+btn.addEventListener('touchend', e => {
+  if (isInside) {
+    btn.classList.remove('pressed');
+    delayedStart(); // ←内側で離した場合のみ実行
+  } else {
+    btn.classList.remove('pressed'); // 外で離したら実行しない
+  }
+  isInside = false;
+});
+
+function delayedStart() {
+  const btn = document.querySelector('.start-btn');
+  btn.classList.add('pressed');
+  setTimeout(() => {
+    location.href = 'quiz.html';
+  }, 500);
+}
+
+function delayedStart() {
+  const btn = document.querySelector('.start-btn');
+  btn.classList.add('pressed');
+
+  // ① 背景以外を非表示
+  setTimeout(() => {
+    document.querySelectorAll('.logo-wrapper, .version, .start-btn, .line, .notice, .footer')
+    .forEach(el => el.classList.add('fade-out'));
+    
+    // ② パーティクル高速上昇 → 消去
+    const particles = document.querySelectorAll('.particle');
+    particles.forEach(p => p.classList.add('fast'));
+    particles.forEach(p => p.classList.add('fade-out'));
+      
+    setTimeout(() => {
+      particles.forEach(p => p.remove());
+    }, 1000); // 高速上昇終了後に削除
+
+    // ③ ページ遷移
+    setTimeout(() => {
+      location.href = 'quiz.html';
+    }, 2000);
+      
+  }, 500);
+ 
+}
+
+
+
+
+
+const particleCount = 30; // お好みで増減
+const container = document.querySelector('.particle-bg');
+
+for(let i=0; i<particleCount; i++){
+  const p = document.createElement('div');
+  p.classList.add('particle');
+  const size = Math.random()*10 + 5; // 5〜15px
+  p.style.width = `${size}px`;
+  p.style.height = `${size}px`;
+  p.style.left = `${Math.random()*100}%`;
+  p.style.animationDuration = `${5 + Math.random()*5}s`;
+  p.style.animationDelay = `${Math.random()*5}s`;
+  container.appendChild(p);
+}
+
+window.addEventListener('load', () => {
+  const bg = document.querySelector('.scroll-bg');
+  const iconbg = document.querySelector('.logo-icon-bg');
+  const icon = document.querySelector('.logo-icon');
+  const text = document.querySelector('.logo-text');
+  const rest = [
+    document.querySelector('.version'),
+    document.querySelector('.start-btn'),
+    document.querySelector('.line'),
+    document.querySelector('.notice'),
+    document.querySelector('.footer')
+  ];
+  
+  // 0. 背景フェードイン
+  setTimeout(() => {
+    bg.style.animation = "scroll 20s linear infinite, showImg 4s forwards";
+  }, 500);
+
+  // 1. アイコン拡大→縮小セット＆フェードイン
+  setTimeout(() => {
+    iconbg.style.animation = "showImg 2s ease forwards";
+    icon.style.animation = "iconAppear 2s ease forwards";
+  }, 1500);
+
+  // 2. テキストスライド＆フェードイン
+  setTimeout(() => {
+    text.style.animation = "textAppear 0.8s ease forwards";
+  }, 3000);
+
+  // 3. その他コンテンツフェードイン
+  setTimeout(() => {
+    rest.forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    });
+  }, 4000);
+});
+
+
 </script>
 </body>
 </html>
