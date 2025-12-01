@@ -68,14 +68,6 @@ const stageData=[
 </script>
 </head>
 <body>
-<audio id="bgm" src="bgm/Specification.mp3" loop></audio>
-<audio id="bgm_michiyo" src="bgm/Michiyo.mp3" loop></audio>
-<audio id="se_count" src="bgm/count.mp3"></audio>
-<audio id="se_lvup" src="bgm/lvup.mp3"></audio>
-<audio id="se_brazirian" src="bgm/brazirian.mp3"></audio>
-<audio id="se_re" src="bgm/re.mp3" loop></audio>
-<audio id="se_picovoice" src="bgm/picovoice.mp3" loop></audio>
-<audio id="se_seven" src="bgm/seven.mp3" loop></audio>
 
 <div id="first-confirm" >
   <span class="first-confirm-title">AI脳トレへようこそ</span>
@@ -93,8 +85,8 @@ const stageData=[
   </div>
   <hr class="divider">
   <div id="first-confirm-buttons" >
-    <button onclick="this.classList.add('pressed');init();">START</button>
-    <button id='back' onclick="this.classList.add('pressed');location.href = 'start.html';">戻る</button>
+    <button id='start' onclick="init();">START</button>
+    <button id='back' onclick="back(this);">戻る</button>
   </div>
 </div>
 
@@ -236,13 +228,14 @@ const loadingProgress=document.getElementById('loadingProgress');
 
 // JSON内のすべての画像URLを抽出してプリロード
 window.addEventListener("load", () => {
-  //音声プリロード
-  preloadSounds(['count','point','seikai','huseikai', 'lvup']);
 
   setTimeout(() => {
     //初回確認を表示し、裏でプリロード
     document.getElementById('first-confirm').classList.add('show');
   }, 0);
+
+  //音声プリロード
+  preloadSounds(['count','point','seikai','huseikai', 'lvup']);
 
   const imageUrls = new Set();
   imageUrls.add('images/maru.png');
@@ -267,6 +260,18 @@ window.addEventListener("load", () => {
     img.src = src;
   });
 });
+
+function back(btn){
+  btn.classList.add('pressed');
+
+  document.getElementById('first-confirm').classList.remove('show');
+  void document.body.offsetWidth; // 再生リセット
+  document.getElementById('first-confirm').classList.add('hide');
+
+  setTimeout(()=>{
+    location.href = 'start.html';
+  },500);
+}
 
 let currentIndex=0;
 let answered=false;
@@ -1074,19 +1079,33 @@ function accelerateBackground() {
 
 function init(){
 
+  document.getElementById('start').classList.add('pressed');
+
   //音声無効化を解除
   const a = new Audio();
   a.play().catch(()=>{});
   
-  //タップ即再生じゃない音声は事前に鳴らしておく
-  prePlaySound(bgm);
-  prePlaySound(bgm_michiyo);
-  prePlaySound(se_count);
-  prePlaySound(se_lvup);
-  prePlaySound(se_brazirian);
-  prePlaySound(se_re);
-  prePlaySound(se_picovoice);
-  prePlaySound(se_seven);
+  //タップ即再生じゃない音声は今生成し、事前に鳴らしておく
+  /*
+  <audio id="bgm" src="bgm/Specification.mp3" loop></audio>
+  <audio id="bgm_michiyo" src="bgm/Michiyo.mp3" loop></audio>
+  <audio id="se_count" src="bgm/count.mp3"></audio>
+  <audio id="se_lvup" src="bgm/lvup.mp3"></audio>
+  <audio id="se_brazirian" src="bgm/brazirian.mp3"></audio>
+  <audio id="se_re" src="bgm/re.mp3" loop></audio>
+  <audio id="se_picovoice" src="bgm/picovoice.mp3" loop></audio>
+  <audio id="se_seven" src="bgm/seven.mp3" loop></audio>
+  */
+  bgm = prePlaySound('Specification');
+  bgm_michiyo = prePlaySound('Michiyo');
+  se_count = prePlaySound('count');
+  se_lvup = prePlaySound('lvup');
+  se_brazirian = prePlaySound('brazirian');
+  se_re = prePlaySound('re');
+  se_picovoice = prePlaySound('picovoice');
+  se_seven = prePlaySound('seven');
+
+  michiyo_gainNode = connectAudio(bgm_michiyo);
 
   //ループが自然な位置に調整
   bgm.addEventListener("timeupdate", () => {
@@ -1200,7 +1219,7 @@ function showCountdown(){
 function endQuiz(){
   stopTimer();
 
-  fadeOutAudio(bgm_michiyo,3.5);
+  fadeOutAudio(bgm_michiyo, michiyo_gainNode, 3.5);
   
   // 白フェード用のdivを生成
   const fade = document.createElement('div');
@@ -1226,14 +1245,16 @@ function endQuiz(){
 }
 
 // ==== 音声処理 ====
-const bgm = document.getElementById('bgm');
-const bgm_michiyo = document.getElementById('bgm_michiyo');
-const se_count = document.getElementById('se_count');
-const se_lvup = document.getElementById('se_lvup');
-const se_brazirian = document.getElementById('se_brazirian');
-const se_re = document.getElementById('se_re');
-const se_picovoice = document.getElementById('se_picovoice');
-const se_seven = document.getElementById('se_seven');
+var bgm; // = document.getElementById('bgm');
+var bgm_michiyo; // = document.getElementById('bgm_michiyo');
+var se_count; // = document.getElementById('se_count');
+var se_lvup; // = document.getElementById('se_lvup');
+var se_brazirian; // = document.getElementById('se_brazirian');
+var se_re; // = document.getElementById('se_re');
+var se_picovoice; // = document.getElementById('se_picovoice');
+var se_seven; // = document.getElementById('se_seven');
+var michiyo_gainNode;
+
 const soundCache = {};
 
 function preloadSounds(list){
@@ -1245,10 +1266,24 @@ function preloadSounds(list){
   });
 }
 
-function prePlaySound(target){
-  target.volume = 0.0;
-  target.play();
-  target.pause();
+function prePlaySound(name){
+
+  audio = new Audio('bgm/' + name + '.mp3');
+  audio.preload = 'auto';
+
+  switch (name) {
+  case 'Specification':
+  case 'Michiyo':
+  case 're':
+  case 'picovoice':
+  case 'seven':
+    audio.loop = true;
+  }
+
+  audio.volume = 0.0;
+  audio.play();
+  audio.pause();
+  return audio;
 }
 
 function playSound(name, vol = 1.0){
@@ -1338,8 +1373,8 @@ function connectAudio(audio){
 }
 
 // フェードアウト（呼び出すだけ）
-function fadeOutAudio(audio, duration = 0.5){
-  const gainNode = connectAudio(audio);
+function fadeOutAudio(audio, gainNode, duration = 0.5){
+  //const gainNode = connectAudio(audio);
   const now = audioCtx.currentTime;
   gainNode.gain.cancelScheduledValues(now);
   gainNode.gain.setValueAtTime(gainNode.gain.value, now);

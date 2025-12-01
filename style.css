@@ -169,8 +169,8 @@ body.grid-restart {
 #first-confirm{
   position:fixed;
   width:80vw;
-  top:5vw;
-  height:80dvh;
+  /*top:5vw;*/
+  height:90dvh;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -219,7 +219,6 @@ body.grid-restart {
   border-radius: 4px;        /* 角を丸めたい場合 */
 }
 
-
 .highlight {
   font-weight: bold;
   color: #ffc840;
@@ -264,6 +263,9 @@ body.grid-restart {
   gap: 4px; /* 行間の調整 */
 }
 
+#first-confirm-buttons{
+  height: 20dvh;
+}
 
 #first-confirm button {
     width: 50vw;
@@ -279,7 +281,7 @@ body.grid-restart {
     color:var(--color-shadow);
     border: 5px solid var(--color-shadow);
     border-radius: 10px;
-    margin-top: 15px;
+    margin-top: 25px;
 }
 
 /* === クイズコンテナ === */
