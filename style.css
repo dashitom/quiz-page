@@ -135,7 +135,7 @@ body.grid-restart {
   background-size: 40px 40px, 40px 40px, 200px 200px, 300px 300px;
   background-position: 100% 100%;
   
-  animation: movePattern 50s linear infinite;
+  animation: fadeInGrid 1s ease-out forwards, movePattern 50s linear infinite;
   opacity:1;
   /*flashGrid 0.5s ease-out forwards,*/
 }

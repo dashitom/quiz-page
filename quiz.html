@@ -10,11 +10,13 @@
 <title>AI脳トレ</title>
 <script>
 
-const testMode = false; //テスト時にローディングを高速化できる
+const testMode = true; //テスト時にローディングを高速化できる
 const FINAL_STAGE = 5;
 
 // --- 問題データ ---
 const quizData=[
+    {"stage":"5","mode":"mikiri","quiztype":"運動神経伝達力","beforeTxt":"もぐらが出たらたたけ！","beforeImg":"images/anagachi_0.png","beforeMusic":"","beforeTime":"13000","question":"もぐらが出たらたたけ！","image":"images/anagachi_mogu.png","music":"","image2":"","image2time":"","options":[{"text":"左上"},{"text":"右上"},{"text":"左下"},{"text":"右下"}],"correct":"左下","answerPict":"","rand":false,"answertime":4000,"answerstart":4000,"perfect":3500,"excellent":3000,"great":2000,"good":1000,"safe":0},
+
   {"stage":"1","mode":"","quiztype":"計算力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"３５－３０＝？","image":"","music":"","image2":"","image2time":"","options":[{"text":"5"},{"text":"7"},{"text":""},{"text":""}],"correct":"5","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"","quiztype":"空間認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"バスの進行方向は？","image":"images/bus_left.png","music":"","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"左","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"この中で一番大きいマルは？","image":"images/ookiimaru.png","music":"","image2":"","image2time":"","options":[{"text":"青"},{"text":"赤"},{"text":""},{"text":""}],"correct":"赤","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
@@ -232,6 +234,7 @@ window.addEventListener("load", () => {
   setTimeout(() => {
     //初回確認を表示し、裏でプリロード
     document.getElementById('first-confirm').classList.add('show');
+    document.body.classList.add('grid-restart');
   }, 0);
 
   //音声プリロード
@@ -243,6 +246,10 @@ window.addEventListener("load", () => {
   imageUrls.add('images/renda.png');
   imageUrls.add('images/mikiri.png');
   imageUrls.add('images/mikiri_press.png');
+  imageUrls.add('images/anagachi_1.png');
+  imageUrls.add('images/anagachi_2.png');
+  imageUrls.add('images/anagachi_4.png');
+  imageUrls.add('images/anagachi_5.png');
   //ボタン用
   
   quizData.forEach(q => {
@@ -394,7 +401,7 @@ function showQuestion(){
     startQuizCountdown();
 
   }else if(q.beforeTxt != '' || q.beforeImg != ''){
-    questionBox.innerHTML=q.beforeTxt + (q.beforeImg?`<br><img src="${q.beforeImg}" class="quiz-img">`:"");
+    questionBox.innerHTML=q.beforeTxt + (q.beforeImg?`<br><img id="quiz-img" src="${q.beforeImg}" class="quiz-img">`:"");
     hideTimer();
     
     if(q.mode=='mikiri'){
@@ -408,6 +415,18 @@ function showQuestion(){
       playSound(q.beforeMusic);
     }
     
+    //あなガチ！特別対応
+    if(q.beforeImg == 'images/anagachi_0.png'){
+      setTimeout(()=>{document.getElementById('quiz-img').src = 'images/anagachi_1.png'}, 2000);
+      setTimeout(()=>{document.getElementById('quiz-img').src = 'images/anagachi_0.png'}, 4500);
+      setTimeout(()=>{document.getElementById('quiz-img').src = 'images/anagachi_2.png'}, 5000);
+      setTimeout(()=>{document.getElementById('quiz-img').src = 'images/anagachi_0.png'}, 6500);
+      setTimeout(()=>{document.getElementById('quiz-img').src = 'images/anagachi_4.png'}, 7500);
+      setTimeout(()=>{document.getElementById('quiz-img').src = 'images/anagachi_0.png'}, 9500);
+      setTimeout(()=>{document.getElementById('quiz-img').src = 'images/anagachi_5.png'}, 10000);
+      setTimeout(()=>{document.getElementById('quiz-img').src = 'images/anagachi_0.png'}, 12500);
+    }
+
     setTimeout(()=>{
       if(q.mode=='kioku'){
         startQuizCountdown();
@@ -1086,16 +1105,6 @@ function init(){
   a.play().catch(()=>{});
   
   //タップ即再生じゃない音声は今生成し、事前に鳴らしておく
-  /*
-  <audio id="bgm" src="bgm/Specification.mp3" loop></audio>
-  <audio id="bgm_michiyo" src="bgm/Michiyo.mp3" loop></audio>
-  <audio id="se_count" src="bgm/count.mp3"></audio>
-  <audio id="se_lvup" src="bgm/lvup.mp3"></audio>
-  <audio id="se_brazirian" src="bgm/brazirian.mp3"></audio>
-  <audio id="se_re" src="bgm/re.mp3" loop></audio>
-  <audio id="se_picovoice" src="bgm/picovoice.mp3" loop></audio>
-  <audio id="se_seven" src="bgm/seven.mp3" loop></audio>
-  */
   bgm = prePlaySound('Specification');
   bgm_michiyo = prePlaySound('Michiyo');
   se_count = prePlaySound('count');
@@ -1137,12 +1146,8 @@ function init(){
   });
 
   setTimeout(() => {
-    document.body.classList.remove('grid-restart');
     document.getElementById('first-confirm').classList.remove('show');
-
     void document.body.offsetWidth; // 再生リセット
-
-    document.body.classList.add('grid-restart');
     document.getElementById('first-confirm').classList.add('hide');
   }, 500);
   
@@ -1331,6 +1336,7 @@ function playSound(name, vol = 1.0){
     se_picovoice.play();
   }else if(name == 'seven'){
     bgm_michiyo.volume = 0.1;
+    fadeVolume(bgm_michiyo, 0.3, 0.5);
     se_seven.volume = vol;
     se_seven.currentTime = 10;
     se_seven.playbackRate = 1.3;
@@ -1339,6 +1345,7 @@ function playSound(name, vol = 1.0){
     if (se_seven.currentTime >= 19.5) {
       se_seven.pause();
       bgm_michiyo.volume = 1.0;
+      fadeVolume(bgm_michiyo, 1.0, 0.5);
     }
   });
   
@@ -1384,6 +1391,13 @@ function fadeOutAudio(audio, gainNode, duration = 0.5){
     audio.pause();
     audio.currentTime = 0;
   }, duration * 1000);
+}
+
+function fadeVolume(gainNode, targetVolume = 0.3, duration = 0.5){
+  const now = audioCtx.currentTime;
+  gainNode.gain.cancelScheduledValues(now);
+  gainNode.gain.setValueAtTime(gainNode.gain.value, now);
+  gainNode.gain.linearRampToValueAtTime(targetVolume, now + duration);
 }
 
 
