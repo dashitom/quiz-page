@@ -1116,6 +1116,7 @@ function init(){
   se_seven = prePlaySound('seven');
 
   michiyo_gainNode = connectAudio(bgm_michiyo);
+  seven_gainNode = connectAudio(se_seven);
 
   //ループが自然な位置に調整
   bgm.addEventListener("timeupdate", () => {
@@ -1203,7 +1204,7 @@ function showCountdown(){
         document.getElementById('timer-container').style.display = "";
         document.getElementById('buttons').style.display = "";
         
-        if(nowStage.stage==5){
+        if(nowStage.stage==FINAL_STAGE){
           /*
           bgm.pause();
           bgm_michiyo.volume = 1.0;
@@ -1260,6 +1261,7 @@ var se_re; // = document.getElementById('se_re');
 var se_picovoice; // = document.getElementById('se_picovoice');
 var se_seven; // = document.getElementById('se_seven');
 var michiyo_gainNode;
+var seven_gainNode;
 
 const soundCache = {};
 
@@ -1342,6 +1344,7 @@ function playSound(name, vol = 1.0){
     se_seven.currentTime = 10;
     se_seven.playbackRate = 1.3;
     se_seven.play();
+    fadeVolume(seven_gainNode, 2.0, 0.5);
     se_seven.addEventListener("timeupdate", () => {
     if (se_seven.currentTime >= 19.5) {
       se_seven.pause();
