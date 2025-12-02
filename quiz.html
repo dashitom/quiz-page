@@ -10,14 +10,11 @@
 <title>AI脳トレ</title>
 <script>
 
-const testMode = true; //テスト時にローディングを高速化できる
-const FINAL_STAGE = 1; //5;
+const testMode = false; //テスト時にローディングを高速化できる
+const FINAL_STAGE = 5;
 
 // --- 問題データ ---
 const quizData=[
-  {"stage":"5","mode":"","quiztype":"記憶力","beforeTxt":"まずは音を聞いて！","beforeImg":"images/kiite.png","beforeMusic":"seven","beforeTime":"9500","question":"セブンって何回言った？","image":"","music":"","image2":"","image2time":"","options":[{"text":"5"},{"text":"6"},{"text":"7"},{"text":"8"}],"correct":"6","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  
-
   {"stage":"1","mode":"","quiztype":"計算力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"３５－３０＝？","image":"","music":"","image2":"","image2time":"","options":[{"text":"5"},{"text":"7"},{"text":""},{"text":""}],"correct":"5","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"","quiztype":"空間認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"バスの進行方向は？","image":"images/bus_left.png","music":"","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"左","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"この中で一番大きいマルは？","image":"images/ookiimaru.png","music":"","image2":"","image2time":"","options":[{"text":"青"},{"text":"赤"},{"text":""},{"text":""}],"correct":"赤","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
