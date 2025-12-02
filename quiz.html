@@ -15,7 +15,8 @@ const FINAL_STAGE = 5;
 
 // --- 問題データ ---
 const quizData=[
-    {"stage":"5","mode":"mikiri","quiztype":"運動神経伝達力","beforeTxt":"もぐらが出たらたたけ！","beforeImg":"images/anagachi_0.png","beforeMusic":"","beforeTime":"13000","question":"もぐらが出たらたたけ！","image":"images/anagachi_mogu.png","music":"","image2":"","image2time":"","options":[{"text":"左上"},{"text":"右上"},{"text":"左下"},{"text":"右下"}],"correct":"左下","answerPict":"","rand":false,"answertime":4000,"answerstart":4000,"perfect":3500,"excellent":3000,"great":2000,"good":1000,"safe":0},
+  {"stage":"5","mode":"","quiztype":"記憶力","beforeTxt":"まずは音を聞いて！","beforeImg":"images/kiite.png","beforeMusic":"seven","beforeTime":"9500","question":"セブンって何回言った？","image":"","music":"","image2":"","image2time":"","options":[{"text":"5"},{"text":"6"},{"text":"7"},{"text":"8"}],"correct":"6","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  
 
   {"stage":"1","mode":"","quiztype":"計算力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"３５－３０＝？","image":"","music":"","image2":"","image2time":"","options":[{"text":"5"},{"text":"7"},{"text":""},{"text":""}],"correct":"5","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"1","mode":"","quiztype":"空間認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"バスの進行方向は？","image":"images/bus_left.png","music":"","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"左","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
@@ -1336,7 +1337,7 @@ function playSound(name, vol = 1.0){
     se_picovoice.play();
   }else if(name == 'seven'){
     bgm_michiyo.volume = 0.1;
-    fadeVolume(bgm_michiyo, 0.3, 0.5);
+    fadeVolume(michiyo_gainNode, 0.3, 0.5);
     se_seven.volume = vol;
     se_seven.currentTime = 10;
     se_seven.playbackRate = 1.3;
@@ -1345,7 +1346,7 @@ function playSound(name, vol = 1.0){
     if (se_seven.currentTime >= 19.5) {
       se_seven.pause();
       bgm_michiyo.volume = 1.0;
-      fadeVolume(bgm_michiyo, 1.0, 0.5);
+      fadeVolume(michiyo_gainNode, 1.0, 0.5);
     }
   });
   
