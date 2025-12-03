@@ -140,9 +140,18 @@ body.grid-restart {
   /*flashGrid 0.5s ease-out forwards,*/
 }
 
+body.hide {
+  animation: fadeOutGrid 1s ease-out forwards, movePattern 50s linear infinite;
+}
+
 @keyframes fadeInGrid {
   0%   { opacity:0; }
   100% { opacity:1; }
+}
+
+@keyframes fadeOutGrid {
+  0%   { opacity:1; }
+  100% { opacity:0; }
 }
 
 @keyframes flashGrid {
@@ -979,7 +988,8 @@ button.imgbtn.pressed{
 }
 
 /* === ステージ移行画面 === */
-#stage-overlay{
+#stage-overlay,
+#stage-overlay-loading{
   position:fixed;top:0;left:0;width:100%;height:100%;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   z-index:3000;
@@ -1021,4 +1031,40 @@ button.imgbtn.pressed{
 #stage-msg,
 #loading-msg{
   font-weight:bold;
+}
+
+
+.img-wrap {
+  position: absolute;
+  top:25dvh;
+  height:25dvh;
+}
+
+.stage-overlay-img{
+  height:25dvh;
+}
+
+.img-wrap.hide img {
+  animation: shrinkFade 0.5s forwards;
+}
+
+.img-wrap.hide::after {
+  content: "";
+  position: absolute;
+  top:50%; left:50%;
+  width:0; height:0;
+  border-radius:50%;
+  border:10dvh solid white;     /* ← 白い輪郭だけ */
+  background:transparent;      /* ← 中を抜く */
+  transform:translate(-50%, -50%);
+  opacity:0.6;
+  animation: shock 1s forwards;
+}
+
+@keyframes shrinkFade {
+  to { transform: scale(0); opacity:0; }
+}
+
+@keyframes shock {
+  to { width:300vmax; height:300vmax; opacity:0; }
 }

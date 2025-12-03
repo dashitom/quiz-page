@@ -16,44 +16,18 @@ const FINAL_STAGE = 5;
 // --- 問題データ ---
 const quizData=[
   {"stage":"1","mode":"","quiztype":"計算力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"３５－３０＝？","image":"","music":"","image2":"","image2time":"","options":[{"text":"5"},{"text":"7"},{"text":""},{"text":""}],"correct":"5","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"1","mode":"","quiztype":"空間認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"バスの進行方向は？","image":"images/bus_left.png","music":"","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"左","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"1","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"この中で一番大きいマルは？","image":"images/ookiimaru.png","music":"","image2":"","image2time":"","options":[{"text":"青"},{"text":"赤"},{"text":""},{"text":""}],"correct":"赤","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"1","mode":"renda","quiztype":"運動神経伝達力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"連打して！","image":"images/yubirenda.png","music":"","image2":"","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answerPict":"","rand":false,"answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10},
-  {"stage":"1","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"じゃんけんで勝って！","image":"images/goo.png","music":"","image2":"","image2time":"","options":[{"text":"images/tyoki.png"},{"text":"images/paa.png"},{"text":""},{"text":""}],"correct":"images/paa.png","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"1","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"若いのは？","image":"","music":"","image2":"","image2time":"","options":[{"text":"images/ageha.png"},{"text":"images/sanagi.png"},{"text":""},{"text":""}],"correct":"images/sanagi.png","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"1","mode":"","quiztype":"パターン認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"文字数が多いのは？","image":"images/moji1.png","music":"","image2":"","image2time":"","options":[{"text":"S"},{"text":"E"},{"text":""},{"text":""}],"correct":"S","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"1","mode":"mikiri","quiztype":"運動神経伝達力","beforeTxt":"もぐらが出たらたたけ！","beforeImg":"images/mogu1.png","beforeMusic":"","beforeTime":"8000","question":"もぐらが出たらたたけ！","image":"images/mogu2.png","music":"","image2":"","image2time":"","options":[{"text":"たたく"},{"text":""},{"text":""},{"text":""}],"correct":"たたく","answerPict":"","rand":false,"answertime":4000,"answerstart":4000,"perfect":3500,"excellent":3000,"great":2000,"good":1000,"safe":0},
-  {"stage":"2","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"じゃんけんで負けて！","image":"images/tyoki.png","music":"","image2":"","image2time":"","options":[{"text":"images/goo.png"},{"text":"images/tyoki.png"},{"text":"images/paa.png"},{"text":""}],"correct":"images/paa.png","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"2","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"文字数が多いのは？","image":"images/moji2.png","music":"","image2":"","image2time":"","options":[{"text":"S"},{"text":"A"},{"text":""},{"text":""}],"correct":"S","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"2","mode":"kioku","quiztype":"記憶力","beforeTxt":"画像を覚えて！","beforeImg":"images/yatyo.png","beforeMusic":"","beforeTime":"4000","question":"野鳥の数は？","image":"","music":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"3","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"2","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"一番若いのは？","image":"","music":"","image2":"","image2time":"","options":[{"text":"images/egg.png"},{"text":"images/otama.png"},{"text":"images/otama2.png"},{"text":"images/kaeru.png"}],"correct":"images/egg.png","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"2","mode":"","quiztype":"音感","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"どの音階？","image":"images/kiite.png","music":"re","image2":"","image2time":"","options":[{"text":"ド"},{"text":"レ"},{"text":"ミ"},{"text":"ファ"}],"correct":"レ","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"2","mode":"","quiztype":"パターン認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"？にあてはまるのは","image":"images/nums.png","music":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"2","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"2","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"あてはまるのは？","image":"images/tako.png","music":"","image2":"","image2time":"","options":[{"text":"images/tako_p1.png"},{"text":"images/tako_p2.png"},{"text":""},{"text":""}],"correct":"images/tako_p2.png","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"2","mode":"renda","quiztype":"運動神経伝達力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"連打して！","image":"images/karate_left.png","music":"","image2":"images/karate_right.png","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answerPict":"","rand":false,"answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10},
-  {"stage":"3","mode":"","quiztype":"記憶力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"今何問目？","image":"","music":"","image2":"","image2time":"","options":[{"text":"12"},{"text":"14"},{"text":"16"},{"text":"17"}],"correct":"17","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"3","mode":"kioku","quiztype":"記憶力","beforeTxt":"画像を覚えて！","beforeImg":"images/animals.png","beforeMusic":"","beforeTime":"4000","question":"野鳥の数は？","image":"","music":"","image2":"","image2time":"","options":[{"text":"0"},{"text":"1"},{"text":"2"},{"text":"3"}],"correct":"2","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"3","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"文字数が多いのは？","image":"images/moji2.png","music":"","image2":"","image2time":"","options":[{"text":"S"},{"text":"A"},{"text":""},{"text":""}],"correct":"S","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"3","mode":"","quiztype":"空間認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"バスの進行方向は？","image":"images/bus_right.png","music":"","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"3","mode":"mikiri","quiztype":"運動神経伝達力","beforeTxt":"もぐらが出たらたたけ！","beforeImg":"images/mogudot1.png","beforeMusic":"","beforeTime":"7000","question":"もぐらが出たらたたけ！","image":"images/mogudot2.png","music":"","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"右","answerPict":"","rand":false,"answertime":4000,"answerstart":4000,"perfect":3500,"excellent":3000,"great":2000,"good":1000,"safe":0},
-  {"stage":"3","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"この中で一番小さい四角形は？","image":"images/shikaku.png","music":"","image2":"","image2time":"","options":[{"text":"黒"},{"text":"緑"},{"text":"赤"},{"text":"紫"}],"correct":"黒","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"3","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"あてはまらないのは？","image":"images/plats.png","music":"","image2":"","image2time":"","options":[{"text":"images/plats_p1.png"},{"text":"images/plats_p2.png"},{"text":"images/plats_p3.png"},{"text":"images/plats_p4.png"}],"correct":"images/plats_p1.png","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"3","mode":"","quiztype":"パターン認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"？にあてはまるのは","image":"images/num2.png","music":"","image2":"","image2time":"","options":[{"text":"1"},{"text":"2"},{"text":"3"},{"text":"4"}],"correct":"1","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"4","mode":"","quiztype":"ドキドキ☆2択クイズ","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"お前の​母親と​恋人が<br>​悪党に​つかまり​<br>一人しか​助けられない<br>​<br>どちらを​助ける？","image":"","music":"","image2":"","image2time":"","options":[{"text":"恋人"},{"text":"母親"},{"text":""},{"text":""}],"correct":null,"answerPict":"images/tinmoku.png","rand":false,"answertime":10000,"answerstart":1,"perfect":-100,"excellent":-200,"great":-300,"good":-400,"safe":-500},
-  {"stage":"4","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"じゃんけんで負けて！","image":"images/sazae_tyoki.png","music":"","image2":"","image2time":"","options":[{"text":"images/sazae_btn_goo.png"},{"text":"images/sazae_btn_tyoki.png"},{"text":"images/sazae_btn_paa.png"},{"text":"images/guwashi.png"}],"correct":"images/sazae_btn_paa.png","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"4","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"一番若いのは？","image":"images/trainers1.png","music":"","image2":"images/trainers2.png","image2time":"5000","options":[{"text":"A"},{"text":"B"},{"text":"C"},{"text":"D"}],"correct":"A","answerPict":"","rand":false,"answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500,"safe":0},
-  {"stage":"4","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"このキャラクターは何色？","image":"images/pikmin.png","music":"","image2":"","image2time":"","options":[{"text":"赤"},{"text":"黄"},{"text":"青"},{"text":"紫"}],"correct":"黄","answerPict":"","rand":true,"answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500,"safe":0},
-  {"stage":"4","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"未定","image":"images/trainers1.png","music":"","image2":"images/trainers2.png","image2time":"5000","options":[{"text":"A"},{"text":"B"},{"text":"C"},{"text":"D"}],"correct":"A","answerPict":"","rand":false,"answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500,"safe":0},
-  {"stage":"4","mode":"renda","quiztype":"運動神経伝達力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"連打して！","image":"images/karate_left.png","music":"","image2":"images/karate_right.png","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answerPict":"","rand":false,"answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10},
-  {"stage":"4","mode":"","quiztype":"空間認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"電車の進行方向は？","image":"images/ookubo.png","music":"","image2":"","image2time":"","options":[{"text":"手前"},{"text":"奥"},{"text":""},{"text":""}],"correct":"手前","answerPict":"","rand":false,"answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500,"safe":0},
-  {"stage":"4","mode":"","quiztype":"形状判断力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"若いのは？","image":"","music":"","image2":"","image2time":"","options":[{"text":"images/kaeru.png"},{"text":"images/penguin.png"},{"text":""},{"text":""}],"correct":"images/penguin.png","answerPict":"","rand":true,"answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500,"safe":0},
+  {"stage":"2","mode":"","quiztype":"空間認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"バスの進行方向は？","image":"images/bus_left.png","music":"","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"左","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"3","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"この中で一番大きいマルは？","image":"images/ookiimaru.png","music":"","image2":"","image2time":"","options":[{"text":"青"},{"text":"赤"},{"text":""},{"text":""}],"correct":"赤","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"4","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"この中で一番大きいマルは？","image":"images/ookiimaru.png","music":"","image2":"","image2time":"","options":[{"text":"青"},{"text":"赤"},{"text":""},{"text":""}],"correct":"赤","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"5","mode":"","quiztype":"記憶力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"マフラーは何色？","image":"images/009.png","music":"","image2":"","image2time":"","options":[{"text":"赤"},{"text":"黄"},{"text":"青"},{"text":"紫"}],"correct":"赤","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"5","mode":"","quiztype":"記憶力","beforeTxt":"まずは音を聞いて！","beforeImg":"images/kiite.png","beforeMusic":"seven","beforeTime":"9500","question":"セブンって何回言った？","image":"","music":"","image2":"","image2time":"","options":[{"text":"5"},{"text":"6"},{"text":"7"},{"text":"8"}],"correct":"6","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
-  {"stage":"5","mode":"","quiztype":"空間認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"電車の進行方向は？","image":"images/ookubo.png","music":"","image2":"","image2time":"","options":[{"text":"手前"},{"text":"奥"},{"text":""},{"text":""}],"correct":"手前","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"5","mode":"","quiztype":"記憶力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"電車の進行方向は？","image":"images/soubu.png","music":"","image2":"","image2time":"","options":[{"text":"中野"},{"text":"三鷹"},{"text":"お茶の水"},{"text":"津田沼"}],"correct":"中野","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"5","mode":"kioku","quiztype":"記憶力","beforeTxt":"画像を覚えて！","beforeImg":"images/picos.png","beforeMusic":"","beforeTime":"4000","question":"野鳥の数は？","image":"","music":"","image2":"","image2time":"","options":[{"text":"0"},{"text":"3"},{"text":"5"},{"text":"7"}],"correct":"0","answerPict":"images/picocomment.png","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"5","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"じゃんけんで負けて！","image":"images/hiroshi.png","music":"","image2":"","image2time":"","options":[{"text":"images/ba-chan-tyoki.png"},{"text":"images/ba-chan-paa.png"},{"text":""},{"text":""}],"correct":"images/ba-chan-paa.png","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"5","mode":"","quiztype":"注意力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"じゃんけんで勝って！","image":"images/ken_paa.png","music":"","image2":"","image2time":"","options":[{"text":"images/nao_goo.png"},{"text":"images/nao_tyoki.png"},{"text":""},{"text":""}],"correct":"images/nao_tyoki.png","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
+  {"stage":"5","mode":"","quiztype":"記憶力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"ポッポはどれ？","image":"","music":"","image2":"","image2time":"","options":[{"text":"images/poke_koko.png"},{"text":"images/poke_oni.png"},{"text":"images/poke_suba.png"},{"text":"images/poke_mada.png"}],"correct":"images/poke_mada.png","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"5","mode":"renda","quiztype":"運動神経伝達力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"連打して！","image":"images/pico_up.png","music":"","image2":"images/pico_down.png","image2time":"","options":[{"text":"連打!"},{"text":""},{"text":""},{"text":""}],"correct":"","answerPict":"","rand":false,"answertime":5000,"answerstart":5000,"perfect":50,"excellent":40,"great":30,"good":20,"safe":10},
-  {"stage":"5","mode":"mikiri","quiztype":"運動神経伝達力","beforeTxt":"もぐらが出たらたたけ！","beforeImg":"images/mogudot1.png","beforeMusic":"","beforeTime":"7000","question":"もぐらが出たらたたけ！","image":"images/mogudot2.png","music":"","image2":"","image2time":"","options":[{"text":"左上"},{"text":"右上"},{"text":"左下"},{"text":"右下"}],"correct":"右下","answerPict":"","rand":false,"answertime":4000,"answerstart":4000,"perfect":3500,"excellent":3000,"great":2000,"good":1000,"safe":0},
+  {"stage":"5","mode":"mikiri","quiztype":"運動神経伝達力","beforeTxt":"もぐらが出たらたたけ！","beforeImg":"images/anagachi_0.png","beforeMusic":"","beforeTime":"13000","question":"もぐらが出たらたたけ！","image":"images/anagachi_mogu.png","music":"","image2":"","image2time":"","options":[{"text":"左上"},{"text":"右上"},{"text":"左下"},{"text":"右下"}],"correct":"左下","answerPict":"","rand":false,"answertime":4000,"answerstart":4000,"perfect":3500,"excellent":3000,"great":2000,"good":1000,"safe":0},
   {"stage":"5","mode":"","quiztype":"最終確認","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"あなたは<br>吉田道代<br>ですね？","image":"","music":"","image2":"","image2time":"","options":[{"text":"はい"},{"text":"はい"},{"text":"はい"},{"text":"はい"}],"correct":"はい","answerPict":"","rand":false,"answertime":10000,"answerstart":10000,"perfect":9500,"excellent":7500,"great":5000,"good":2500,"safe":0},  
 ];
 
@@ -191,10 +165,13 @@ const stageData=[
     <div id="stage-msg" ></div>
     <div class="count-number" id="countNum" >3</div>
   </div>
-  <div id="stage-overlay-loading" >
-    <div id="loading-msg" ></div>
-    <div class="loading-bar" id="loadingBar" ><div class="loading-progress" id="stageProgress"></div></div>
+</div>
+<div id="stage-overlay-loading" style="display:none;" >
+  <div id="img-wrap" class="img-wrap">
+    <img src="images/logo_icon_trans.png" alt="ロゴアイコン" class="stage-overlay-img" oncontextmenu="return false;" draggable="false">
   </div>
+  <div id="loading-msg" ></div>
+  <div class="loading-bar" id="loadingBar" ><div class="loading-progress" id="stageProgress"></div></div>
 </div>
 
 <div class="container" >
@@ -272,10 +249,11 @@ function back(btn){
   document.getElementById('first-confirm').classList.remove('show');
   void document.body.offsetWidth; // 再生リセット
   document.getElementById('first-confirm').classList.add('hide');
+  document.body.classList.add('hide');
 
   setTimeout(()=>{
     location.href = 'start.html';
-  },500);
+  },1000);
 }
 
 let currentIndex=0;
@@ -940,8 +918,11 @@ function showNextStage(){
   
   stageText.textContent = `STAGE ` + nowStage.stage;
   
+  document.getElementById('loading-msg').style.display = "";
   document.getElementById('loading-msg').textContent = nowStage.loadMsg;
-  
+  document.getElementById('loadingBar').style.display = "";
+  document.getElementById('img-wrap').classList.remove('hide');
+
   stageProgress.style.width = "0%";
   stageOverlay.style.display = "flex";
 
@@ -954,7 +935,7 @@ function showNextStage(){
     var upPt = Math.random() * 18 - 9;
 
     if(testMode){
-      upPt = 100;
+      upPt = 0.01;
     }
 
     if(upPt < 0) upPt = 0;
@@ -973,10 +954,13 @@ function showNextStage(){
         createProgressSegments(nowStage.count);
         document.getElementById('stage-info-title').textContent = `STAGE ` + nowStage.stage;
         stageOverlayTitle.style.display = "";
-        stageOverlayLoading.style.display = "none";
         stageText.style.display = '';
         document.getElementById('stage-msg').textContent = nowStage.startMsg;
         stageProgress.style.width = "0%";
+
+        document.getElementById('loading-msg').style.display = "none";
+        document.getElementById('loadingBar').style.display = "none";
+        document.getElementById('img-wrap').classList.add('hide');
 
         if(nowStage.stage == 1){
           //背景の演出
@@ -1164,6 +1148,8 @@ const container=document.querySelector('.container');
 let count=3;
 
 function showCountdown(){
+  stageOverlayLoading.style.display = "none";
+
   countNum.textContent=count;
   countNum.style.opacity='1';
   
