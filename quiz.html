@@ -11,7 +11,7 @@
 <script>
 
 const testMode = false; //テスト時にローディングを高速化できる
-const FINAL_STAGE = 5;
+const FINAL_STAGE = 2;
 
 // --- 問題データ ---
 const quizData=[
@@ -168,7 +168,7 @@ const stageData=[
 </div>
 <div id="stage-overlay-loading" style="display:none;" >
   <div id="img-wrap" class="img-wrap">
-    <img src="images/logo_icon_trans.png" alt="ロゴアイコン" class="stage-overlay-img" oncontextmenu="return false;" draggable="false">
+    <img id="loading-logo" src="images/logo_icon_trans.png" alt="ロゴアイコン" class="stage-overlay-img" oncontextmenu="return false;" draggable="false">
   </div>
   <div id="loading-msg" ></div>
   <div class="loading-bar" id="loadingBar" ><div class="loading-progress" id="stageProgress"></div></div>
@@ -899,7 +899,40 @@ const stageOverlayTitle = document.getElementById('stage-overlay-title');
 const stageOverlayLoading = document.getElementById('stage-overlay-loading');
 const stageText = document.getElementById('stage-title');
 const stageProgress = document.getElementById('stageProgress');
-  
+//最終ステージ演出
+const lastLoadMsges = [
+  "回答データ解析中…",
+  "行動傾向の初期分析…",
+  "特徴パターン抽出中…",
+  "回答精度の分布を計測…",
+  "類似回答との距離を測定…",
+  "回答内容の偏差を計算…",
+  "プロファイル候補を生成…",
+  "属性推定モデルを更新中…",
+  "回答速度の傾向を集計…",
+  "推定年代を再計算…",
+  "推定性別の精度検証…",
+  "居住エリア候補を推定…",
+  "回答履歴との相関を強化…",
+  "行動プロファイルを統合中…",
+  "特徴量の信頼度を評価…",
+  "一致率の高い候補を抽出…",
+  "残り情報を補完中…",
+  "予測精度を最適化…",
+  "識別モデルの再学習…",
+  "プロファイルの整合性チェック…",
+  "行動指標の重み付け調整…",
+  "回答傾向の再スキャン…",
+  "識別精度の閾値を修正…",
+  "候補プロファイルを再ランキング…",
+  "識別パラメータを展開中…",
+  "候補データの重複排除…",
+  "最終候補を絞り込み…",
+  "個人識別スコアを算出…",
+  "識別結果の整形処理…",
+  "最終プロファイルを生成しています…"
+];
+
 function showNextStage(){
 
   document.getElementById('quiz-header').style.display = "none";
@@ -921,6 +954,7 @@ function showNextStage(){
   document.getElementById('loading-msg').style.display = "";
   document.getElementById('loading-msg').textContent = nowStage.loadMsg;
   document.getElementById('loadingBar').style.display = "";
+  document.getElementById('loading-logo').style.display = '';
   document.getElementById('img-wrap').classList.remove('hide');
 
   stageProgress.style.width = "0%";
@@ -930,9 +964,19 @@ function showNextStage(){
   stageProgress.style.transition = "none";
   stageProgress.style.width = "0%";
 
+  let iconID = 0;
+
   const timer = setInterval(() => {
     // ランダムに進行量を変える（1/2は進行なし、1/2は0～9％）
     var upPt = Math.random() * 18 - 9;
+
+    if(nowStage.stage == FINAL_STAGE){
+      upPt = upPt / 3; //最終ステージは減速
+      //中盤ははやめ
+      if(progress > 35 && progress < 65){
+        upPt = upPt + 3;
+      }
+    }
 
     if(testMode){
       upPt = 0.01;
@@ -942,6 +986,39 @@ function showNextStage(){
     progress += upPt;
     if (progress >= 100) progress = 100;
 
+    if(nowStage.stage == FINAL_STAGE){
+      //アイコンがみちよに……！！
+      var nextIconID = Math.floor(progress / 3);
+
+      if(progress==100){
+        document.getElementById('loading-logo').src = 'images/michiyo.gif';
+        setTimeout(() => {
+          document.getElementById('loading-logo').src = 'images/logo_michi_99.png';
+        }, 3000);
+        document.getElementById('loading-msg').textContent = "あなたのことを完全に理解しました"
+
+      }else if(nextIconID > iconID){
+        iconID = nextIconID;
+
+        if(nextIconID > 30){
+          document.getElementById('loading-logo').src = 'images/logo_michi_99.png';
+        }else if(nextIconID >= 16){
+          document.getElementById('img-wrap').classList.add('michi');
+          document.getElementById('loading-logo').src = 'images/logo_michi_' + iconID + '.png';
+
+          var michiTop = 25 + 2.5 / 15 * (30 - nextIconID);
+          var michiHeight = 20 + 5 / 15 * (nextIconID -15);
+          document.getElementById('img-wrap').style.top = '';
+          document.getElementById('loading-logo').style.height = `${michiHeight}dvh`;
+        }else{
+          document.getElementById('loading-logo').src = 'images/logo_michi_' + iconID + '.png';
+        }
+        if(iconID < lastLoadMsges.length){
+          document.getElementById('loading-msg').textContent = lastLoadMsges[iconID];
+        }
+      }
+    }
+
     // 更新のたびに短いトランジションで滑らかに
     stageProgress.style.transition = "width 0.2s ease-out";
     stageProgress.style.width = progress + "%";
@@ -950,58 +1027,84 @@ function showNextStage(){
     if (progress >= 100) {
       clearInterval(timer);
 
-      setTimeout(() => {
-        createProgressSegments(nowStage.count);
-        document.getElementById('stage-info-title').textContent = `STAGE ` + nowStage.stage;
-        stageOverlayTitle.style.display = "";
-        stageText.style.display = '';
-        document.getElementById('stage-msg').textContent = nowStage.startMsg;
-        stageProgress.style.width = "0%";
+      if(nowStage.stage == FINAL_STAGE){
 
-        document.getElementById('loading-msg').style.display = "none";
-        document.getElementById('loadingBar').style.display = "none";
-        document.getElementById('img-wrap').classList.add('hide');
+        bgm.pause();
 
-        if(nowStage.stage == 1){
-          //背景の演出
-          document.getElementById('stage-info').classList.add('appear');
-        }else if(nowStage.stage > 1){
-          //ステージ背景色の変更
-          applyColor('--color-dark', '--color-dark-' + nowStage.stage);
-          applyColor('--color-light', '--color-light-' + nowStage.stage);
-          //accelerateBackground(); //背景モーションを加速
-          animateGradient(nowStage.stage);
-        }
+        setTimeout(() => {
+          //みちよスタート！！
+          playSound('michiyo');
+        }, 5000);
 
-        bgm.volume = 0.5;
-        playSound('lvup', 0.3);
+        setTimeout(() => {
+          showNextStageFinaly();
+        }, 15000);
 
-        if(nowStage.stage==FINAL_STAGE){
-          bgm.pause();
-
-          setTimeout(() => {
-            //みちよスタート！！
-            bgm_michiyo.volume = 1.0;
-            bgm_michiyo.play();
-
-            setTimeout(() => {
-              count = 3;
-              showCountdown();
-            }, 400);
-            
-          }, 3000);
-
-        }else{
-          setTimeout(() => {
-            count = 3;
-            showCountdown();
-          }, 2000);
-
-        }
-
-      }, 1000);
+      }else{
+        showNextStageFinaly();
+      }
     }
   }, 100); 
+}
+
+function showNextStageFinaly(){
+
+  setTimeout(() => {
+    createProgressSegments(nowStage.count);
+    if(nowStage.stage == FINAL_STAGE){
+      document.getElementById('stage-info-title').textContent = `FINAL STAGE`;
+    }else{
+      document.getElementById('stage-info-title').textContent = `STAGE ` + nowStage.stage;
+    }
+    
+    stageOverlayTitle.style.display = "";
+    stageText.style.display = '';
+    document.getElementById('stage-msg').textContent = nowStage.startMsg;
+    stageProgress.style.width = "0%";
+
+    document.getElementById('loading-logo').style.display = 'none';
+    document.getElementById('loading-msg').style.display = "none";
+    document.getElementById('loadingBar').style.display = "none";
+    document.getElementById('img-wrap').classList.add('hide');
+
+    if(nowStage.stage == 1){
+      //背景の演出
+      document.getElementById('stage-info').classList.add('appear');
+    }else if(nowStage.stage > 1){
+      //ステージ背景色の変更
+      applyColor('--color-dark', '--color-dark-' + nowStage.stage);
+      applyColor('--color-light', '--color-light-' + nowStage.stage);
+      //accelerateBackground(); //背景モーションを加速
+      animateGradient(nowStage.stage);
+    }
+
+    bgm.volume = 0.5;
+    playSound('lvup', 0.3);
+
+    /*
+    if(nowStage.stage==FINAL_STAGE){
+      bgm.pause();
+
+      setTimeout(() => {
+        //みちよスタート！！
+        bgm_michiyo.volume = 1.0;
+        bgm_michiyo.play();
+
+        setTimeout(() => {
+          count = 3;
+          showCountdown();
+        }, 400);
+        
+      }, 3000);
+
+    }*/
+
+    setTimeout(() => {
+      count = 3;
+      showCountdown();
+    }, 2000);
+
+  }, 1000);
 }
 
 
@@ -1153,12 +1256,12 @@ function showCountdown(){
   countNum.textContent=count;
   countNum.style.opacity='1';
   
-  if(nowStage.stage == FINAL_STAGE){
-    countNum.style.animation='moveUp 0.3s ease';
-  }else{
-    countNum.style.animation='moveUp 0.7s ease';
-    playSound('count');
-  }
+  //if(nowStage.stage == FINAL_STAGE){
+  //  countNum.style.animation='moveUp 0.3s ease';
+  //}
+
+  countNum.style.animation='moveUp 0.7s ease';
+  playSound('count');
   
   countNum.addEventListener('animationend',()=>{
     countNum.style.animation='none';
@@ -1264,7 +1367,6 @@ function prePlaySound(name){
 
   switch (name) {
   case 'Specification':
-  case 'Michiyo':
   case 're':
   case 'picovoice':
   case 'seven':
@@ -1279,7 +1381,11 @@ function prePlaySound(name){
 
 function playSound(name, vol = 1.0){
 
-  if(name == 'count'){
+  if(name == 'michiyo'){
+    bgm_michiyo.volume = 1.0;
+    bgm_michiyo.play();
+    
+  }else if(name == 'count'){
     se_count.pause();
     se_count.volume = vol;
     se_count.currentTime = 0;
@@ -1328,13 +1434,13 @@ function playSound(name, vol = 1.0){
     se_seven.playbackRate = 1.3;
     se_seven.play();
     fadeVolume(seven_gainNode, 2.0, 0.5);
-    se_seven.addEventListener("timeupdate", () => {
-    if (se_seven.currentTime >= 19.5) {
-      se_seven.pause();
-      bgm_michiyo.volume = 1.0;
-      fadeVolume(michiyo_gainNode, 1.0, 0.5);
-    }
-  });
+      se_seven.addEventListener("timeupdate", () => {
+      if (se_seven.currentTime >= 19.5) {
+        se_seven.pause();
+        bgm_michiyo.volume = 1.0;
+        fadeVolume(michiyo_gainNode, 1.0, 0.5);
+      }
+    });
   
   }else{
     const a = soundCache[name].cloneNode();

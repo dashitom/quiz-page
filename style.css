@@ -1044,6 +1044,10 @@ button.imgbtn.pressed{
   height:25dvh;
 }
 
+.img-wrap img {
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
 .img-wrap.hide img {
   animation: shrinkFade 0.5s forwards;
 }
@@ -1061,10 +1065,31 @@ button.imgbtn.pressed{
   animation: shock 1s forwards;
 }
 
+.img-wrap.michi img {
+  mask-image: radial-gradient(circle at 50% 45%, #000 40%, transparent 60%);
+  -webkit-mask-image: radial-gradient(circle at 50% 45%, #000 40%, transparent 60%);
+  animation: michiFade 5s forwards;
+}
+
 @keyframes shrinkFade {
-  to { transform: scale(0); opacity:0; }
+  0%   { transform: scale(1); opacity:0;}
+  100%  { transform: scale(0.3); opacity:0;}
+}
+
+@keyframes michiFade {
+  0%   { transform: scale(1); opacity:0.5; }
+  100% { transform: scale(1); opacity:1; }
 }
 
 @keyframes shock {
   to { width:300vmax; height:300vmax; opacity:0; }
+}
+
+@keyframes heartbeat {
+  0%   { transform: scale(1); }
+  10%  { transform: scale(1.08); } /* 1回目の鼓動 */
+  20%  { transform: scale(1); }
+  30%  { transform: scale(1.12); } /* 2回目の鼓動（少し強め） */
+  40%  { transform: scale(1); }
+  100% { transform: scale(1); }
 }
