@@ -1244,7 +1244,7 @@ function init(){
 
   setTimeout(() => {
     document.getElementById('first-confirm').classList.remove('show');
-    void document.body.offsetWidth; // 再生リセット
+    void document.getElementById('first-confirm').offsetWidth; // 再生リセット
     document.getElementById('first-confirm').classList.add('hide');
   }, 500);
   
@@ -1449,7 +1449,7 @@ function playSound(name, vol = 1.0){
     se_seven.currentTime = 10;
     se_seven.playbackRate = 1.3;
     se_seven.play();
-    fadeVolume(seven_gainNode, 2.0, 0.5);
+    //fadeVolume(seven_gainNode, 2.0, 0.5);
     se_seven.addEventListener("timeupdate", () => {
       if (se_seven.currentTime >= 19.5) {
         se_seven.pause();
