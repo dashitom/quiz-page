@@ -37,7 +37,7 @@ const stageData=[
   {"stage":"2", "loadMsg":"あなたの回答を分析しています…", "startMsg":"少しレベルを上げます！"},
   {"stage":"3", "loadMsg":"さらに分析しています…", "startMsg":"やりますね！さらにレベルアップ！"},
   {"stage":"4", "loadMsg":"あなたにあわせて調整しています…", "startMsg":"こんな問題はどうですか？"},
-  {"stage":"5", "loadMsg":"完全にあなたを理解しました…", "startMsg":"あなたは・・・"},
+  {"stage":"5", "loadMsg":"回答データ解析中…", "startMsg":"あなたは・・・"},
 ]
 </script>
 </head>
@@ -1042,18 +1042,42 @@ function showNextStage(){
         setTimeout(() => {
           //みちよスタート！！
           playSound('michiyo');
-        }, 5000);
+
+          //カラフルBG
+          changeBGColor(3);
+          setTimeout(() => {changeBGColor(2);}, 1000);
+          setTimeout(() => {changeBGColor(1);}, 2000);
+          setTimeout(() => {changeBGColor(2);}, 3000);
+          setTimeout(() => {changeBGColor(3);}, 4000);
+          setTimeout(() => {changeBGColor(4);}, 5000);
+          setTimeout(() => {changeBGColor(3);}, 6000);
+          setTimeout(() => {changeBGColor(2);}, 7000);
+          setTimeout(() => {changeBGColor(1);}, 8000);
+          setTimeout(() => {changeBGColor(2);}, 9000);
+          setTimeout(() => {changeBGColor(3);}, 10000);
+          setTimeout(() => {changeBGColor(4);}, 11000);
+          setTimeout(() => {changeBGColor(3);}, 12000);
+          setTimeout(() => {changeBGColor(2);}, 13000);
+
+        }, 3000);
+
 
         //★出題再生位置調整
         setTimeout(() => {
           showNextStageFinaly();
-        }, 18000);
+        }, 16000);
 
       }else{
         showNextStageFinaly();
       }
     }
   }, 100); 
+}
+
+function changeBGColor(toNum){
+  applyColor('--color-dark', '--color-dark-' + toNum);
+  applyColor('--color-light', '--color-light-' + toNum);
+  animateGradient(toNum);
 }
 
 function showNextStageFinaly(){
@@ -1221,7 +1245,7 @@ function init(){
 
   bgm_michiyo.addEventListener("timeupdate", () => {
     //★アウトロループ　TODO
-    if (bgm_michiyo.currentTime >= 119.2) {
+    if (bgm_michiyo.currentTime >= 119.1) {
       bgm_michiyo.currentTime = 103.5;
     }
   });
@@ -1443,7 +1467,7 @@ function playSound(name, vol = 1.0){
     se_picovoice.currentTime = 1.8;
     se_picovoice.play();
   }else if(name == 'seven'){
-    bgm_michiyo.volume = 0.1;
+    bgm_michiyo.volume = 0.3;
     fadeVolume(michiyo_gainNode, 0.3, 0.5);
     se_seven.volume = vol;
     se_seven.currentTime = 10;
@@ -1454,7 +1478,7 @@ function playSound(name, vol = 1.0){
       if (se_seven.currentTime >= 19.5) {
         se_seven.pause();
         bgm_michiyo.volume = 1.0;
-        fadeVolume(michiyo_gainNode, 1.0, 0.5);
+        //fadeVolume(michiyo_gainNode, 1.0, 0.5);
       }
     });
   
