@@ -237,6 +237,13 @@ window.addEventListener("load", () => {
     });
   });
 
+  //みちよ画像
+  imageUrls.add(`images/michiyo.gif`);
+  for (let i = 0; i <= 30; i++) {
+    imageUrls.add(`images/logo_michi_${i}.png`);
+  }
+  imageUrls.add(`images/logo_michi_99.png`);
+
   imageUrls.forEach(src => {
     const img = new Image();
     img.src = src;
@@ -1036,9 +1043,10 @@ function showNextStage(){
           playSound('michiyo');
         }, 5000);
 
+        //★出題再生位置調整
         setTimeout(() => {
           showNextStageFinaly();
-        }, 15000);
+        }, 19000);
 
       }else{
         showNextStageFinaly();
@@ -1210,8 +1218,9 @@ function init(){
   });
 
   bgm_michiyo.addEventListener("timeupdate", () => {
-    if (bgm_michiyo.currentTime >= 131.8) {
-      bgm_michiyo.currentTime = 0.8;
+    //アウトロループ
+    if (bgm_michiyo.currentTime >= 119) {
+      bgm_michiyo.currentTime = 103;
     }
   });
 
@@ -1384,7 +1393,7 @@ function playSound(name, vol = 1.0){
   if(name == 'michiyo'){
     bgm_michiyo.volume = 1.0;
     bgm_michiyo.play();
-    
+
   }else if(name == 'count'){
     se_count.pause();
     se_count.volume = vol;
@@ -1434,7 +1443,7 @@ function playSound(name, vol = 1.0){
     se_seven.playbackRate = 1.3;
     se_seven.play();
     fadeVolume(seven_gainNode, 2.0, 0.5);
-      se_seven.addEventListener("timeupdate", () => {
+    se_seven.addEventListener("timeupdate", () => {
       if (se_seven.currentTime >= 19.5) {
         se_seven.pause();
         bgm_michiyo.volume = 1.0;
