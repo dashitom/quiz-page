@@ -44,7 +44,7 @@ const stageData=[
 <body>
 
 <div id="first-confirm" >
-  <span class="first-confirm-title">AI脳トレへようこそ</span>
+  <span class="first-confirm-title">AI脳トレへようこそ ver2</span>
   <img class="first-confirm-image" src="images/image.png" />
   <div class="sentence">
     このアプリはあなたの回答をもとに<br>
@@ -1044,10 +1044,12 @@ function showNextStage(){
           playSound('michiyo');
 
           //カラフルBG
+          /*
           changeBGColor(3);
           setTimeout(() => {changeBGColor(2);}, 1100);
           setTimeout(() => {changeBGColor(1);}, 2200);
           setTimeout(() => {changeBGColor(2);}, 3300);
+          */
           setTimeout(() => {changeBGColor(3);}, 4400);
           setTimeout(() => {changeBGColor(4);}, 5500);
           setTimeout(() => {changeBGColor(3);}, 6600);
