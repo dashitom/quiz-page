@@ -3,11 +3,16 @@
   --color-text: white;
   --color-mikiri: #B8860B;
   --color-renda: #953735;
-  /* -1 blue */
+
   --color-dark: #002060;
   --color-light: #3399FF;
   --color-bg-top: #3399FF;
   --color-bg-bottom: #0056b3;
+  /* -1 blue */
+  --color-dark-1: #002060;
+  --color-light-1: #3399FF;
+  --color-bg-top-1: #3399FF;
+  --color-bg-bottom-1: #0056b3;
   /* -2 green */
   --color-dark-2: #005020;   
   --color-light-2: #33cc66;    
