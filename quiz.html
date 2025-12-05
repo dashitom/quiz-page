@@ -11,7 +11,7 @@
 <script>
 
 const testMode = false; //テスト時にローディングを高速化できる
-const FINAL_STAGE = 2;
+const FINAL_STAGE = 5;
 
 // --- 問題データ ---
 const quizData=[
@@ -1046,7 +1046,7 @@ function showNextStage(){
         //★出題再生位置調整
         setTimeout(() => {
           showNextStageFinaly();
-        }, 19000);
+        }, 18000);
 
       }else{
         showNextStageFinaly();
@@ -1218,9 +1218,9 @@ function init(){
   });
 
   bgm_michiyo.addEventListener("timeupdate", () => {
-    //アウトロループ
-    if (bgm_michiyo.currentTime >= 119) {
-      bgm_michiyo.currentTime = 103;
+    //★アウトロループ　TODO
+    if (bgm_michiyo.currentTime >= 119.3) {
+      bgm_michiyo.currentTime = 103.5;
     }
   });
 
