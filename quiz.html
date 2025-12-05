@@ -1003,6 +1003,7 @@ function showNextStage(){
           document.getElementById('loading-logo').src = 'images/logo_michi_99.png';
         }, 3000);
         document.getElementById('loading-msg').textContent = "あなたのことを完全に理解しました"
+        playSound('understand');
 
       }else if(nextIconID > iconID){
         iconID = nextIconID;
@@ -1204,6 +1205,7 @@ function init(){
   se_lvup = prePlaySound('lvup');
   se_brazirian = prePlaySound('brazirian');
   se_re = prePlaySound('re');
+  se_understand = prePlaySound('understand');
   se_picovoice = prePlaySound('picovoice');
   se_seven = prePlaySound('seven');
 
@@ -1219,7 +1221,7 @@ function init(){
 
   bgm_michiyo.addEventListener("timeupdate", () => {
     //★アウトロループ　TODO
-    if (bgm_michiyo.currentTime >= 119.3) {
+    if (bgm_michiyo.currentTime >= 119.2) {
       bgm_michiyo.currentTime = 103.5;
     }
   });
@@ -1353,6 +1355,7 @@ var se_count; // = document.getElementById('se_count');
 var se_lvup; // = document.getElementById('se_lvup');
 var se_brazirian; // = document.getElementById('se_brazirian');
 var se_re; // = document.getElementById('se_re');
+var se_understand;
 var se_picovoice; // = document.getElementById('se_picovoice');
 var se_seven; // = document.getElementById('se_seven');
 var michiyo_gainNode;
@@ -1393,6 +1396,10 @@ function playSound(name, vol = 1.0){
   if(name == 'michiyo'){
     bgm_michiyo.volume = 1.0;
     bgm_michiyo.play();
+
+  }else if(name == 'understand'){
+    se_understand.volume = 1.0;
+    se_understand.play();
 
   }else if(name == 'count'){
     se_count.pause();
