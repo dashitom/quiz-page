@@ -11,7 +11,7 @@
 <script>
 
 const testMode = false; //テスト時にローディングを高速化できる
-const FINAL_STAGE = 2;
+const FINAL_STAGE = 5;
 
 // --- 問題データ ---
 const quizData=[
@@ -987,7 +987,11 @@ function showNextStage(){
   
   stageQuizIdx=0;
   
-  stageText.textContent = `STAGE ` + nowStage.stage;
+  if(nowStage.stage == FINAL_STAGE){
+    stageText.textContent = `FINAL STAGE`;
+  }else{
+    stageText.textContent = `STAGE ` + nowStage.stage;
+  }
   
   document.getElementById('loading-msg').style.display = "";
   document.getElementById('loading-msg').textContent = nowStage.loadMsg;
