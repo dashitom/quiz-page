@@ -1042,23 +1042,21 @@ function showNextStage(){
         setTimeout(() => {
           //みちよスタート！！
           playSound('michiyo');
-
+          //ノリノリ
+          document.getElementById('loading-logo').classList.add('float');
           //カラフルBG
-          /*
-          changeBGColor(3);
-          setTimeout(() => {changeBGColor(2);}, 1100);
-          setTimeout(() => {changeBGColor(1);}, 2200);
-          setTimeout(() => {changeBGColor(2);}, 3300);
-          */
-          setTimeout(() => {changeBGColor(3);}, 4400);
-          setTimeout(() => {changeBGColor(4);}, 5500);
-          setTimeout(() => {changeBGColor(3);}, 6600);
-          setTimeout(() => {changeBGColor(2);}, 7700);
-          setTimeout(() => {changeBGColor(1);}, 8800);
-          setTimeout(() => {changeBGColor(2);}, 9900);
-          setTimeout(() => {changeBGColor(3);}, 11000);
-          setTimeout(() => {changeBGColor(4);}, 12100);
-          setTimeout(() => {changeBGColor(3);}, 13200);
+          setTimeout(() => {changeBGColor(3);}, 2000);
+          setTimeout(() => {changeBGColor(2);}, 3000);
+          setTimeout(() => {changeBGColor(1);}, 4000);
+          setTimeout(() => {changeBGColor(2);}, 5000);
+          setTimeout(() => {changeBGColor(3);}, 6000);
+          setTimeout(() => {changeBGColor(4);}, 7000);
+          setTimeout(() => {changeBGColor(3);}, 8000);
+          setTimeout(() => {changeBGColor(2);}, 9000);
+          setTimeout(() => {changeBGColor(1);}, 10000);
+          setTimeout(() => {changeBGColor(2);}, 11000);
+          setTimeout(() => {changeBGColor(3);}, 12000);
+          setTimeout(() => {changeBGColor(4);}, 13000);
 
         }, 3000);
 
@@ -1468,8 +1466,8 @@ function playSound(name, vol = 1.0){
     se_picovoice.currentTime = 1.8;
     se_picovoice.play();
   }else if(name == 'seven'){
-    bgm_michiyo.volume = 0.3;
-    fadeVolume(michiyo_gainNode, 0.3, 0.5);
+    bgm_michiyo.volume = 0.5;
+    fadeVolume(michiyo_gainNode, 0.5, 0.5);
     se_seven.volume = vol;
     se_seven.currentTime = 10;
     se_seven.playbackRate = 1.3;
