@@ -39,7 +39,6 @@ body::before {
   font-weight: bold;
   text-align: left;
   opacity: 0;
-  animation: showLine 0.01s forwards 1s;
 }
 .strike.exec { color:#eee;/*text-decoration: line-through; text-decoration-thickness: 5px;*/ }
 
@@ -166,7 +165,7 @@ body::before {
   <div class="line3 flash">還暦おめでとう！</div>
   <div class="face-container">
     <div class="float-wrap">
-      <img src="kawashima.png" class="face" id="face" style="display:none;">
+      <img src="kawashima.png" class="face" id="face" >
     </div>
   </div>
   <div class="line4">
@@ -197,6 +196,7 @@ body::before {
 const imageUrls = ["kawashima.png", "kawashima2.png", "pico.png"];
 const face = document.getElementById('face');
 const strike = document.querySelector('.strike');
+const line1 = document.querySelector('.line1');
 const line2 = document.querySelector('.line2');
 const line3 = document.querySelector('.line3');
 const line4 = document.querySelector('.line4');
@@ -217,20 +217,23 @@ function tap(){
   executed = true;
 
   bgm_mario = prePlaySound('mario');
+  se_clap = prePlaySound('clap');
 
   document.getElementById('first-tap-area').classList.add('hide');
-  //document.getElementById('first-tap-area').style.display = 'none';
+  playSound(se_clap);
 
-  face.style.display = '';
-  face.src = "kawashima.png";
-  
+  setTimeout(() => {
+    line1.style.animation = "showLine 0.01s forwards";
+    playSound(se_clap);
+  }, 1100);
+
   // ① 3秒後：上昇開始
   setTimeout(() => {
     stopFloat();
     
     var firstSE = true; 
     bgm_mario.volume = 1.0;
-    bgm_mario.currentTime = 7.5;
+    bgm_mario.currentTime = 7.6;
     bgm_mario.play();
     //いったんストップ
     bgm_mario.addEventListener("timeupdate", () => {
@@ -263,6 +266,7 @@ function tap(){
   setTimeout(() => {
     line2.style.animation = "showLine 0.01s forwards";
     strike.classList.add("exec");
+    playSound(se_clap);
     //BGM再開
     bgm_mario.play();
 
@@ -281,7 +285,7 @@ function tap(){
     line4.style.animation = "showLine 0.5s forwards";
     const hash = window.location.hash;
     const scoreValue = hash.replace('#score=', '');
-    addScore(scoreValue, 4.0);
+    addScore(scoreValue, 5.2);
     //document.getElementById('score-value').textContent = scoreValue;
   }, 6000);
 }
@@ -379,6 +383,7 @@ function startConfetti() {
 // ==== 音声処理 ====
 
 var bgm_mario;
+var se_clap;
 
 const soundCache = {};
 
@@ -400,6 +405,26 @@ function prePlaySound(name){
   audio.play();
   audio.pause();
   return audio;
+}
+
+function playSound(target){
+  target.volume = 1.0;
+  /*
+  target.play().then(()=>{
+    // 再生が終わったら自動でリセットして pause
+    target.addEventListener('ended', () => {
+      target.currentTime = 0;
+      target.pause();
+    }, { once: true });
+  }).catch(()=>{});
+  */
+  target.addEventListener("timeupdate", () => {
+    if (target.currentTime >= 1.0) {
+      target.currentTime = 0;
+      target.pause();
+    }
+  });
+  target.play();
 }
 
 
