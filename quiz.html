@@ -76,7 +76,7 @@ const stageData=[
 <body>
 
 <div id="first-confirm" >
-  <span class="first-confirm-title">AI脳トレへようこそ ver7</span>
+  <span class="first-confirm-title">AI脳トレへようこそ ver17:47</span>
   <img class="first-confirm-image" src="images/image.png" />
   <div class="sentence">
     このアプリはあなたの回答をもとに<br>
@@ -1262,6 +1262,9 @@ function init(){
   
   //タップ即再生じゃない音声は今生成し、事前に鳴らしておく
   bgm = prePlaySound('Specification');
+  bgm2 = prePlaySound('Specification');
+  bgm3 = prePlaySound('Specification');
+  bgm4 = prePlaySound('Specification');
   bgm_michiyo = prePlaySound('Michiyo');
   se_count = prePlaySound('count');
   se_lvup = prePlaySound('lvup');
@@ -1274,13 +1277,6 @@ function init(){
   bgm_gainNode = connectAudio(bgm);
   michiyo_gainNode = connectAudio(bgm_michiyo);
   seven_gainNode = connectAudio(se_seven);
-
-  //ループが自然な位置に調整
-  bgm.addEventListener("timeupdate", () => {
-    if (bgm.currentTime >= 206) {
-      bgm.currentTime = 0;
-    }
-  });
 
   bgm_michiyo.addEventListener("timeupdate", () => {
     //★アウトロループ　TODO
@@ -1372,16 +1368,8 @@ function showCountdown(){
           */
         }else{
           //BGMスピードを変更
+          playBGM(nowStage.stage);
           //bgm.playbackRate = 0.9 + 0.1 * nowStage.stage;
-
-          if(nowStage.stage==1){
-            //playSound('bgm');
-            bgm.value = 1.0;
-            bgm.play();
-          }else{
-            changeBGMRate(bgm, 0.9 + 0.1 * nowStage.stage)
-          }
-
         }
 
         showQuestion();
@@ -1420,7 +1408,10 @@ function endQuiz(){
 }
 
 // ==== 音声処理 ====
-var bgm; // = document.getElementById('bgm');
+var bgm; 
+var bgm2;
+var bgm3;
+var bgm4;
 var bgm_michiyo; // = document.getElementById('bgm_michiyo');
 var se_count; // = document.getElementById('se_count');
 var se_lvup; // = document.getElementById('se_lvup');
@@ -1457,23 +1448,48 @@ function prePlaySound(name){
     audio.loop = true;
   }
 
+  switch (name) {
+  case 'Specification':
+    //ループが自然な位置に調整
+    audio.addEventListener("timeupdate", () => {
+      if (audio.currentTime >= 206) {
+        audio.currentTime = 0;
+      }
+    });
+  }
+
   audio.volume = 0.0;
   audio.play();
   audio.pause();
   return audio;
 }
 
-function changeBGMRate(rate){
-  bgm.pause();
+function playBGM(stage){
+
+  var target;
+  switch (stage) {
+  case 1:
+    target = bgm;
+    break;
+  case 2:
+    target = bgm2;
+    break;
+  case 3:
+    target = bgm3;
+    break;
+  case 4:
+    target = bgm4;
+    break;
+  }
+/*
   var nowCurrentTime = bgm.currentTime;
-  const a = bgm.cloneNode();
   bgm.src = "";
-  a.volume = 1.0;
   a.playbackRate = rate
   a.currentTime = nowCurrentTime;
-  //★リスナー！！
-  a.play();
-  bgm = a;
+  */
+  target.playbackRate = 0.9 + 0.1 * stage;
+  target.volume = 1.0;
+  target.play();
 }
 
 function playSound(name, vol = 1.0){
