@@ -76,7 +76,7 @@ const stageData=[
 <body>
 
 <div id="first-confirm" >
-  <span class="first-confirm-title">AI脳トレへようこそ ver6</span>
+  <span class="first-confirm-title">AI脳トレへようこそ ver7</span>
   <img class="first-confirm-image" src="images/image.png" />
   <div class="sentence">
     このアプリはあなたの回答をもとに<br>
@@ -1377,9 +1377,10 @@ function showCountdown(){
           if(nowStage.stage==1){
             //playSound('bgm');
             bgm.value = 1.0;
+            bgm.play();
+          }else{
+            changeBGMRate(bgm, 0.9 + 0.1 * nowStage.stage)
           }
-
-          bgm.playbackRate = 0.9 + 0.1 * nowStage.stage;
 
         }
 
@@ -1470,6 +1471,7 @@ function changeBGMRate(rate){
   a.volume = 1.0;
   a.playbackRate = rate
   a.currentTime = nowCurrentTime;
+  //★リスナー！！
   a.play();
   bgm = a;
 }
