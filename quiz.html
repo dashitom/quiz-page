@@ -1147,7 +1147,7 @@ function showNextStageFinaly(){
       animateGradient(nowStage.stage);
     }
 
-    bgm.volume = 0.5;
+    //bgm.volume = 0.5;
     playSound('lvup', 0.3);
 
     /*
@@ -1370,8 +1370,12 @@ function showCountdown(){
           */
         }else{
           //BGMスピードを変更
-          bgm.playbackRate = 0.9 + 0.1 * nowStage.stage;
-          playSound('bgm');
+          //bgm.playbackRate = 0.9 + 0.1 * nowStage.stage;
+          bgm.playbackRate = 0.5 + 0.3 * nowStage.stage;
+
+          if(nowStage.stage==1){
+            playSound('bgm');
+          }
         }
 
         showQuestion();
