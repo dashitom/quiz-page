@@ -74,7 +74,7 @@ const stageData=[
 <body>
 
 <div id="first-confirm" >
-  <span class="first-confirm-title">AI脳トレへようこそ ver18:00</span>
+  <span class="first-confirm-title">AI脳トレへようこそ ver7:48</span>
   <img class="first-confirm-image" src="images/image.png" />
   <div class="sentence">
     このアプリはあなたの回答をもとに<br>
@@ -240,6 +240,7 @@ window.addEventListener("load", () => {
     //初回確認を表示し、裏でプリロード
     document.getElementById('first-confirm').classList.add('show');
     document.body.classList.add('grid-restart');
+    initButtonTouchEvents();
   }, 0);
 
   //音声プリロード
@@ -1555,7 +1556,7 @@ function playSound(name, vol = 1.0){
     se_picovoice.currentTime = 1.8;
     se_picovoice.play();
   }else if(name == 'seven'){
-    bgm.volume = 0.5;
+    nowBgm.volume = 0.5;
     fadeVolume(bgm_gainNode, 0.5, 0.5);
     se_seven.volume = vol;
     se_seven.currentTime = 10;
@@ -1567,7 +1568,8 @@ function playSound(name, vol = 1.0){
       if (se_seven.currentTime >= 19.45 && whileSeven) {
         whileSeven = false;
         se_seven.pause();
-        bgm.volume = 1.0;
+        se_seven.src = "";
+        nowBgm.volume = 1.0;
         fadeVolume(bgm_gainNode, 1.0, 0.5);
       }
     });

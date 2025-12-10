@@ -63,6 +63,13 @@ body::before {
   margin-top: 5dvh;
   opacity: 0;
 }
+.line5 {
+  font-size: 1em;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 5dvh;
+  opacity: 0;
+}
 
 /* 画像ボックス */
 .face-container {
@@ -171,6 +178,8 @@ body::before {
   <div class="line4">
     <div class="score">スコア <Span id="score-value">12345</span></div>
     <br>
+  </div>
+  <div class="line5">
     <div class="staff">
       <div class="member">
         <div class="role">ゲームディレクター：</div>
@@ -200,6 +209,7 @@ const line1 = document.querySelector('.line1');
 const line2 = document.querySelector('.line2');
 const line3 = document.querySelector('.line3');
 const line4 = document.querySelector('.line4');
+const line5 = document.querySelector('.line5');
 
 // すべての画像がロード完了してからアニメーション開始
 Promise.all(imageUrls.map(src => new Promise(resolve => {
@@ -218,6 +228,7 @@ function tap(){
 
   bgm_mario = prePlaySound('mario');
   se_clap = prePlaySound('clap');
+  se_clap.currentTime = 0.5;
 
   document.getElementById('first-tap-area').classList.add('hide');
   playSound(se_clap);
@@ -233,15 +244,16 @@ function tap(){
     
     var firstSE = true; 
     bgm_mario.volume = 1.0;
-    bgm_mario.currentTime = 7.5;
+    bgm_mario.currentTime = 7.0;
     bgm_mario.play();
+    /*
     //いったんストップ
     bgm_mario.addEventListener("timeupdate", () => {
       if (bgm_mario.currentTime >= 8.45 && firstSE) {
         firstSE = false;
         bgm_mario.pause();
       }
-    });
+    });*/
 
     face.src = "kawashima2.png";
     // 画像が読み込まれたら上昇を開始
@@ -266,29 +278,36 @@ function tap(){
   setTimeout(() => {
     line2.style.animation = "showLine 0.01s forwards";
     strike.classList.add("exec");
-    playSound(se_clap);
     //BGM再開
-    bgm_mario.currentTime = 8.55;
-    bgm_mario.play();
+//    bgm_mario.currentTime = 8.55;
+//    bgm_mario.play();
 
     //還暦おめでとう
     line3.style.animation = "showLine 0.5s forwards";
+
+    //紙吹雪
     startConfetti(); 
 
     //ふわふわ再開
     startFloat();
     face.style.animation = "showLine 0s forwards, float 0.5s ease-in-out infinite";
     
+    //スコア
+    setTimeout(() => {
+      line4.style.animation = "showLine 0.5s forwards";
+      const hash = window.location.hash;
+      const scoreValue = hash.replace('#score=', '');
+      addScore(scoreValue, 5.2);
+      //document.getElementById('score-value').textContent = scoreValue;
+    }, 1000);
+
+    //開発者
+    setTimeout(() => {
+      line5.style.animation = "showLine 0.5s forwards";
+    }, 2000);
+
   }, 5000);
 
-  // ⑥ 最後のテキスト
-  setTimeout(() => {
-    line4.style.animation = "showLine 0.5s forwards";
-    const hash = window.location.hash;
-    const scoreValue = hash.replace('#score=', '');
-    addScore(scoreValue, 5.2);
-    //document.getElementById('score-value').textContent = scoreValue;
-  }, 6000);
 }
 
 
