@@ -15,6 +15,7 @@ const FINAL_STAGE = 5;
 
 // --- 問題データ ---
 const quizData=[
+    
   {"stage":"1","mode":"","quiztype":"計算力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"３５－３０＝？","image":"","music":"","image2":"","image2time":"","options":[{"text":"5"},{"text":"7"},{"text":""},{"text":""}],"correct":"5","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"2","mode":"","quiztype":"空間認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"バスの進行方向は？","image":"images/bus_left.png","music":"","image2":"","image2time":"","options":[{"text":"左"},{"text":"右"},{"text":""},{"text":""}],"correct":"左","answerPict":"","rand":false,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
   {"stage":"3","mode":"","quiztype":"色彩認識力","beforeTxt":"","beforeImg":"","beforeMusic":"","beforeTime":"","question":"この中で一番大きいマルは？","image":"images/ookiimaru.png","music":"","image2":"","image2time":"","options":[{"text":"青"},{"text":"赤"},{"text":""},{"text":""}],"correct":"赤","answerPict":"","rand":true,"answertime":20000,"answerstart":20000,"perfect":19000,"excellent":15000,"great":10000,"good":5000,"safe":0},
@@ -75,7 +76,7 @@ const stageData=[
 <body>
 
 <div id="first-confirm" >
-  <span class="first-confirm-title">AI脳トレへようこそ ver4</span>
+  <span class="first-confirm-title">AI脳トレへようこそ ver6</span>
   <img class="first-confirm-image" src="images/image.png" />
   <div class="sentence">
     このアプリはあなたの回答をもとに<br>
@@ -1073,6 +1074,7 @@ function showNextStage(){
       if(nowStage.stage == FINAL_STAGE){
 
         bgm.pause();
+        bgm.src = "";
 
         setTimeout(() => {
           //みちよスタート！！
@@ -1377,9 +1379,7 @@ function showCountdown(){
             bgm.value = 1.0;
           }
 
-          bgm.pause();
           bgm.playbackRate = 0.9 + 0.1 * nowStage.stage;
-          bgm.play();
 
         }
 
@@ -1460,6 +1460,18 @@ function prePlaySound(name){
   audio.play();
   audio.pause();
   return audio;
+}
+
+function changeBGMRate(rate){
+  bgm.pause();
+  var nowCurrentTime = bgm.currentTime;
+  const a = bgm.cloneNode();
+  bgm.src = "";
+  a.volume = 1.0;
+  a.playbackRate = rate
+  a.currentTime = nowCurrentTime;
+  a.play();
+  bgm = a;
 }
 
 function playSound(name, vol = 1.0){
