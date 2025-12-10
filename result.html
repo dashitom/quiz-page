@@ -70,6 +70,13 @@ body::before {
   margin-top: 5dvh;
   opacity: 0;
 }
+.line6 {
+  font-size: 1em;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 5dvh;
+  opacity: 0;
+}
 
 /* 画像ボックス */
 .face-container {
@@ -177,7 +184,6 @@ body::before {
   </div>
   <div class="line4">
     <div class="score">スコア <Span id="score-value">12345</span></div>
-    <br>
   </div>
   <div class="line5">
     <div class="staff">
@@ -197,6 +203,11 @@ body::before {
         </div>
       </div>
     </div>
+  </div>
+  <div class="line6">
+    <br>
+    <button id='start' onclick="infiniteMode();">回答時間無限・観察モード</button>
+    <button id='back' onclick="back(this);">TOPへ戻る</button>
   </div>
 </div>
 
@@ -304,7 +315,7 @@ function tap(){
     //開発者
     setTimeout(() => {
       line5.style.animation = "showLine 0.5s forwards";
-    }, 2000);
+    }, 4500);
 
   }, 5000);
 
