@@ -76,7 +76,7 @@ const stageData=[
 <body>
 
 <div id="first-confirm" >
-  <span class="first-confirm-title">AI脳トレへようこそ ver17:55</span>
+  <span class="first-confirm-title">AI脳トレへようこそ ver18:00</span>
   <img class="first-confirm-image" src="images/image.png" />
   <div class="sentence">
     このアプリはあなたの回答をもとに<br>
@@ -1077,8 +1077,8 @@ function showNextStage(){
 
       if(nowStage.stage == FINAL_STAGE){
 
-        bgm.pause();
-        bgm.src = "";
+        nowBgm.pause();
+        nowBgm.src = "";
 
         setTimeout(() => {
           //みちよスタート！！
@@ -1498,6 +1498,7 @@ function playBGM(stage){
   if(stage > 1){
     nowBgm.pause();
     nowBgm.src = "";
+    target.currentTime = nowBgm.currentTime;
   }
   target.play();
 
