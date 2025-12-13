@@ -1066,7 +1066,7 @@ button.imgbtn.pressed{
   border:10dvh solid white;     /* ← 白い輪郭だけ */
   background:transparent;      /* ← 中を抜く */
   transform:translate(-50%, -50%);
-  opacity:0.6;
+  opacity:0; /*opacity:0.6;*/
   animation: shock 1s forwards;
 }
 
